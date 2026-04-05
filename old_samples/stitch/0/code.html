@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding - Hana Digital Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#bcc9c6",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9fa",
+                        "on-tertiary-fixed-variant": "#004395",
+                        "on-primary": "#ffffff",
+                        "background": "#f8f9fa",
+                        "surface-container-high": "#e7e8e9",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d9dadb",
+                        "inverse-surface": "#2e3132",
+                        "outline": "#6d7a77",
+                        "on-primary-container": "#f4fffb",
+                        "on-background": "#191c1d",
+                        "inverse-on-surface": "#f0f1f2",
+                        "secondary-container": "#e2e0fc",
+                        "surface-container": "#edeeef",
+                        "primary": "#00685e",
+                        "tertiary-fixed-dim": "#adc6ff",
+                        "secondary-fixed-dim": "#c6c4df",
+                        "on-secondary-fixed-variant": "#45455b",
+                        "on-tertiary-fixed": "#001a42",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#fefcff",
+                        "surface-tint": "#006a60",
+                        "on-surface": "#191c1d",
+                        "on-secondary-fixed": "#1a1a2e",
+                        "tertiary-container": "#2170e4",
+                        "on-primary-fixed": "#00201c",
+                        "on-primary-fixed-variant": "#005048",
+                        "secondary": "#5d5c74",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#63627a",
+                        "primary-container": "#008377",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e1e3e4",
+                        "tertiary": "#0058be",
+                        "surface-container-low": "#f3f4f5",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#64d9c9",
+                        "surface-container-highest": "#e1e3e4",
+                        "primary-fixed-dim": "#64d9c9",
+                        "secondary-fixed": "#e2e0fc",
+                        "surface": "#f8f9fa",
+                        "on-surface-variant": "#3d4947",
+                        "tertiary-fixed": "#d8e2ff",
+                        "primary-fixed": "#82f6e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .byulbeot-slope {
+            background: linear-gradient(135deg, #00685e 0%, #008377 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar suppression as per "Linear/Transactional" rule for Onboarding -->
+<main class="flex-grow px-5 py-8 max-w-lg mx-auto w-full">
+<!-- AI Sanctuary Welcome Header -->
+<header class="mb-10 relative">
+<div class="flex items-start justify-between">
+<div class="max-w-[70%]">
+<h1 class="font-headline font-bold text-3xl leading-tight text-primary mb-2">Welcome to your digital sanctuary.</h1>
+<p class="text-on-surface-variant text-sm leading-relaxed">Let's personalize your stay in Korea. Tell me about your journey.</p>
+</div>
+<div class="relative w-20 h-20 bg-primary-fixed rounded-full flex items-center justify-center overflow-visible">
+<img alt="Byulbeot" class="w-20 h-20 object-contain drop-shadow-lg scale-125" data-alt="3D friendly white robot character with a small green sprout on its head waving, soft studio lighting, teal background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzY0ok6bJMDv1s2X2vmgpXjqzCz-sVPvMeQl-p1Ou5ArOQQxMQQXR5_87Z5Q9wcYF2oTCR840eSO8Xtqq9Rxz5KGm3DBugkIC4c-ONwL1YOXDrg2a9RuCEF1Fiog92kSuPlACKTtdK36OyV-Z5gVtufzVyR_jgoNfTdEog4BEiCNWqLJAr6BNpfLWRoBsJwyD5qtfaDMjNkFxgs8Az8Y3O4CXsGN4cL5z9js5vGHgUOsw2GuESM9-cyIA4oCW6BAu9qAhqtO-m4rI"/>
+</div>
+</div>
+</header>
+<!-- Onboarding Survey Card -->
+<section class="space-y-8">
+<!-- Profile Details Group -->
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="font-label text-xs font-semibold text-on-surface-variant px-1">School or University</label>
+<div class="relative group">
+<select class="w-full h-14 pl-4 pr-10 bg-surface-container-highest border-none rounded-lg appearance-none text-on-surface focus:ring-0 focus:bg-primary-fixed transition-colors">
+<option disabled="" selected="" value="">Select your institution</option>
+<option>Seoul National University</option>
+<option>Yonsei University</option>
+<option>Korea University</option>
+<option>Hanyang University</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="font-label text-xs font-semibold text-on-surface-variant px-1">Visa Type</label>
+<div class="relative">
+<select class="w-full h-14 pl-4 pr-10 bg-surface-container-highest border-none rounded-lg appearance-none text-on-surface focus:ring-0 focus:bg-primary-fixed transition-colors">
+<option disabled="" selected="" value="">Select Visa</option>
+<option>D-2 Student</option>
+<option>D-4 Language Training</option>
+<option>E-7 Professional</option>
+<option>F-4 Ethnic Korean</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label text-xs font-semibold text-on-surface-variant px-1">Nationality</label>
+<div class="relative">
+<select class="w-full h-14 pl-4 pr-10 bg-surface-container-highest border-none rounded-lg appearance-none text-on-surface focus:ring-0 focus:bg-primary-fixed transition-colors">
+<option disabled="" selected="" value="">Select Country</option>
+<option>USA</option>
+<option>Vietnam</option>
+<option>China</option>
+<option>France</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label text-xs font-semibold text-on-surface-variant px-1">Entry Date</label>
+<div class="relative">
+<select class="w-full h-14 pl-4 pr-10 bg-surface-container-highest border-none rounded-lg appearance-none text-on-surface focus:ring-0 focus:bg-primary-fixed transition-colors">
+<option disabled="" selected="" value="">When did you arrive?</option>
+<option>Within last 30 days</option>
+<option>1-3 months ago</option>
+<option>3-6 months ago</option>
+<option>Planning to arrive</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">calendar_today</span>
+</div>
+</div>
+</div>
+<!-- Current Status Toggle Chips -->
+<div class="space-y-4">
+<div class="flex items-center justify-between px-1">
+<h3 class="font-headline font-bold text-lg text-on-surface">What do you have?</h3>
+<span class="text-xs text-on-surface-variant italic">Select all that apply</span>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="flex items-center gap-2 px-4 py-3 bg-surface-container-lowest border border-outline-variant/30 rounded-full text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all duration-200">
+<span class="material-symbols-outlined text-[18px]">credit_card</span>
+<span class="text-sm font-semibold">ARC</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-3 bg-primary text-on-primary rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[18px]">smartphone</span>
+<span class="text-sm font-semibold">Phone</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-3 bg-surface-container-lowest border border-outline-variant/30 rounded-full text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all duration-200">
+<span class="material-symbols-outlined text-[18px]">account_balance</span>
+<span class="text-sm font-semibold">Bank Account</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-3 bg-surface-container-lowest border border-outline-variant/30 rounded-full text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all duration-200">
+<span class="material-symbols-outlined text-[18px]">school</span>
+<span class="text-sm font-semibold">Scholarship</span>
+</button>
+</div>
+</div>
+<!-- AI Insight Hint (The AI Slope Zone) -->
+<div class="byulbeot-slope p-6 rounded-xl relative overflow-hidden text-on-primary-container">
+<div class="relative z-10 space-y-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-xs font-bold tracking-wider uppercase">Byulbeot Guidance</span>
+</div>
+<p class="text-sm leading-relaxed opacity-90">Based on your school and visa, I'll prepare a custom legal checklist for your first 90 days.</p>
+</div>
+<!-- Glass Decorative Elements -->
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+</div>
+</section>
+<!-- Primary Action -->
+<footer class="mt-12">
+<button class="w-full h-[52px] bg-primary text-on-primary font-bold rounded-lg shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                Create Checklist
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-center mt-4 text-xs text-on-surface-variant">Step 1 of 3: Core Profile</p>
+</footer>
+</main>
+<!-- BottomNavBar suppression as per "Relevance Check" rule (Transactional journey) -->
+</body></html>

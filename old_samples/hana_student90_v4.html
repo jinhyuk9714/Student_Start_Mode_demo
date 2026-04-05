@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hana EZ — Student Mode</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #0F6E56; --teal-light: #E1F5EE; --teal-mid: #5DCAA5; --teal-dark: #0A5A46;
+  --amber: #EF9F27; --amber-light: #FAEEDA;
+  --coral: #D85A30; --coral-light: #FAECE7;
+  --blue: #378ADD; --blue-light: #E6F1FB;
+  --green-light: #EAF3DE; --green: #639922;
+  --gray-50: #F7F6F3; --gray-100: #EEEDEA; --gray-200: #D8D7D3;
+  --gray-400: #9B9A96; --gray-600: #6B6A67; --gray-800: #3A3937; --gray-900: #1C1C1A;
+  --red: #E24B4A; --red-light: #FCEBEB;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', 'Noto Sans', sans-serif;
+  background: #E8E4DF;
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 24px 16px 40px;
+}
+
+.page-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  color: var(--teal); text-transform: uppercase; margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+/* ── 폰 껍데기 ── */
+.phone {
+  width: 393px; max-width: 100%;
+  background: #fff;
+  border-radius: 50px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+.notch { background: #111; height: 28px; display: flex; align-items: center; justify-content: center; }
+.notch-pill { width: 96px; height: 22px; background: #000; border-radius: 12px; }
+.status-bar {
+  background: var(--teal); padding: 8px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.status-bar .brand { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.05em; }
+.status-bar .tag {
+  font-size: 10px; color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.18); padding: 2px 10px; border-radius: 10px; font-weight: 500;
+}
+.phone-body { min-height: 700px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.home-bar { height: 22px; background: #fff; display: flex; align-items: center; justify-content: center; }
+.home-pill { width: 110px; height: 4px; background: var(--gray-200); border-radius: 3px; }
+
+/* ── 화면 공통 ── */
+.screen { display: none; flex-direction: column; flex: 1; animation: fadeUp 0.28s ease; }
+.screen.active { display: flex; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+.scr-head {
+  background: var(--teal); padding: 16px 20px 22px; color: #fff;
+}
+.scr-head h2 { font-size: 21px; font-weight: 700; line-height: 1.3; }
+.scr-head .sub { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+.scr-body { flex: 1; overflow-y: auto; background: var(--gray-50); padding: 16px 16px 90px; }
+
+/* ── 탭바 ── */
+.tab-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: #fff; border-top: 1px solid var(--gray-100);
+  display: flex; z-index: 10;
+}
+.tab-btn {
+  flex: 1; padding: 10px 0 8px; text-align: center; cursor: pointer;
+  background: none; border: none; font-family: inherit;
+  color: var(--gray-400); transition: color 0.2s;
+}
+.tab-btn.active { color: var(--teal); }
+.tab-btn .ico { font-size: 20px; margin-bottom: 2px; }
+.tab-btn .lbl { font-size: 10px; font-weight: 600; }
+
+/* ── 1. 웰컴 화면 ── */
+#scrWelcome {
+  background: var(--teal);
+  align-items: center; justify-content: center;
+  gap: 0; padding: 40px 28px;
+  min-height: 700px;
+}
+.welcome-logo { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: 0.04em; margin-bottom: 4px; }
+.welcome-badge {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.9);
+  padding: 3px 12px; border-radius: 10px; margin-bottom: 36px;
+}
+.welcome-illus { font-size: 64px; margin-bottom: 28px; }
+.welcome-title { font-size: 22px; font-weight: 700; color: #fff; text-align: center; line-height: 1.4; margin-bottom: 10px; }
+.welcome-desc { font-size: 13px; color: rgba(255,255,255,0.75); text-align: center; line-height: 1.7; margin-bottom: 40px; }
+.welcome-btn {
+  width: 100%; padding: 15px; border-radius: 14px;
+  background: #fff; color: var(--teal); font-size: 15px; font-weight: 700;
+  border: none; cursor: pointer; font-family: inherit;
+  transition: opacity 0.15s;
+}
+.welcome-btn:hover { opacity: 0.9; }
+
+/* ── 2. 언어 선택 ── */
+#scrLang { background: var(--gray-50); }
+.lang-header { background: var(--teal); padding: 24px 20px 28px; text-align: center; }
+.lang-header .logo { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.lang-header p { font-size: 13px; color: rgba(255,255,255,0.8); }
+.lang-body { padding: 20px 16px; }
+.lang-title { font-size: 14px; font-weight: 600; color: var(--gray-600); margin-bottom: 14px; text-align: center; }
+.lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.lang-card {
+  background: #fff; border-radius: 14px; border: 2px solid var(--gray-100);
+  padding: 16px 12px; text-align: center; cursor: pointer; transition: all 0.2s;
+}
+.lang-card:hover { border-color: var(--teal-mid); }
+.lang-card .flag { font-size: 26px; margin-bottom: 6px; }
+.lang-card .lang-name { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+.lang-card .lang-sub { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+
+/* ── 3. 설문 화면 ── */
+.prog-bar-wrap { background: rgba(255,255,255,0.25); border-radius: 4px; height: 4px; margin-top: 12px; }
+.prog-bar { background: #fff; height: 4px; border-radius: 4px; transition: width 0.4s ease; }
+
+.q-card {
+  background: #fff; border-radius: 16px; border: 1.5px solid var(--gray-100);
+  padding: 16px; margin-bottom: 12px;
+}
+.q-label { font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+.q-text { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 12px; line-height: 1.4; }
+.q-opts { display: flex; flex-wrap: wrap; gap: 7px; }
+.q-opt {
+  padding: 8px 15px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  background: var(--gray-50); border: 1.5px solid var(--gray-100); color: var(--gray-600);
+  cursor: pointer; font-family: inherit; transition: all 0.15s;
+}
+.q-opt:hover { border-color: var(--teal-mid); color: var(--teal); }
+.q-opt.sel { background: var(--teal); border-color: var(--teal); color: #fff; }
+.q-opt.multi.sel { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+.gen-btn {
+  display: block; width: 100%; padding: 14px; border-radius: 14px;
+  background: var(--teal); color: #fff; font-size: 14px; font-weight: 700;
+  border: none; cursor: pointer; font-family: inherit;
+  transition: all 0.2s; margin-top: 4px;
+}
+.gen-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ── 4. 생성 중 ── */
+#scrGen {
+  background: var(--teal);
+  align-items: center; justify-content: center;
+  min-height: 700px; gap: 18px; padding: 40px;
+}
+.gen-spinner { font-size: 48px; animation: spin 2s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.gen-title { font-size: 18px; font-weight: 700; color: #fff; }
+.gen-msg { font-size: 13px; color: rgba(255,255,255,0.75); text-align: center; line-height: 1.6; }
+.gen-dots { display: flex; gap: 8px; }
+.gen-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); animation: blink 1.4s infinite both; }
+.gen-dots span:nth-child(2) { animation-delay: 0.2s; }
+.gen-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink { 0%,80%,100%{opacity:0.3} 40%{opacity:1} }
+
+/* ── 5. 체크리스트 ── */
+.profile-bar {
+  background: var(--teal-dark); padding: 8px 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.profile-bar .av { font-size: 16px; }
+.profile-bar .info { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); flex: 1; }
+.profile-bar .edit-btn {
+  font-size: 11px; color: rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.15); border: none; padding: 3px 10px;
+  border-radius: 10px; cursor: pointer; font-family: inherit;
+}
+
+.sum-row { display: flex; background: #fff; border-radius: 14px; border: 1.5px solid var(--gray-100); margin-bottom: 14px; overflow: hidden; }
+.sum-cell { flex: 1; padding: 12px 8px; text-align: center; }
+.sum-cell + .sum-cell { border-left: 1px solid var(--gray-100); }
+.sum-n { font-size: 22px; font-weight: 700; color: var(--teal); }
+.sum-l { font-size: 10px; color: var(--gray-400); margin-top: 1px; font-weight: 500; }
+
+.sec-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+  color: var(--gray-400); margin: 14px 0 8px; text-transform: uppercase;
+}
+
+.task {
+  background: #fff; border-radius: 14px; border: 1.5px solid var(--gray-100);
+  padding: 13px; margin-bottom: 9px;
+}
+.task.can   { background: var(--teal-light); border-color: rgba(93,202,165,0.4); }
+.task.pend  { background: var(--amber-light); border-color: rgba(239,159,39,0.25); }
+.task.lock  { background: var(--gray-50); border-color: var(--gray-100); }
+.task.warn  { background: var(--coral-light); border-color: rgba(216,90,48,0.25); }
+
+.task-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+.task-ico {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 13px;
+}
+.ico-can  { background: var(--teal); color: #fff; }
+.ico-pend { background: var(--amber); color: #fff; }
+.ico-lock { background: var(--gray-200); color: #fff; }
+.ico-warn { background: var(--coral); color: #fff; }
+.task-title { font-size: 14px; font-weight: 700; color: var(--gray-900); line-height: 1.3; }
+.task-sub { font-size: 12px; color: var(--gray-600); margin-top: 2px; line-height: 1.4; }
+
+.tag-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+.tag {
+  font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 6px;
+  background: rgba(255,255,255,0.8); border: 1px solid rgba(0,0,0,0.06); color: var(--gray-600);
+}
+.tag.hana  { background: var(--teal-light); border-color: rgba(93,202,165,0.4); color: var(--teal-dark); }
+.tag.gov   { background: var(--green-light); border-color: rgba(99,153,34,0.3); color: var(--green); }
+.tag.warn  { background: #fff; border-color: rgba(216,90,48,0.3); color: var(--coral); }
+.tag.school{ background: var(--blue-light); border-color: rgba(55,138,221,0.3); color: var(--blue); }
+
+.task-cta {
+  display: block; width: 100%; padding: 9px; border-radius: 10px;
+  background: var(--teal); color: #fff; font-size: 12px; font-weight: 600;
+  border: none; cursor: pointer; margin-top: 9px; font-family: inherit;
+  transition: opacity 0.15s;
+}
+.task-cta:hover { opacity: 0.88; }
+.task-cta.sec {
+  background: #fff; color: var(--teal); border: 1.5px solid rgba(93,202,165,0.5);
+}
+.task-cta.ai-btn {
+  background: var(--blue-light); color: var(--blue); border: 1.5px solid rgba(55,138,221,0.3);
+}
+
+/* ── 6. AI 채팅 ── */
+.chat-wrap { flex: 1; overflow-y: auto; background: var(--gray-50); padding: 14px 14px 100px; }
+.msg-row { display: flex; gap: 8px; margin-bottom: 12px; align-items: flex-end; }
+.msg-row.user { flex-direction: row-reverse; }
+.av32 { width: 32px; height: 32px; border-radius: 50%; background: var(--teal-light); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+.bubble {
+  max-width: 76%; padding: 11px 13px; border-radius: 16px;
+  font-size: 13px; line-height: 1.6; color: var(--gray-900);
+}
+.bot .bubble { background: #fff; border: 1px solid var(--gray-100); border-bottom-left-radius: 4px; }
+.user .bubble { background: var(--teal); color: #fff; border-bottom-right-radius: 4px; }
+
+.src-chip {
+  display: inline-block; font-size: 10px; font-weight: 600;
+  padding: 2px 7px; border-radius: 5px; margin-top: 5px;
+}
+.src-hana   { background: var(--teal-light); color: var(--teal-dark); }
+.src-gov    { background: var(--green-light); color: var(--green); }
+.src-school { background: var(--blue-light); color: var(--blue); }
+.src-warn   { background: var(--coral-light); color: var(--coral); }
+
+.quick-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; padding-left: 40px; }
+.qbtn {
+  padding: 7px 13px; border-radius: 18px; font-size: 12px; font-weight: 500;
+  background: #fff; border: 1.5px solid rgba(93,202,165,0.5); color: var(--teal);
+  cursor: pointer; font-family: inherit; transition: all 0.15s;
+}
+.qbtn:hover { background: var(--teal-light); border-color: var(--teal-mid); }
+
+.chat-input-bar {
+  position: absolute; bottom: 50px; left: 0; right: 0;
+  background: #fff; border-top: 1px solid var(--gray-100);
+  padding: 8px 12px; display: flex; gap: 8px; align-items: center;
+}
+.chat-inp {
+  flex: 1; padding: 9px 14px; border-radius: 20px;
+  border: 1.5px solid var(--gray-200); font-size: 13px;
+  font-family: inherit; outline: none; background: var(--gray-50);
+}
+.chat-inp:focus { border-color: var(--teal-mid); background: #fff; }
+.send-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--teal); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.update-banner {
+  background: var(--teal-light); border: 1.5px solid rgba(93,202,165,0.5);
+  border-radius: 10px; padding: 10px 12px; margin: 6px 0;
+  font-size: 12px; color: var(--teal-dark); line-height: 1.5;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+
+.typing-dots { display: inline-flex; gap: 4px; padding: 4px 0; }
+.typing-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--gray-200); animation: blink 1.4s infinite both; }
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ── 학교 경고 배너 ── */
+.school-banner {
+  background: var(--amber-light); border: 1.5px solid rgba(239,159,39,0.4);
+  border-radius: 14px; padding: 12px 14px; margin-bottom: 10px;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.school-banner-ico { font-size: 16px; flex-shrink: 0; }
+.school-banner-txt { font-size: 12px; color: #6B4A0A; line-height: 1.5; }
+.school-banner-txt strong { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="page-label">Hana EZ · Student Mode · Prototype</div>
+
+<div class="phone">
+  <div class="notch"><div class="notch-pill"></div></div>
+  <div class="status-bar">
+    <span class="brand">Hana EZ</span>
+    <span class="tag">Student 90</span>
+  </div>
+
+  <div class="phone-body" id="phoneBody">
+
+    <!-- ① 웰컴 -->
+    <div id="scrWelcome" class="screen active" style="background:var(--teal);align-items:center;justify-content:center;min-height:700px;gap:0;padding:40px 28px;">
+      <div class="welcome-logo">Hana EZ</div>
+      <div class="welcome-badge">Student 90 Mode</div>
+      <div class="welcome-illus">🎓</div>
+      <div class="welcome-title">한국 유학 생활,<br>처음부터 같이 준비해요</div>
+      <div class="welcome-desc">
+        계좌개설부터 ARC 등록까지<br>
+        내 상황에 맞는 순서로 알려드릴게요
+      </div>
+      <button class="welcome-btn" onclick="go('scrLang')">시작하기 →</button>
+    </div>
+
+    <!-- ② 언어 선택 -->
+    <div id="scrLang" class="screen" style="flex-direction:column;">
+      <div class="lang-header">
+        <div class="logo">Hana EZ</div>
+        <p>언어를 선택하세요 · Select your language</p>
+      </div>
+      <div class="lang-body">
+        <div class="lang-title">어떤 언어로 도움을 드릴까요?</div>
+        <div class="lang-grid">
+          <div class="lang-card" onclick="selectLang('ko')">
+            <div class="flag">🇰🇷</div>
+            <div class="lang-name">한국어</div>
+            <div class="lang-sub">Korean</div>
+          </div>
+          <div class="lang-card" onclick="selectLang('en')">
+            <div class="flag">🇺🇸</div>
+            <div class="lang-name">English</div>
+            <div class="lang-sub">영어</div>
+          </div>
+          <div class="lang-card" onclick="selectLang('zh')">
+            <div class="flag">🇨🇳</div>
+            <div class="lang-name">中文</div>
+            <div class="lang-sub">중국어</div>
+          </div>
+          <div class="lang-card" onclick="selectLang('vi')">
+            <div class="flag">🇻🇳</div>
+            <div class="lang-name">Tiếng Việt</div>
+            <div class="lang-sub">베트남어</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 기본정보 설문 -->
+    <div id="scrSurvey" class="screen">
+      <div class="scr-head">
+        <h2>기본 정보 입력</h2>
+        <div class="sub">입력하신 정보로 맞춤 체크리스트가 만들어져요</div>
+        <div class="prog-bar-wrap" style="margin-top:12px;">
+          <div class="prog-bar" id="progBar" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="scr-body">
+
+        <div class="q-card">
+          <div class="q-label">학교</div>
+          <div class="q-text">어느 대학교로 가시나요?</div>
+          <div class="q-opts" id="q-school">
+            <button class="q-opt" onclick="ans('school','연세대',this)">연세대</button>
+            <button class="q-opt" onclick="ans('school','고려대',this)">고려대</button>
+            <button class="q-opt" onclick="ans('school','한양대',this)">한양대</button>
+            <button class="q-opt" onclick="ans('school','성균관대',this)">성균관대</button>
+            <button class="q-opt" onclick="ans('school','기타',this)">기타</button>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-label">과정</div>
+          <div class="q-text">어떤 과정으로 오시나요?</div>
+          <div class="q-opts" id="q-program">
+            <button class="q-opt" onclick="ans('program','학부',this)">학부</button>
+            <button class="q-opt" onclick="ans('program','대학원',this)">대학원</button>
+            <button class="q-opt" onclick="ans('program','교환학생',this)">교환학생</button>
+            <button class="q-opt" onclick="ans('program','어학연수',this)">어학연수</button>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-label">입국 시기</div>
+          <div class="q-text">한국에 언제 오시나요?</div>
+          <div class="q-opts" id="q-arrival">
+            <button class="q-opt" onclick="ans('arrival','pre',this)">아직 입국 전이에요</button>
+            <button class="q-opt" onclick="ans('arrival','week',this)">입국한 지 1주일 이내</button>
+            <button class="q-opt" onclick="ans('arrival','month',this)">입국한 지 1개월 이내</button>
+            <button class="q-opt" onclick="ans('arrival','long',this)">1개월 이상 됐어요</button>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-label">외국인등록증 (ARC)</div>
+          <div class="q-text">외국인등록증(ARC)이 있으신가요?</div>
+          <div class="q-opts" id="q-arc">
+            <button class="q-opt" onclick="ans('arc','yes',this)">네, 있어요</button>
+            <button class="q-opt" onclick="ans('arc','pending',this)">신청 중이에요</button>
+            <button class="q-opt" onclick="ans('arc','no',this)">아직 없어요</button>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-label">한국 전화번호</div>
+          <div class="q-text">한국 전화번호가 있으신가요?</div>
+          <div class="q-opts" id="q-phone">
+            <button class="q-opt" onclick="ans('phone','yes',this)">네, 있어요</button>
+            <button class="q-opt" onclick="ans('phone','no',this)">아직 없어요</button>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-label">은행 계좌</div>
+          <div class="q-text">하나은행 계좌가 있으신가요?</div>
+          <div class="q-opts" id="q-account">
+            <button class="q-opt" onclick="ans('account','yes',this)">네, 있어요</button>
+            <button class="q-opt" onclick="ans('account','no',this)">아직 없어요</button>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-label">필요사항 <span style="font-size:10px;color:var(--gray-400);font-weight:400">(복수 선택 가능)</span></div>
+          <div class="q-text">필요한 항목을 모두 골라주세요</div>
+          <div class="q-opts" id="q-needs">
+            <button class="q-opt multi" onclick="toggleNeed('scholarship',this)">장학금 수령</button>
+            <button class="q-opt multi" onclick="toggleNeed('studentcard',this)">금융 학생증</button>
+            <button class="q-opt multi" onclick="toggleNeed('remit',this)">해외송금</button>
+            <button class="q-opt multi" onclick="toggleNeed('tuition',this)">등록금 납부</button>
+            <button class="q-opt multi" onclick="toggleNeed('health',this)">건강보험 확인</button>
+          </div>
+        </div>
+
+        <button class="gen-btn" id="genBtn" onclick="startGenerate()" disabled>
+          ✨ 내 체크리스트 만들기
+        </button>
+      </div>
+    </div>
+
+    <!-- ④ 생성 중 -->
+    <div id="scrGen" class="screen" style="background:var(--teal);align-items:center;justify-content:center;min-height:700px;gap:16px;padding:40px;">
+      <div class="gen-spinner">⚙️</div>
+      <div class="gen-title">체크리스트 생성 중...</div>
+      <div class="gen-msg" id="genMsg">입력하신 정보를 분석하고 있어요</div>
+      <div class="gen-dots"><span></span><span></span><span></span></div>
+    </div>
+
+    <!-- ⑤ 체크리스트 -->
+    <div id="scrChecklist" class="screen">
+      <div class="profile-bar" id="profileBar"></div>
+      <div class="scr-head">
+        <h2>나의 체크리스트</h2>
+        <div class="sub" id="checklistSub"></div>
+      </div>
+      <div class="scr-body" id="checklistBody"></div>
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="showTab('checklist')"><div class="ico">📋</div><div class="lbl">체크리스트</div></button>
+        <button class="tab-btn" onclick="showTab('chat')"><div class="ico">🤖</div><div class="lbl">AI 비서</div></button>
+      </div>
+    </div>
+
+    <!-- ⑥ AI 채팅 -->
+    <div id="scrChat" class="screen">
+      <div class="profile-bar" id="chatProfileBar"></div>
+      <div class="scr-head" style="padding-bottom:16px;">
+        <h2>AI 금융비서</h2>
+        <div class="sub" id="chatContextSub">체크리스트 단계별 맞춤 안내</div>
+      </div>
+      <div class="chat-wrap" id="chatArea"></div>
+      <div class="chat-input-bar">
+        <input class="chat-inp" id="chatInput" placeholder="궁금한 점을 물어보세요..." onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="send-btn" onclick="sendChat()">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 9l14-7-7 14-2-5z" fill="#fff"/></svg>
+        </button>
+      </div>
+      <div class="tab-bar">
+        <button class="tab-btn" onclick="showTab('checklist')"><div class="ico">📋</div><div class="lbl">체크리스트</div></button>
+        <button class="tab-btn active" onclick="showTab('chat')"><div class="ico">🤖</div><div class="lbl">AI 비서</div></button>
+      </div>
+    </div>
+
+  </div>
+  <div class="home-bar"><div class="home-pill"></div></div>
+</div>
+
+<script>
+// ── 상태 ──
+let state = {
+  lang: 'ko',
+  school: null, program: null, arrival: null,
+  arc: null, phone: null, account: null,
+  needs: [], realNameChanged: false
+};
+let chatReady = false;
+let pendingCtx = null;
+const REQUIRED = ['school','program','arrival','arc','phone','account'];
+
+// ── 화면 전환 ──
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function selectLang(lang) {
+  state.lang = lang;
+  go('scrSurvey');
+}
+
+// ── 설문 ──
+function ans(key, val, el) {
+  state[key] = val;
+  el.closest('.q-opts').querySelectorAll('.q-opt:not(.multi)').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+  updateProgress();
+}
+
+function toggleNeed(val, el) {
+  el.classList.toggle('sel');
+  if (state.needs.includes(val)) state.needs = state.needs.filter(n => n !== val);
+  else state.needs.push(val);
+}
+
+function updateProgress() {
+  const done = REQUIRED.filter(k => state[k] !== null).length;
+  document.getElementById('progBar').style.width = (done / REQUIRED.length * 100) + '%';
+  document.getElementById('genBtn').disabled = done < REQUIRED.length;
+}
+
+// ── 생성 ──
+function startGenerate() {
+  go('scrGen');
+  const msgs = [
+    '입력하신 정보를 분석하고 있어요',
+    `${state.school} 관련 절차를 확인하고 있어요`,
+    '현재 상태에 맞는 순서를 정하고 있어요',
+    '맞춤 체크리스트를 완성하고 있어요 ✨'
+  ];
+  let i = 0;
+  const msgEl = document.getElementById('genMsg');
+  const iv = setInterval(() => {
+    i++;
+    if (i < msgs.length) msgEl.textContent = msgs[i];
+    else {
+      clearInterval(iv);
+      buildChecklist();
+      buildProfileBar();
+      chatReady = false;
+      setTimeout(() => go('scrChecklist'), 200);
+    }
+  }, 650);
+}
+
+// ── 프로필 바 ──
+function buildProfileBar() {
+  const emoji = { '연세대':'🦁', '고려대':'🐯', '한양대':'⚡', '성균관대':'📚', '기타':'🎓' }[state.school] || '🎓';
+  const arcTxt = state.arc === 'yes' ? 'ARC 있음' : state.arc === 'pending' ? 'ARC 신청 중' : 'ARC 없음';
+  const html = `<div class="av">${emoji}</div>
+    <div class="info">${state.school} · ${state.program} · ${arcTxt}</div>
+    <button class="edit-btn" onclick="go('scrSurvey')">수정</button>`;
+  document.getElementById('profileBar').innerHTML = html;
+  document.getElementById('chatProfileBar').innerHTML = html;
+}
+
+// ── 탭 전환 ──
+function showTab(tab) {
+  if (tab === 'checklist') {
+    go('scrChecklist');
+    document.querySelectorAll('#scrChecklist .tab-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+    document.querySelectorAll('#scrChat .tab-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+  } else {
+    const sub = document.getElementById('chatContextSub');
+    if (pendingCtx) {
+      sub.textContent = pendingCtx.badge;
+      chatReady = false;
+    } else {
+      sub.textContent = '체크리스트 단계별 맞춤 안내';
+    }
+    if (!chatReady) { buildChat(); chatReady = true; }
+    go('scrChat');
+    document.querySelectorAll('#scrChecklist .tab-btn').forEach((b,i) => b.classList.toggle('active', i===1));
+    document.querySelectorAll('#scrChat .tab-btn').forEach((b,i) => b.classList.toggle('active', i===1));
+  }
+}
+
+function openAI(ctx, badge) {
+  pendingCtx = { ctx, badge };
+  chatReady = false;
+  showTab('chat');
+}
+
+// ── 체크리스트 빌드 ──
+function task(type, ico, title, sub, tags, cta, aiCtx) {
+  const icoClass = { can:'ico-can', pend:'ico-pend', lock:'ico-lock', warn:'ico-warn' }[type];
+  const tagHtml = (tags||[]).map(([t,c]) => `<span class="tag ${c||''}">${t}</span>`).join('');
+  const ctaHtml = cta ? `<button class="task-cta" onclick="event.stopPropagation()">${cta} →</button>` : '';
+  const aiHtml = (type==='can'||type==='pend') && aiCtx
+    ? `<button class="task-cta ai-btn" onclick="event.stopPropagation();openAI('${aiCtx.replace(/'/g,"\\'")}','${aiCtx} 단계')">🤖 AI에게 물어보기</button>`
+    : '';
+  return `<div class="task ${type}">
+    <div class="task-top">
+      <div class="task-ico ${icoClass}">${ico}</div>
+      <div><div class="task-title">${title}</div><div class="task-sub">${sub}</div></div>
+    </div>
+    <div class="tag-row">${tagHtml}</div>
+    ${ctaHtml}${aiHtml}
+  </div>`;
+}
+
+function buildChecklist() {
+  const s = state;
+  let h = '';
+
+  // 학교 경고 배너
+  if (s.school === '고려대') {
+    h += `<div class="school-banner"><div class="school-banner-ico">⚠️</div>
+      <div class="school-banner-txt"><strong>고려대 안내:</strong> 금융학생증 발급은 <strong>지정 하나은행 지점 방문</strong>이 필요합니다. ARC + 재학증명서 + 사진 + 수수료를 준비하세요.</div></div>`;
+  }
+  if (s.school === '연세대' && s.needs.includes('scholarship')) {
+    h += `<div class="school-banner"><div class="school-banner-ico">⚠️</div>
+      <div class="school-banner-txt"><strong>연세대 장학금 안내:</strong> 외국인 계좌 개설에 <strong>최대 4주</strong>가 걸릴 수 있어요. 지금 바로 시작하세요!</div></div>`;
+  }
+
+  // 상태별 분기
+  let doNow = 0, coming = 0, later = 0;
+
+  if (s.arrival === 'pre') {
+    // ── 입국 전 ──
+    h += `<div class="sec-label">지금 할 수 있어요</div>`;
+    h += task('can','✅','사전정보 등록','입국 전 등록하면 도착 후 바로 계좌 개설 가능',
+      [['하나EZ','hana'],['여권 + 입학허가서','']],
+      '사전정보 등록 시작', '사전정보 등록');
+    h += task('can','✅','필요 서류 준비','여권, 입학허가서, 재학증명서를 미리 챙겨요',
+      [['학교마다 다름',''],['📋 정부 규정','gov']],
+      null, '서류 준비');
+    doNow = 2;
+
+    h += `<div class="sec-label">입국 후 순서대로</div>`;
+    h += task('pend','⏳','한국 전화번호 개통','선불 유심으로 시작해도 돼요',
+      [['계좌 개설 시 필요','']],
+      null, '한국 번호 개통');
+    h += task('pend','⏳','하나은행 계좌 개설','여권+입학허가서로 비대면 가능',
+      [['하나EZ','hana'],['약 5분 소요','']],
+      null, '계좌 개설');
+    h += task('pend','⏳','외국인등록(ARC) 신청','입국 후 90일 이내 필수',
+      [['📋 정부 규정','gov'],['출입국관리사무소','']],
+      null, 'ARC 신청');
+    coming = 3;
+
+    h += `<div class="sec-label">ARC 발급 후</div>`;
+    h += task('lock','🔒','실명번호 변경','여권번호 → ARC 번호로 비대면 변경', [['하나EZ 업계최초','hana']], null, null);
+    h += task('lock','🔒','하나인증서 발급','16개 언어 지원, 170+ 기관 연동', [['ARC 필요','']], null, null);
+    h += task('lock','🔒','해외송금 활성화','인증서 발급 후 가능', [['하나EZ','hana']], null, null);
+    later = 3;
+
+  } else if (s.arc === 'no' || s.arc === 'pending') {
+    // ── 입국 후, ARC 없음 ──
+    h += `<div class="sec-label">지금 바로 하세요</div>`;
+    if (!s.phone || s.phone === 'no') {
+      h += task('can','✅','한국 전화번호 개통','선불 유심으로 먼저 시작하세요',
+        [['계좌 개설 필수','']],
+        null, '한국 번호 개통');
+      doNow++;
+    }
+    if (!s.account || s.account === 'no') {
+      h += task('can','✅','하나은행 계좌 개설',
+        s.phone === 'yes' ? '한국번호 있으니 지금 바로 가능해요! 약 5분' : '전화번호 개통 후 바로 진행하세요',
+        [['하나EZ','hana'],['여권 + 입학허가서','']],
+        '계좌 개설 시작', '계좌 개설');
+      doNow++;
+    }
+    if (s.school === '고려대') {
+      h += task('can','✅','고려대 지정 지점 확인','금융학생증 발급 지점을 미리 확인하세요',
+        [['🏫 고려대','school'],['방문 필수','warn']],
+        null, '학교 절차');
+      doNow++;
+    }
+
+    h += `<div class="sec-label">곧 해야 해요</div>`;
+    const dDay = s.arrival === 'week' ? 'D-83 남음' : s.arrival === 'month' ? 'D-60 남음' : '';
+    h += task('pend','⏳','외국인등록(ARC) 신청','입국 후 90일 이내 — 서두르세요!',
+      [['📋 정부 규정','gov'], dDay ? [dDay,'warn'] : ['','']].filter(t=>t[0]),
+      null, 'ARC 신청');
+    coming = 1;
+
+    h += `<div class="sec-label">ARC 발급 후</div>`;
+    h += task('lock','🔒','실명번호 변경','여권번호 → ARC 번호로 비대면 변경', [['하나EZ 업계최초','hana']], null, null);
+    h += task('lock','🔒','하나인증서 발급','16개 언어 지원, 170+ 기관 연동', [['ARC 필요','']], null, null);
+    h += task('lock','🔒','해외송금 활성화','인증서 발급 후 가능', [['하나EZ','hana']], null, null);
+    later = 3;
+
+  } else {
+    // ── ARC 있음 ──
+    h += `<div class="sec-label">지금 바로 하세요</div>`;
+    if (!s.realNameChanged) {
+      h += task('can','✅','실명번호 변경','ARC 발급 완료! 지금 바로 비대면 변경 가능',
+        [['하나EZ 업계최초','hana'],['비대면 가능','']],
+        '실명번호 변경 시작', '실명번호 변경');
+      doNow++;
+    }
+    h += task('can','✅','하나인증서 발급','실명번호 변경 후 바로 발급 — 16개 언어 지원',
+      [['하나EZ','hana'],['170+ 기관 연동','']],
+      '인증서 발급 시작', '인증서 발급');
+    doNow++;
+
+    h += `<div class="sec-label">곧 해야 해요</div>`;
+    if (s.needs.includes('remit')) {
+      h += task('pend','⏳','첫 해외송금 준비','$5,000 이상 시 자금출처 증빙 필요',
+        [['📋 외환 규정','gov'],['$5,000 기준','warn']],
+        null, '해외송금');
+      coming++;
+    }
+    if (s.needs.includes('health')) {
+      h += task('pend','⏳','건강보험 가입 확인','ARC 발급 후 건강보험 자격 확인',
+        [['📋 정부 규정','gov']],
+        null, '건강보험');
+      coming++;
+    }
+    if (s.needs.includes('studentcard') && s.school === '고려대') {
+      h += task('pend','⏳','고려대 금융학생증 발급','지정 지점 방문 + ARC + 재학증명서 필요',
+        [['🏫 고려대','school'],['지점 방문 필수','warn']],
+        null, '금융학생증');
+      coming++;
+    }
+    later = 0;
+  }
+
+  // 공통 — 금융사기 예방
+  h += `<div class="sec-label">금융사기 예방</div>`;
+  h += `<div class="task warn">
+    <div class="task-top">
+      <div class="task-ico ico-warn">⚠️</div>
+      <div><div class="task-title">금융사기 주의사항</div>
+      <div class="task-sub">보이스피싱, 불법환전, 대포통장 — 특히 유학생 초기에 많이 발생해요</div></div>
+    </div>
+    <div class="tag-row">
+      <span class="tag warn">모르는 계좌 송금 금지</span>
+      <span class="tag warn">의심 링크 클릭 금지</span>
+      <span class="tag warn">계좌 대여 금지</span>
+    </div>
+    <div style="margin-top:8px;font-size:11px;color:var(--coral);line-height:1.5;">
+      의심되면 즉시 하나은행 다국어 상담에 연락하세요.
+    </div>
+  </div>`;
+
+  // 요약 바
+  const sumHtml = `<div class="sum-row">
+    <div class="sum-cell"><div class="sum-n">${doNow}</div><div class="sum-l">지금 할 일</div></div>
+    <div class="sum-cell"><div class="sum-n">${coming}</div><div class="sum-l">곧 해야 할 일</div></div>
+    <div class="sum-cell"><div class="sum-n">${later}</div><div class="sum-l">나중에</div></div>
+  </div>`;
+
+  document.getElementById('checklistBody').innerHTML = sumHtml + h;
+  document.getElementById('checklistSub').textContent =
+    `${state.school} · ${state.program} · ${state.arc==='yes'?'ARC 있음':state.arc==='pending'?'ARC 신청 중':'ARC 없음'}`;
+}
+
+// ── 상태 변화 감지 → 체크리스트 업데이트 ──
+function tryUpdateChecklist(text) {
+  const lc = text.toLowerCase();
+  let msg = '';
+
+  if ((lc.includes('arc')||lc.includes('외국인등록')) && (lc.includes('받았')||lc.includes('완료')||lc.includes('발급'))) {
+    if (state.arc !== 'yes') { state.arc = 'yes'; msg = 'ARC 발급 확인! 실명번호 변경 단계가 열렸어요 🎉'; }
+  }
+  if ((lc.includes('계좌')||lc.includes('account')) && (lc.includes('열었')||lc.includes('만들었')||lc.includes('개설'))) {
+    if (state.account !== 'yes') { state.account = 'yes'; msg = '계좌 개설 확인! 다음 단계로 넘어가요 🎉'; }
+  }
+  if ((lc.includes('번호')||lc.includes('유심')||lc.includes('개통')) && (lc.includes('생겼')||lc.includes('완료')||lc.includes('받았'))) {
+    if (state.phone !== 'yes') { state.phone = 'yes'; msg = '한국 번호 확인! 모바일뱅킹이 가능해졌어요 📱'; }
+  }
+  if ((lc.includes('실명')||lc.includes('번호 변경')) && (lc.includes('했')||lc.includes('완료')||lc.includes('바꿨'))) {
+    if (!state.realNameChanged) { state.realNameChanged = true; msg = '실명번호 변경 완료! 인증서 발급으로 넘어가요 ✅'; }
+  }
+
+  if (msg) {
+    buildChecklist();
+    buildProfileBar();
+    const area = document.getElementById('chatArea');
+    area.innerHTML += `<div class="update-banner">✅ <div><strong>체크리스트가 업데이트됐어요</strong><br>${msg} 체크리스트 탭에서 확인해보세요!</div></div>`;
+    area.scrollTop = area.scrollHeight;
+  }
+}
+
+// ── AI 채팅 ──
+const chatDB = {
+  intro: [
+    { text: '안녕하세요! 저는 하나 EZ 금융비서예요 🤖', src: null },
+  ],
+  ctxMsg: {
+    '사전정보 등록': { text: '사전정보 등록 단계군요! 🙌<br>지금 여권과 입학허가서만 있으면 바로 시작할 수 있어요.<br><br><strong>Hana EZ 앱 → 사전정보 등록</strong> 메뉴에서 진행하세요. 어떤 부분이 궁금하세요?', src: '🏦 하나EZ', srcCls: 'src-hana' },
+    '서류 준비': { text: '서류 준비 단계군요! 📋<br>학교마다 요구 서류가 다를 수 있어요. 어떤 서류가 궁금하세요?', src: '🏫 학교 DB', srcCls: 'src-school' },
+    '한국 번호 개통': { text: '한국 번호 개통 단계군요! 📱<br>선불 유심(MVNO)으로 먼저 시작하면 계좌 개설 전에도 번호를 받을 수 있어요.<br><br>공항 도착 직후 구매할 수 있고, 이후 ARC 받으면 정식 개통으로 전환 가능해요. 궁금한 게 있으세요?', src: null, srcCls: null },
+    '계좌 개설': { text: `계좌 개설 단계군요! 🏦<br>${state.phone==='yes' ? '한국 번호가 있으니' : '번호 개통 후'} 바로 비대면으로 가능해요.<br><br><strong>Hana EZ 앱 → 외국인 계좌 개설</strong>에서 약 5분이면 완료돼요. 막히는 부분이 있으세요?`, src: '🏦 하나EZ', srcCls: 'src-hana' },
+    '학교 절차': { text: `${state.school} 관련 절차 단계군요! 🎓<br>${state.school==='고려대' ? '고려대는 금융학생증 발급 시 지정 지점 방문이 필요해요. ARC + 재학증명서 + 사진을 준비하세요.' : state.school==='연세대' ? '연세대는 장학금 계좌 등록에 최대 4주가 걸릴 수 있어요. 서두르세요!' : '학교별 절차를 확인해드릴게요.'}<br><br>더 궁금한 게 있으면 물어보세요!`, src: '🏫 학교 DB', srcCls: 'src-school' },
+    'ARC 신청': { text: 'ARC 신청 단계군요! 📋<br>입국 후 90일 이내에 관할 출입국관리사무소에서 신청해야 해요.<br><br><strong>필요 서류:</strong> 여권, 신청서, 증명사진 1장, 수수료 30,000원, 재학증명서<br><br>Hi Korea 앱으로 미리 예약하면 대기 시간을 줄일 수 있어요. 궁금한 점이 있으세요?', src: '📋 정부 규정', srcCls: 'src-gov' },
+    '실명번호 변경': { text: '실명번호 변경 단계군요! 🔄<br>ARC가 있으니 지금 바로 비대면으로 가능해요.<br><br><strong>Hana EZ 앱 → 실명번호 변경</strong>에서 ARC 카드 촬영 후 약 3분이면 완료돼요. 진행해볼까요?', src: '🏦 하나EZ', srcCls: 'src-hana' },
+    '인증서 발급': { text: '하나인증서 발급 단계군요! ✅<br>실명번호 변경 후 바로 발급 가능하고 16개 언어를 지원해요.<br><br>발급 과정에서 막히는 부분이 있으면 말해주세요!', src: '🏦 하나EZ', srcCls: 'src-hana' },
+    '해외송금': { text: '해외송금 준비 단계군요! 💸<br>$5,000 이상 송금 시 자금출처 증빙이 필요해요.<br><br>장학금 증명서, 급여명세서 등을 미리 준비하면 좋아요. 송금 방법이나 수수료가 궁금하세요?', src: '📋 외환 규정', srcCls: 'src-gov' },
+    '건강보험': { text: '건강보험 확인 단계군요! 🏥<br>ARC 발급 후 건강보험 가입 자격이 생겨요. 월 보험료는 약 13만원이에요.<br><br>학교 단체보험이 있을 수 있으니 국제처에도 문의해보세요!', src: '📋 정부 규정', srcCls: 'src-gov' },
+    '금융학생증': { text: `${state.school} 금융학생증 발급 단계군요! 🪪<br>준비물: ARC + 재학증명서 + 증명사진 1장 + 수수료<br><br>온라인 신청은 내국인 전용이에요. 지정 하나은행 지점에 직접 방문해야 해요. 지점 안내가 필요하세요?`, src: '🏫 학교 DB', srcCls: 'src-school' },
+  },
+  qReplies: ['계좌개설 방법', 'ARC 신청 방법', '실명번호 변경', '송금 수수료', '보이스피싱 예방'],
+  responses: {
+    '계좌개설 방법': { text: '계좌 개설 순서:<br><br>1. Hana EZ 앱 → "외국인 계좌 개설"<br>2. 여권 촬영<br>3. 입학허가서 업로드<br>4. 한국 전화번호 인증<br>5. 완료! 약 5분 소요<br><br>💡 입국 전 사전정보 등록을 하면 더 빠르게 개설할 수 있어요.', src: '🏦 하나EZ', srcCls: 'src-hana' },
+    'ARC 신청 방법': { text: '외국인등록(ARC) 신청:<br><br>📍 <strong>장소:</strong> 관할 출입국관리사무소<br>📅 <strong>기한:</strong> 입국 후 90일 이내<br><br>📄 <strong>필요 서류:</strong><br>- 여권<br>- 외국인등록 신청서<br>- 증명사진 1장<br>- 수수료 30,000원<br>- 재학증명서<br><br>💡 Hi Korea 앱으로 예약하면 대기 시간이 줄어요!', src: '📋 정부 규정', srcCls: 'src-gov' },
+    '실명번호 변경': { text: '실명번호 변경 순서:<br><br>1. Hana EZ 앱 → "실명번호 변경"<br>2. ARC 카드 촬영<br>3. 본인 확인<br>4. 자동 변경 완료!<br><br>✅ 하나은행만 <strong>비대면</strong>으로 가능해요. (업계 최초)<br>변경 후 하나인증서도 바로 발급하세요!', src: '🏦 하나EZ', srcCls: 'src-hana' },
+    '송금 수수료': { text: '해외송금 방법별 수수료 (약 $3,000 기준):<br><br>🏦 <strong>하나 Just송금:</strong> 약 3,000~5,000원<br>🏦 <strong>하나 다이렉트 송금:</strong> 약 2,000~3,000원<br>🏦 <strong>은행 창구 송금:</strong> 약 5~8만원<br><br>⚠️ $5,000 초과 시 자금출처 증빙 필요<br>💡 하나EZ AI 환율 예측 기능도 활용해보세요!', src: '🏦 하나EZ', srcCls: 'src-hana' },
+    '보이스피싱 예방': { text: '유학생이 특히 주의해야 할 3가지:<br><br>🔴 <strong>보이스피싱:</strong> 경찰/검찰 사칭 → 절대 송금 금지<br>🔴 <strong>불법환전:</strong> SNS 환전 제안 → 사기<br>🔴 <strong>대포통장:</strong> "계좌 빌려주면 돈 줄게" → 범죄<br><br>💡 모르는 사람에게 절대 송금하지 마세요.<br>의심되면 하나은행 다국어 상담으로 즉시 연락하세요!', src: '⚠️ 금융안전', srcCls: 'src-warn' },
+  }
+};
+
+function buildChat() {
+  const area = document.getElementById('chatArea');
+  area.innerHTML = '';
+
+  if (pendingCtx) {
+    const ctx = pendingCtx.ctx;
+    pendingCtx = null;
+
+    // 컨텍스트 재생성 (state 반영)
+    const ctxData = chatDB.ctxMsg[ctx] || { text: `${ctx} 단계에 대해 도움을 드릴게요! 어떤 부분이 궁금하세요?`, src: null, srcCls: null };
+    // state 반영된 동적 메시지
+    let dynamicText = ctxData.text
+      .replace('${state.phone}', state.phone)
+      .replace('${state.school}', state.school);
+
+    setTimeout(() => {
+      addBot(dynamicText, ctxData.src, ctxData.srcCls);
+      setTimeout(() => addQuick(chatDB.qReplies), 300);
+      area.scrollTop = area.scrollHeight;
+    }, 300);
+  } else {
+    // 일반 진입 — 상태 기반 인트로
+    const arcTxt = state.arc === 'yes' ? 'ARC가 있으시군요!' : state.arc === 'pending' ? 'ARC 신청 중이시군요.' : 'ARC가 아직 없으시군요.';
+    const introMsg = `안녕하세요! 하나 EZ 금융비서예요 🤖<br><br><strong>${state.school} ${state.program}</strong>으로 오시는군요! ${arcTxt}<br><br>체크리스트의 각 단계에서 "AI에게 물어보기"를 누르시면 맞춤 안내를 드릴 수 있어요. 또는 아래 버튼이나 직접 질문해 주세요!`;
+
+    setTimeout(() => {
+      addBot(introMsg, '🏦 하나EZ', 'src-hana');
+      setTimeout(() => addQuick(chatDB.qReplies), 400);
+      area.scrollTop = area.scrollHeight;
+    }, 300);
+  }
+}
+
+function addBot(text, src, srcCls) {
+  const area = document.getElementById('chatArea');
+  const srcHtml = src ? `<div class="src-chip ${srcCls}">${src}</div>` : '';
+  area.innerHTML += `<div class="msg-row bot">
+    <div class="av32">🤖</div>
+    <div class="bubble">${text.replace(/\n/g,'<br>')}${srcHtml}</div>
+  </div>`;
+}
+function addUser(text) {
+  const area = document.getElementById('chatArea');
+  area.innerHTML += `<div class="msg-row user"><div class="bubble">${text}</div></div>`;
+}
+function addQuick(replies) {
+  const area = document.getElementById('chatArea');
+  const btns = replies.map(r => `<button class="qbtn" onclick="handleQ('${r}')">${r}</button>`).join('');
+  area.innerHTML += `<div class="quick-wrap" id="qWrap">${btns}</div>`;
+  area.scrollTop = area.scrollHeight;
+}
+
+function handleQ(text) {
+  document.getElementById('qWrap')?.remove();
+  addUser(text);
+  tryUpdateChecklist(text);
+  const area = document.getElementById('chatArea');
+  area.innerHTML += `<div class="msg-row bot" id="typing">
+    <div class="av32">🤖</div>
+    <div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>
+  </div>`;
+  area.scrollTop = area.scrollHeight;
+  setTimeout(() => {
+    document.getElementById('typing')?.remove();
+    const r = chatDB.responses[text] || { text: `"${text}"에 대해 찾아볼게요. 아래 빠른 답변을 이용하거나 직접 질문해 주세요!`, src: '🏦 하나EZ', srcCls: 'src-hana' };
+    addBot(r.text, r.src, r.srcCls);
+    setTimeout(() => addQuick(chatDB.qReplies), 200);
+    area.scrollTop = area.scrollHeight;
+  }, 800);
+}
+
+function sendChat() {
+  const inp = document.getElementById('chatInput');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  document.getElementById('qWrap')?.remove();
+  addUser(text);
+  tryUpdateChecklist(text);
+
+  const area = document.getElementById('chatArea');
+  area.innerHTML += `<div class="msg-row bot" id="typing">
+    <div class="av32">🤖</div>
+    <div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>
+  </div>`;
+  area.scrollTop = area.scrollHeight;
+
+  setTimeout(() => {
+    document.getElementById('typing')?.remove();
+    const lc = text.toLowerCase();
+    let r = null;
+    if (lc.includes('계좌')) r = chatDB.responses['계좌개설 방법'];
+    else if (lc.includes('arc')||lc.includes('외국인등록')) r = chatDB.responses['ARC 신청 방법'];
+    else if (lc.includes('실명')) r = chatDB.responses['실명번호 변경'];
+    else if (lc.includes('송금')||lc.includes('수수료')) r = chatDB.responses['송금 수수료'];
+    else if (lc.includes('피싱')||lc.includes('사기')) r = chatDB.responses['보이스피싱 예방'];
+    else r = { text: `"${text}"에 대해 더 알아볼게요.<br><br>지금은 프리토타입 단계라 미리 준비된 답변만 가능해요. 아래 버튼을 이용하거나 다른 질문을 해주세요!`, src: '🏦 하나EZ', srcCls: 'src-hana' };
+    addBot(r.text, r.src, r.srcCls);
+    setTimeout(() => addQuick(chatDB.qReplies), 200);
+    area.scrollTop = area.scrollHeight;
+  }, 800);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdroadEZ - Interactive Prototype</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+:root {
+  --teal: #0F6E56;
+  --teal-light: #E1F5EE;
+  --teal-mid: #5DCAA5;
+  --teal-dark: #0A5A46;
+  --amber: #EF9F27;
+  --amber-light: #FAEEDA;
+  --coral: #D85A30;
+  --coral-light: #FAECE7;
+  --blue: #378ADD;
+  --blue-light: #E6F1FB;
+  --green: #639922;
+  --green-light: #EAF3DE;
+  --red: #E24B4A;
+  --red-light: #FCEBEB;
+  --gray-50: #F7F6F3;
+  --gray-100: #EEEDEA;
+  --gray-200: #D8D7D3;
+  --gray-400: #9B9A96;
+  --gray-600: #6B6A67;
+  --gray-800: #3A3937;
+  --gray-900: #1C1C1A;
+  --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  word-break: keep-all;
+  background: #E8E6E1;
+  background-image: radial-gradient(circle at 30% 20%, rgba(15,110,86,0.06) 0%, transparent 50%),
+                    radial-gradient(circle at 70% 80%, rgba(55,138,221,0.04) 0%, transparent 50%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* ===== PHONE FRAME ===== */
+.phone {
+  width: 393px;
+  background: #fff;
+  border-radius: 50px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.08);
+  overflow: hidden;
+  position: relative;
+}
+.notch {
+  background: #111;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.notch-pill {
+  width: 96px;
+  height: 22px;
+  background: #000;
+  border-radius: 12px;
+}
+.brand-bar {
+  background: var(--teal);
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand-bar .brand {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+.brand-bar .tag {
+  font-size: 10px;
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.18);
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+.phone-body {
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.home-bar {
+  height: 22px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-pill {
+  width: 110px;
+  height: 4px;
+  background: var(--gray-200);
+  border-radius: 3px;
+}
+
+/* ===== SCREENS ===== */
+.screen {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  animation: fadeUp 0.28s ease;
+  min-height: 0;
+}
+.screen.active { display: flex; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(8px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.scr-head {
+  background: var(--teal);
+  padding: 16px 20px 22px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.scr-head h2 {
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.scr-head .sub {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+.scr-body {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--gray-50);
+  padding: 16px 16px 20px;
+}
+
+/* Profile Bar */
+.profile-bar {
+  background: var(--teal-dark);
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.profile-bar .av {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-bar .av svg { width:16px; height:16px; }
+.profile-bar .info {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  flex: 1;
+}
+
+/* Section Label */
+.sec-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--gray-400);
+  margin: 14px 0 8px;
+  text-transform: uppercase;
+}
+
+/* Summary Row */
+.sum-row {
+  display: flex;
+  background: #fff;
+  border-radius: 14px;
+  border: 1.5px solid var(--gray-100);
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.sum-cell {
+  flex: 1;
+  padding: 12px 8px;
+  text-align: center;
+}
+.sum-cell + .sum-cell { border-left: 1px solid var(--gray-100); }
+.sum-n {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--teal);
+}
+.sum-l {
+  font-size: 10px;
+  color: var(--gray-400);
+  margin-top: 1px;
+  font-weight: 500;
+}
+
+/* Cards */
+.card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1.5px solid var(--gray-100);
+  padding: 13px;
+  margin-bottom: 10px;
+}
+.card.can {
+  background: var(--teal-light);
+  border-color: rgba(93,202,165,0.4);
+}
+.card.pend {
+  background: var(--amber-light);
+  border-color: rgba(239,159,39,0.25);
+}
+.card.lock {
+  background: var(--gray-50);
+  border-color: var(--gray-100);
+}
+.card.warn {
+  background: var(--coral-light);
+  border-color: rgba(216,90,48,0.25);
+}
+
+/* Pill Badges */
+.pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.pill-teal { background: var(--teal-light); color: var(--teal-dark); }
+.pill-amber { background: var(--amber-light); color: #854F0B; }
+.pill-coral { background: var(--coral-light); color: var(--coral); }
+.pill-blue { background: var(--blue-light); color: var(--blue); }
+.pill-gray { background: var(--gray-100); color: var(--gray-600); }
+.pill-green { background: var(--green-light); color: var(--green); }
+.pill-new { background: var(--blue); color: #fff; }
+
+/* Task Icon */
+.task-ico {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.task-ico svg { width:14px; height:14px; }
+.ico-can { background: var(--teal); color: #fff; }
+.ico-pend { background: var(--amber); color: #fff; }
+.ico-lock { background: var(--gray-200); color: #fff; }
+.ico-warn { background: var(--coral); color: #fff; }
+.ico-done { background: var(--teal); color: #fff; }
+
+/* Source Chips */
+.src-chip {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-right: 3px;
+}
+.src-hana { background: var(--teal-light); color: var(--teal-dark); }
+.src-gov { background: var(--green-light); color: var(--green); }
+.src-school { background: var(--blue-light); color: var(--blue); }
+.src-warn { background: var(--coral-light); color: var(--coral); }
+
+/* Buttons */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--teal);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: opacity 0.15s;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-sec {
+  padding: 9px 14px;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--teal);
+  border: 1.5px solid rgba(93,202,165,0.5);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 0.15s;
+}
+.btn-sec:hover { background: var(--teal-light); }
+.btn-ai {
+  padding: 9px 14px;
+  border-radius: 10px;
+  background: var(--blue-light);
+  color: var(--blue);
+  border: 1.5px solid rgba(55,138,221,0.3);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+}
+
+/* ARC Banner */
+.arc-banner {
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.arc-progress {
+  background: linear-gradient(135deg, var(--teal), var(--teal-mid));
+  padding: 18px 16px;
+  color: #fff;
+}
+.arc-done-bg {
+  background: linear-gradient(135deg, #185FA5, var(--blue));
+  padding: 18px 16px;
+  color: #fff;
+}
+.arc-step-row { display: flex; gap:0; margin-top:14px; }
+.arc-step { flex:1; text-align:center; position:relative; }
+.arc-step:not(:last-child)::after { content:''; position:absolute; top:12px; right:-1px; width:50%; height:2px; background:rgba(255,255,255,.3); z-index:0; }
+.arc-step:not(:first-child)::before { content:''; position:absolute; top:12px; left:-1px; width:50%; height:2px; background:rgba(255,255,255,.3); z-index:0; }
+.arc-step.done::after,.arc-step.done::before { background:rgba(255,255,255,.85); }
+.arc-step-dot {
+  width:24px; height:24px; border-radius:50%;
+  border:2px solid rgba(255,255,255,.5);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 5px; font-size:11px; position:relative; z-index:1;
+  background:rgba(255,255,255,.15);
+}
+.arc-step.done .arc-step-dot { background:#fff; border-color:#fff; color:var(--teal); font-weight:700; }
+.arc-step.active .arc-step-dot { border-color:#fff; background:rgba(255,255,255,.35); animation:pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.4)} 50%{box-shadow:0 0 0 5px rgba(255,255,255,0)} }
+.arc-step-label { font-size:9px; color:rgba(255,255,255,.75); line-height:1.3; }
+.arc-step.done .arc-step-label,.arc-step.active .arc-step-label { color:#fff; }
+.arc-action-btn {
+  margin-top:14px;
+  background:rgba(255,255,255,.2);
+  border:0.5px solid rgba(255,255,255,.4);
+  border-radius:10px; padding:10px 14px;
+  display:flex; align-items:center; justify-content:space-between;
+  cursor:pointer;
+}
+.arc-action-btn span { font-size:12px; font-weight:500; color:#fff; }
+
+/* Social Proof Bar */
+.social-bar {
+  background: var(--teal-light);
+  border: 1.5px solid rgba(93,202,165,0.4);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.social-bar p { font-size: 11px; color: var(--teal-dark); line-height: 1.4; }
+.social-bar .social-ico {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--teal); display: flex;
+  align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.social-bar .social-ico svg { width:14px; height:14px; }
+
+/* Tab Bar */
+.tab-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-top: 1px solid var(--gray-100);
+  display: flex;
+  z-index: 10;
+}
+.tab-btn {
+  flex: 1;
+  padding: 10px 0 8px;
+  text-align: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font);
+  color: var(--gray-400);
+  transition: color 0.2s;
+}
+.tab-btn.active { color: var(--teal); }
+.tab-btn .ico { display:flex; justify-content:center; margin-bottom:2px; }
+.tab-btn .ico svg { width:22px; height:22px; }
+.tab-btn .lbl { font-size:10px; font-weight:600; }
+
+/* ===== ONBOARDING ===== */
+.onboard-screen {
+  background: linear-gradient(180deg, var(--teal) 0%, var(--teal-dark) 100%);
+  color: #fff;
+  padding: 30px 24px 20px;
+  text-align: center;
+}
+.onboard-screen h2 { font-size:22px; font-weight:700; margin-top:14px; }
+.onboard-screen .sub { font-size:14px; opacity:0.85; margin:6px 0 24px; }
+.form-group { margin-bottom: 12px; text-align: left; }
+.form-group label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.form-group label svg { width:14px; height:14px; }
+.form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+  font-family: var(--font);
+  font-size: 14px;
+  color: #fff;
+  background: rgba(255,255,255,0.12);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+.form-select option { color: var(--gray-900); background: #fff; }
+.form-select:focus { border-color: rgba(255,255,255,0.6); outline:none; }
+.toggle-chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+.toggle-chip {
+  padding: 8px 14px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 24px;
+  font-family: var(--font);
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.toggle-chip svg { width:14px; height:14px; }
+.toggle-chip.selected {
+  background: rgba(255,255,255,0.25);
+  border-color: rgba(255,255,255,0.6);
+  color: #fff;
+}
+.btn-onboard {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--teal);
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  margin-top: 18px;
+  transition: opacity 0.15s;
+}
+.btn-onboard:hover { opacity:0.9; }
+
+/* ===== LOADING ===== */
+.loading-screen {
+  background: linear-gradient(180deg, var(--teal) 0%, var(--teal-dark) 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+.byulbeot-lg {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: bounce 1.5s ease-in-out infinite;
+  margin-bottom: 20px;
+}
+.byulbeot-lg svg { width:40px; height:40px; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.loading-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.loading-dots span {
+  width:8px; height:8px; border-radius:50%;
+  background:rgba(255,255,255,.5);
+  animation: blink 1.4s infinite both;
+}
+.loading-dots span:nth-child(2) { animation-delay:0.2s; }
+.loading-dots span:nth-child(3) { animation-delay:0.4s; }
+@keyframes blink { 0%,80%,100%{opacity:.3} 40%{opacity:1} }
+.loading-progress {
+  width: 200px; height:4px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 4px;
+  margin-top: 16px;
+  overflow: hidden;
+}
+.loading-progress-fill {
+  height: 100%;
+  background: #fff;
+  border-radius: 4px;
+  width: 0%;
+  transition: width 0.3s;
+}
+
+/* ===== CHECKLIST ITEMS ===== */
+.cl-item {
+  background: #fff;
+  border-radius: 14px;
+  border: 1.5px solid var(--gray-100);
+  margin-bottom: 9px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.cl-item.can { background: var(--teal-light); border-color: rgba(93,202,165,0.4); }
+.cl-item.lock { background: var(--gray-50); border-color: var(--gray-100); }
+.cl-item.done-item { background: #fff; border-color: var(--gray-100); }
+.cl-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px;
+  cursor: pointer;
+}
+.cl-item-title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+.cl-item.lock .cl-item-title { color: var(--gray-400); }
+.cl-item.done-item .cl-item-title { color: var(--gray-400); text-decoration: line-through; }
+.cl-chevron {
+  width:16px; height:16px;
+  color: var(--gray-400);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.cl-item.expanded .cl-chevron { transform: rotate(180deg); }
+.cl-detail {
+  display: none;
+  padding: 0 13px 13px;
+  border-top: 1px solid var(--gray-100);
+}
+.cl-item.expanded .cl-detail { display:block; }
+.cl-detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--gray-600);
+}
+.cl-detail-row svg { width:14px; height:14px; flex-shrink:0; margin-top:1px; color:var(--gray-400); }
+.cl-cascade {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--gray-200);
+}
+.cl-cascade-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gray-400);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.cl-cascade-item {
+  font-size: 12px;
+  color: var(--teal);
+  font-weight: 500;
+  margin: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cl-cascade-item svg { width:14px; height:14px; }
+.cl-actions { display:flex; gap:8px; margin-top:10px; }
+
+/* Lock Reason */
+.lock-reason {
+  margin-top: 8px;
+  padding: 9px 12px;
+  background: var(--amber-light);
+  border: 1px solid rgba(239,159,39,0.25);
+  border-radius: 8px;
+  font-size: 12px;
+  color: #854F0B;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.lock-reason svg { width:14px; height:14px; flex-shrink:0; margin-top:1px; }
+
+/* ===== CHAT ===== */
+.chat-wrap {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--gray-50);
+  padding: 14px 14px 100px;
+}
+.msg-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: flex-end;
+}
+.msg-row.user { flex-direction: row-reverse; }
+.av32 {
+  width:32px; height:32px; border-radius:50%;
+  background: var(--teal-light);
+  flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.av32 svg { width:18px; height:18px; color:var(--teal); }
+.bubble {
+  max-width: 76%;
+  padding: 11px 13px;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--gray-900);
+}
+.msg-row:not(.user) .bubble {
+  background: #fff;
+  border: 1px solid var(--gray-100);
+  border-bottom-left-radius: 4px;
+}
+.msg-row.user .bubble {
+  background: var(--teal);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.ai-disclaimer {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-100);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin: 0 0 12px;
+  font-size: 11px;
+  color: var(--gray-400);
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.ai-disclaimer svg { width:14px; height:14px; flex-shrink:0; color:var(--amber); }
+.quick-btns {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.qbtn {
+  padding: 7px 13px;
+  border-radius: 18px;
+  font-size: 12px;
+  font-weight: 500;
+  background: #fff;
+  border: 1.5px solid rgba(93,202,165,0.5);
+  color: var(--teal);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 0.15s;
+}
+.qbtn:hover { background:var(--teal-light); border-color:var(--teal-mid); }
+.chat-input-bar {
+  position: absolute;
+  bottom: 50px;
+  left: 0; right: 0;
+  background: #fff;
+  border-top: 1px solid var(--gray-100);
+  padding: 8px 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.chat-inp {
+  flex: 1;
+  padding: 9px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--gray-200);
+  font-size: 13px;
+  font-family: var(--font);
+  outline: none;
+  background: var(--gray-50);
+}
+.chat-inp:focus { border-color:var(--teal-mid); background:#fff; }
+.send-btn {
+  width:36px; height:36px;
+  border-radius:50%;
+  background: var(--teal);
+  border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.send-btn svg { width:18px; height:18px; }
+
+/* Confirm Card */
+.confirm-card {
+  background: #fff;
+  border: 1.5px solid rgba(93,202,165,0.5);
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 8px;
+}
+.confirm-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-800);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.confirm-title svg { width:16px; height:16px; color:var(--teal); }
+.confirm-btns { display:flex; gap:8px; }
+.btn-confirm {
+  padding:8px 16px;
+  background: var(--teal);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  font-family:var(--font);
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn-deny {
+  padding:8px 16px;
+  background:none;
+  color:var(--gray-600);
+  border:1.5px solid var(--gray-200);
+  border-radius:8px;
+  font-family:var(--font);
+  font-size:12px;
+  cursor:pointer;
+}
+
+/* ===== MY SCREEN ===== */
+.my-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 13px;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 13px;
+}
+.my-status-row:last-child { border-bottom:none; }
+.my-status-label {
+  color: var(--gray-600);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.my-status-label svg { width:16px; height:16px; }
+.my-status-value {
+  font-weight: 600;
+  color: var(--teal);
+  cursor: pointer;
+}
+.my-menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 13px;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 13px;
+  color: var(--gray-800);
+  cursor: pointer;
+}
+.my-menu-item:last-child { border-bottom:none; }
+.my-menu-item svg { width:16px; height:16px; color:var(--gray-400); }
+
+/* Step Indicator (My) */
+.step-indicator {
+  display: flex;
+  gap: 0;
+  margin-bottom: 14px;
+}
+.step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+.step:not(:last-child)::after {
+  content:''; position:absolute; top:14px; right:-1px; width:50%; height:2px;
+  background:var(--gray-200); z-index:0;
+}
+.step:not(:first-child)::before {
+  content:''; position:absolute; top:14px; left:-1px; width:50%; height:2px;
+  background:var(--gray-200); z-index:0;
+}
+.step.done::after,.step.done::before { background:var(--teal); }
+.step-dot {
+  width:28px; height:28px; border-radius:50%;
+  border:2px solid var(--gray-200);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 4px; position:relative; z-index:1;
+  background:#fff;
+}
+.step-dot svg { width:12px; height:12px; }
+.step.done .step-dot { background:var(--teal); border-color:var(--teal); }
+.step.done .step-dot svg { color:#fff; }
+.step.active .step-dot { border-color:var(--teal); border-width:2px; }
+.step-label { font-size:10px; color:var(--gray-400); line-height:1.3; }
+.step.done .step-label { color:var(--teal); font-weight:600; }
+
+/* Toast */
+.toast {
+  position: absolute;
+  bottom: 60px;
+  left: 16px; right: 16px;
+  background: var(--gray-900);
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  display: none;
+  z-index: 20;
+  animation: fadeUp 0.3s ease;
+}
+
+/* ===== DEMO CONTROLS ===== */
+.demo-controls {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  z-index: 100;
+  max-width: 220px;
+}
+.demo-controls h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-800);
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+.demo-btn {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border: 1.5px solid var(--gray-100);
+  border-radius: 10px;
+  background: #fff;
+  font-family: var(--font);
+  font-size: 12px;
+  color: var(--gray-800);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+.demo-btn:hover { background:var(--teal-light); border-color:rgba(93,202,165,0.4); }
+.demo-btn.active { background:var(--teal); color:#fff; border-color:var(--teal); }
+.demo-btn.reset {
+  margin-top: 8px;
+  border-color: var(--teal);
+  color: var(--teal);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ===== MICRO-INTERACTIONS ===== */
+.card { transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s; }
+.card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.card:active { transform: scale(0.98); }
+.cl-item { transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s; }
+.cl-item:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.cl-item:active { transform: scale(0.98); }
+.btn-primary:active, .btn-onboard:active { transform: scale(0.97); }
+.btn-sec:active, .btn-ai:active { transform: scale(0.96); }
+.btn-confirm:active { transform: scale(0.96); }
+.tab-btn { transition: color 0.2s, transform 0.15s; }
+.tab-btn:active { transform: scale(0.92); }
+.qbtn:active { transform: scale(0.95); }
+.arc-action-btn { transition: background 0.2s; }
+.arc-action-btn:hover { background: rgba(255,255,255,.3) !important; }
+.toggle-chip { transition: all 0.2s cubic-bezier(0.16,1,0.3,1); }
+.toggle-chip:active { transform: scale(0.94); }
+.my-menu-item { transition: background 0.15s; }
+.my-menu-item:hover { background: var(--gray-50); }
+.social-bar { transition: transform 0.2s; }
+.social-bar:hover { transform: translateY(-1px); }
+</style>
+</head>
+<body>
+
+<!-- Demo Controls -->
+<div class="demo-controls">
+  <h3>시연 시나리오</h3>
+  <button class="demo-btn" onclick="runScenario('onboarding')">1. 온보딩 설문</button>
+  <button class="demo-btn" onclick="runScenario('wangwei')">2. 왕웨이: ARC 수령</button>
+  <button class="demo-btn" onclick="runScenario('nguyen')">3. 응우옌: 장학금</button>
+  <button class="demo-btn" onclick="runScenario('sarah')">4. Sarah: 이체한도</button>
+  <button class="demo-btn reset" onclick="showScreen('home')">홈으로 리셋</button>
+</div>
+
+<!-- Phone Frame -->
+<div class="phone">
+  <div class="notch"><div class="notch-pill"></div></div>
+  <div class="brand-bar">
+    <span class="brand">Hana EZ</span>
+    <span class="tag">Student 90</span>
+  </div>
+
+  <div class="phone-body">
+
+    <!-- SCREEN: Onboarding -->
+    <div id="screen-onboarding" class="screen active">
+      <div class="onboard-screen" style="flex:1; overflow-y:auto;">
+        <div class="byulbeot-lg" style="margin:0 auto 0;">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="22" r="14" fill="rgba(255,255,255,0.3)"/>
+            <circle cx="14" cy="19" r="2.5" fill="#fff"/>
+            <circle cx="26" cy="19" r="2.5" fill="#fff"/>
+            <path d="M14 26c0 0 3 3 6 3s6-3 6-3" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+            <path d="M17 8 L20 2 L23 8" fill="#4ADE80" stroke="#4ADE80" stroke-width="1"/>
+            <circle cx="20" cy="3" r="2" fill="#4ADE80"/>
+          </svg>
+        </div>
+        <h2>안녕! 나는 별벗이야</h2>
+        <div class="sub">한국 금융 체크리스트, 같이 시작하자!</div>
+
+        <div class="form-group">
+          <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> 학교</label>
+          <select class="form-select" id="sel-univ">
+            <option value="">학교를 선택하세요</option>
+            <option value="SNU">서울대학교</option>
+            <option value="YONSEI">연세대학교</option>
+            <option value="KOREA">고려대학교</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M10 4v16"/></svg> 비자</label>
+          <select class="form-select">
+            <option value="">비자 유형을 선택하세요</option>
+            <option value="D2" selected>D-2 (유학)</option>
+            <option value="D4">D-4 (어학연수)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 010 20 15 15 0 010-20z"/></svg> 국적</label>
+          <select class="form-select" id="sel-nation">
+            <option value="">국적을 선택하세요</option>
+            <option value="CN">중국</option>
+            <option value="VN">베트남</option>
+            <option value="DE">독일</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg> 입국일</label>
+          <input type="date" class="form-select" value="2026-04-01" style="color:#fff">
+        </div>
+        <div class="form-group">
+          <label>현재 상태 (해당하는 것 선택)</label>
+          <div class="toggle-chips">
+            <span class="toggle-chip" onclick="this.classList.toggle('selected')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><circle cx="12" cy="15" r="2"/></svg> 외국인등록증</span>
+            <span class="toggle-chip selected" onclick="this.classList.toggle('selected')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> 휴대폰</span>
+            <span class="toggle-chip" onclick="this.classList.toggle('selected')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><path d="M4 10v11"/><path d="M20 10v11"/><path d="M8 14v4"/><path d="M12 14v4"/><path d="M16 14v4"/></svg> 은행계좌</span>
+            <span class="toggle-chip" onclick="this.classList.toggle('selected')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> 장학금</span>
+          </div>
+        </div>
+        <button class="btn-onboard" onclick="startLoading()">나만의 체크리스트 만들기</button>
+      </div>
+    </div>
+
+    <!-- SCREEN: Loading -->
+    <div id="screen-loading" class="screen">
+      <div class="loading-screen" style="flex:1">
+        <div class="byulbeot-lg">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="22" r="14" fill="rgba(255,255,255,0.3)"/>
+            <circle cx="14" cy="19" r="2.5" fill="#fff"/>
+            <circle cx="26" cy="19" r="2.5" fill="#fff"/>
+            <path d="M14 26c0 0 3 3 6 3s6-3 6-3" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+            <path d="M17 8 L20 2 L23 8" fill="#4ADE80" stroke="#4ADE80" stroke-width="1"/>
+            <circle cx="20" cy="3" r="2" fill="#4ADE80"/>
+          </svg>
+        </div>
+        <div style="font-size:15px;font-weight:700;margin-top:4px;" id="loading-conditions">SNU x D-2 x China</div>
+        <div style="font-size:13px;opacity:0.8;margin-top:6px;">맞춤 체크리스트를 만들고 있어요...</div>
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+        <div class="loading-progress"><div class="loading-progress-fill" id="loading-bar"></div></div>
+      </div>
+    </div>
+
+    <!-- SCREEN: Home -->
+    <div id="screen-home" class="screen">
+      <div class="profile-bar">
+        <div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div class="info" id="profile-info">왕웨이 | 서울대 | D-2 | 중국</div>
+      </div>
+      <div class="scr-head" style="padding-bottom:18px;">
+        <div style="font-size:13px;opacity:0.8;margin-bottom:2px;">한국 금융 여정</div>
+        <h2 id="home-greeting">안녕 왕웨이!</h2>
+      </div>
+      <div class="scr-body" id="home-body">
+        <!-- Summary Row -->
+        <div class="sum-row">
+          <div class="sum-cell"><div class="sum-n" id="sum-done">3</div><div class="sum-l">완료</div></div>
+          <div class="sum-cell"><div class="sum-n" style="color:var(--amber)" id="sum-todo">2</div><div class="sum-l">할 일</div></div>
+          <div class="sum-cell"><div class="sum-n" style="color:var(--gray-400)" id="sum-locked">3</div><div class="sum-l">잠김</div></div>
+        </div>
+
+        <!-- ARC Banner -->
+        <div class="arc-banner" id="arc-banner"></div>
+
+        <!-- Top 3 -->
+        <div class="sec-label">지금 할 수 있는 일 TOP 3</div>
+        <div class="card can" style="cursor:pointer" onclick="switchTab('checklist')">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <div class="task-ico ico-can"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><circle cx="12" cy="15" r="2"/></svg></div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:600;color:var(--gray-800)">재학증명서 발급하기</div>
+              <div style="font-size:11px;color:var(--gray-600);margin-top:2px">계좌 개설 시 필요</div>
+            </div>
+            <span class="pill pill-teal">가능</span>
+          </div>
+        </div>
+        <div class="card can" style="cursor:pointer" onclick="switchTab('checklist')">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <div class="task-ico ico-can"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><path d="M4 10v11"/><path d="M20 10v11"/></svg></div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:600;color:var(--gray-800)">은행 알아보기</div>
+              <div style="font-size:11px;color:var(--gray-600);margin-top:2px">하나 / 우리 / 신한 비교</div>
+            </div>
+            <span class="pill pill-teal">가능</span>
+          </div>
+        </div>
+        <div class="card pend" style="cursor:pointer" onclick="switchTab('checklist')">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <div class="task-ico ico-pend"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:600;color:var(--gray-800)">ARC 신청하기</div>
+              <div style="font-size:11px;color:var(--gray-600);margin-top:2px">출입국관리사무소, 2~4주 소요</div>
+            </div>
+            <span class="pill pill-amber">진행 중</span>
+          </div>
+        </div>
+
+        <!-- Coming Soon -->
+        <div class="sec-label">곧 가능해져요</div>
+        <div class="card lock">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <div class="task-ico ico-lock"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:500;color:var(--gray-400)">은행 계좌 개설</div>
+              <div style="font-size:11px;color:var(--gray-400);margin-top:2px">예상: ARC 수령 후 (4/15~22)</div>
+            </div>
+            <span class="pill pill-gray">잠김</span>
+          </div>
+        </div>
+
+        <!-- Social Proof -->
+        <div class="social-bar">
+          <div class="social-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <p><strong>1,245명</strong>이 비슷한 상황에서 선불 유심 → 하나은행 순서로 진행했어요</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN: Checklist -->
+    <div id="screen-checklist" class="screen">
+      <div class="scr-head">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h2>나의 체크리스트</h2>
+          <span style="font-size:13px;opacity:0.85" id="cl-count">3/8 완료</span>
+        </div>
+      </div>
+      <div class="scr-body" id="cl-body">
+        <!-- Done -->
+        <div class="sec-label">완료 (3)</div>
+        <div class="cl-item done-item" onclick="toggleItem(this)">
+          <div class="cl-item-header">
+            <div class="task-ico ico-done"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="cl-item-title">선불폰 유지</div>
+            <svg class="cl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div class="cl-item done-item" onclick="toggleItem(this)">
+          <div class="cl-item-header">
+            <div class="task-ico ico-done"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="cl-item-title">서류 미리 준비</div>
+            <svg class="cl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div class="cl-item done-item" onclick="toggleItem(this)">
+          <div class="cl-item-header">
+            <div class="task-ico ico-done"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="cl-item-title">은행 알아보기</div>
+            <svg class="cl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+
+        <!-- Available -->
+        <div class="sec-label">지금 가능 (2)</div>
+        <div class="cl-item can" onclick="toggleItem(this)">
+          <div class="cl-item-header">
+            <div class="task-ico ico-can"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="8"/></svg></div>
+            <div class="cl-item-title">ARC 발급받기</div>
+            <svg class="cl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="cl-detail">
+            <div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> 출입국관리사무소</div>
+            <div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 2~4주 소요</div>
+            <div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg> 여권, 입학허가서</div>
+            <div class="cl-cascade">
+              <div class="cl-cascade-title">이걸 완료하면</div>
+              <div class="cl-cascade-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> 은행 계좌 개설 해제</div>
+              <div class="cl-cascade-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> 후불폰 전환 해제</div>
+            </div>
+            <div class="cl-actions">
+              <button class="btn-sec" onclick="event.stopPropagation()">HiKorea</button>
+              <button class="btn-ai" onclick="event.stopPropagation(); switchTab('chat')"><svg viewBox="0 0 40 40" fill="none" width="14" height="14" style="margin-right:4px"><circle cx="20" cy="22" r="10" fill="currentColor" opacity="0.2"/><circle cx="16" cy="20" r="1.5" fill="currentColor"/><circle cx="24" cy="20" r="1.5" fill="currentColor"/></svg> 별벗에게 물어보기</button>
+            </div>
+          </div>
+        </div>
+        <div class="cl-item can" onclick="toggleItem(this)">
+          <div class="cl-item-header">
+            <div class="task-ico ico-can"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="8"/></svg></div>
+            <div class="cl-item-title">재학증명서 발급</div>
+            <svg class="cl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="cl-detail">
+            <div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> mySNU (온라인 발급)</div>
+            <div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 5분 소요</div>
+            <div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg> 영문 재학증명서 출력</div>
+            <div class="cl-actions">
+              <button class="btn-sec" onclick="event.stopPropagation()">mySNU 바로가기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Locked -->
+        <div class="sec-label">다음 단계 (3)</div>
+        <div class="cl-item lock" onclick="toggleItem(this)" id="cl-bank-account">
+          <div class="cl-item-header">
+            <div class="task-ico ico-lock"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+            <div class="cl-item-title">은행 계좌 개설</div>
+            <svg class="cl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="cl-detail">
+            <div class="lock-reason"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> ARC 필요 (대기 중)</div>
+            <div style="margin-top:8px;font-size:12px;color:var(--gray-400);display:flex;align-items:center;gap:6px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg> 예상 해제: ARC 수령 후 (4/15~22)</div>
+            <div class="cl-actions">
+              <button class="btn-ai" onclick="event.stopPropagation(); switchTab('chat')"><svg viewBox="0 0 40 40" fill="none" width="14" height="14" style="margin-right:4px"><circle cx="20" cy="22" r="10" fill="currentColor" opacity="0.2"/><circle cx="16" cy="20" r="1.5" fill="currentColor"/><circle cx="24" cy="20" r="1.5" fill="currentColor"/></svg> 먼저 알아보기</button>
+            </div>
+          </div>
+        </div>
+        <div class="cl-item lock" onclick="toggleItem(this)">
+          <div class="cl-item-header">
+            <div class="task-ico ico-lock"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+            <div class="cl-item-title">후불폰 전환</div>
+            <svg class="cl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="cl-detail">
+            <div class="lock-reason"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> ARC 필요</div>
+          </div>
+        </div>
+        <div class="cl-item lock" onclick="toggleItem(this)">
+          <div class="cl-item-header">
+            <div class="task-ico ico-lock"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+            <div class="cl-item-title">모바일뱅킹 활성화</div>
+            <svg class="cl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="cl-detail">
+            <div class="lock-reason"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> 계좌 + 후불폰 필요</div>
+          </div>
+        </div>
+
+        <!-- Hidden: Scholarship items -->
+        <div id="scholarship-items" style="display:none">
+          <div class="sec-label" style="color:var(--blue);animation:fadeUp 0.3s">새로 추가됨</div>
+          <div class="cl-item can" onclick="toggleItem(this)" style="animation:fadeUp 0.3s">
+            <div class="cl-item-header">
+              <div class="task-ico ico-can"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="8"/></svg></div>
+              <div class="cl-item-title">장학금 수령 계좌 지정 <span class="pill pill-new" style="margin-left:6px">NEW</span></div>
+              <svg class="cl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="cl-detail">
+              <div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> 우리은행 연세대지점</div>
+              <div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 40~60분 소요</div>
+              <div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg> 여권, ARC, 장학금 통지서</div>
+            </div>
+          </div>
+          <div class="cl-item can" onclick="toggleItem(this)" style="animation:fadeUp 0.3s;animation-delay:0.1s">
+            <div class="cl-item-header">
+              <div class="task-ico ico-can"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="8"/></svg></div>
+              <div class="cl-item-title">장학금 증빙 서류 준비 <span class="pill pill-new" style="margin-left:6px">NEW</span></div>
+              <svg class="cl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <div class="cl-detail">
+              <div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> 학과 사무실 (경영관 202호)</div>
+              <div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 10분 소요</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN: Chat -->
+    <div id="screen-chat" class="screen">
+      <div class="scr-head" style="padding-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="av32" style="background:rgba(255,255,255,0.2);">
+            <svg viewBox="0 0 40 40" fill="none" width="20" height="20">
+              <circle cx="20" cy="22" r="12" fill="rgba(255,255,255,0.3)"/>
+              <circle cx="15" cy="20" r="2" fill="#fff"/>
+              <circle cx="25" cy="20" r="2" fill="#fff"/>
+              <path d="M15 26c0 0 2.5 2.5 5 2.5s5-2.5 5-2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M17 10 L20 5 L23 10" fill="#4ADE80"/>
+            </svg>
+          </div>
+          <div>
+            <h2 style="font-size:18px">별벗 AI</h2>
+            <div class="sub" style="margin-top:2px">나의 금융 가이드</div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-wrap" id="chat-messages">
+        <div class="ai-disclaimer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          <span>AI 답변은 참고용입니다. 체크리스트는 검증된 DB 기반입니다.</span>
+        </div>
+        <div class="quick-btns" id="quick-btns">
+          <button class="qbtn" onclick="sendQuickChat('계좌 개설 방법')">계좌 개설</button>
+          <button class="qbtn" onclick="sendQuickChat('ARC 언제 나와요?')">ARC 언제?</button>
+          <button class="qbtn" onclick="sendQuickChat('이체한도 올리기')">이체한도</button>
+        </div>
+        <div class="msg-row">
+          <div class="av32"><svg viewBox="0 0 40 40" fill="none" width="20" height="20"><circle cx="20" cy="22" r="12" fill="currentColor" opacity="0.15"/><circle cx="15" cy="20" r="2" fill="currentColor"/><circle cx="25" cy="20" r="2" fill="currentColor"/><path d="M15 26c0 0 2.5 2.5 5 2.5s5-2.5 5-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M17 10 L20 5 L23 10" fill="#4ADE80"/></svg></div>
+          <div class="bubble">무엇이든 물어보세요! 금융, 비자, 생활 질문 모두 도와드릴게요.</div>
+        </div>
+      </div>
+      <div class="chat-input-bar">
+        <input class="chat-inp" type="text" placeholder="메시지 입력..." id="chat-input-field" onkeypress="if(event.key==='Enter')sendChat()">
+        <button class="send-btn" onclick="sendChat()"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+      </div>
+    </div>
+
+    <!-- SCREEN: My -->
+    <div id="screen-my" class="screen">
+      <div class="scr-head">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" width="24" height="24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <h2 style="font-size:18px" id="my-name">왕웨이 (王伟)</h2>
+            <div class="sub" style="margin-top:2px" id="my-info">서울대학교 | D-2 | 중국</div>
+          </div>
+        </div>
+      </div>
+      <div class="scr-body">
+        <!-- Step Indicator -->
+        <div class="sec-label">여정 진행 상태</div>
+        <div class="step-indicator" id="step-indicator">
+          <div class="step done">
+            <div class="step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="12" height="12"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="step-label">ARC<br>신청</div>
+          </div>
+          <div class="step active">
+            <div class="step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="4" fill="var(--teal)"/></svg></div>
+            <div class="step-label">은행<br>계좌</div>
+          </div>
+          <div class="step">
+            <div class="step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gray-400)" stroke-width="2" width="12" height="12"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+            <div class="step-label">체크<br>카드</div>
+          </div>
+          <div class="step">
+            <div class="step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gray-400)" stroke-width="2" width="12" height="12"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg></div>
+            <div class="step-label">모바일<br>뱅킹</div>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="sec-label">나의 상태</div>
+        <div class="card" style="padding:0">
+          <div class="my-status-row">
+            <span class="my-status-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><circle cx="12" cy="15" r="2"/></svg> 외국인등록증</span>
+            <span class="my-status-value" id="my-arc-status">대기 중</span>
+          </div>
+          <div class="my-status-row">
+            <span class="my-status-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> 휴대폰</span>
+            <span class="my-status-value" style="color:var(--gray-600)">선불 USIM</span>
+          </div>
+          <div class="my-status-row">
+            <span class="my-status-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6l7-3 7 3"/><path d="M4 10v11"/><path d="M20 10v11"/></svg> 은행계좌</span>
+            <span class="my-status-value" style="color:var(--gray-400)">없음</span>
+          </div>
+          <div class="my-status-row">
+            <span class="my-status-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> 장학금</span>
+            <span class="my-status-value" id="my-scholarship" onclick="toggleScholarship()" style="cursor:pointer">없음</span>
+          </div>
+        </div>
+
+        <!-- Menu -->
+        <div class="sec-label">설정</div>
+        <div class="card" style="padding:0">
+          <div class="my-menu-item"><span style="display:flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 010 20 15 15 0 010-20z"/></svg> 언어: 한국어</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+          <div class="my-menu-item"><span style="display:flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> 도움말</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+          <div class="my-menu-item" onclick="showScreen('onboarding')"><span style="display:flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> 온보딩 다시하기</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="tab-bar" id="tab-bar" style="display:none">
+      <button class="tab-btn" id="tab-home" onclick="switchTab('home')">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+        <div class="lbl">홈</div>
+      </button>
+      <button class="tab-btn" id="tab-checklist" onclick="switchTab('checklist')">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <div class="lbl">체크리스트</div>
+      </button>
+      <button class="tab-btn" id="tab-chat" onclick="switchTab('chat')">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <div class="lbl">챗</div>
+      </button>
+      <button class="tab-btn" id="tab-my" onclick="switchTab('my')">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div class="lbl">마이</div>
+      </button>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <div class="home-bar"><div class="home-pill"></div></div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let currentTab = 'home';
+let scholarshipAdded = false;
+
+// ============================================================
+// ARC BANNER HTML
+// ============================================================
+const ARC_PROGRESS = '<div class="arc-progress">'
+  + '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2px">'
+  + '<div>'
+  + '<div style="font-size:11px;opacity:.8;margin-bottom:3px">외국인등록증 (ARC) 진행 상황</div>'
+  + '<div style="font-size:16px;font-weight:700">신청 완료 · 심사 중</div>'
+  + '<div style="font-size:12px;opacity:.85;margin-top:2px">예상 수령일 <strong>4월 20일</strong> (D-15)</div>'
+  + '</div>'
+  + '<div style="background:rgba(255,255,255,.2);border-radius:10px;padding:4px 10px;text-align:center">'
+  + '<div style="font-size:20px;font-weight:700;color:#fff">15</div>'
+  + '<div style="font-size:9px;color:rgba(255,255,255,.8)">일 남음</div>'
+  + '</div></div>'
+  + '<div class="arc-step-row">'
+  + '<div class="arc-step done"><div class="arc-step-dot">'
+  + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="11" height="11"><path d="M20 6L9 17l-5-5"/></svg>'
+  + '</div><div class="arc-step-label">서류<br>제출</div></div>'
+  + '<div class="arc-step done"><div class="arc-step-dot">'
+  + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="11" height="11"><path d="M20 6L9 17l-5-5"/></svg>'
+  + '</div><div class="arc-step-label">접수<br>완료</div></div>'
+  + '<div class="arc-step active"><div class="arc-step-dot" style="font-size:8px">'
+  + '<svg viewBox="0 0 24 24" fill="none" width="8" height="8"><circle cx="12" cy="12" r="5" fill="#fff"/></svg>'
+  + '</div><div class="arc-step-label">심사<br>중</div></div>'
+  + '<div class="arc-step"><div class="arc-step-dot"></div><div class="arc-step-label">SMS<br>수신</div></div>'
+  + '<div class="arc-step"><div class="arc-step-dot"></div><div class="arc-step-label">수령<br>완료</div></div>'
+  + '</div>'
+  + '<div class="arc-action-btn" onclick="switchTab(\'checklist\')">'
+  + '<span>지금 할 수 있는 일 보기</span>'
+  + '<span style="font-size:14px;opacity:0.8">&rarr;</span>'
+  + '</div></div>';
+
+const ARC_DONE = '<div class="arc-done-bg">'
+  + '<div style="margin-bottom:4px">'
+  + '<div style="font-size:11px;opacity:.8;margin-bottom:3px">외국인등록증 (ARC) 진행 상황</div>'
+  + '<div style="font-size:16px;font-weight:700">수령 완료!</div>'
+  + '<div style="font-size:12px;opacity:.85;margin-top:2px">이제 은행 계좌 개설이 가능해요</div>'
+  + '</div>'
+  + '<div class="arc-step-row">'
+  + '<div class="arc-step done"><div class="arc-step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="11" height="11"><path d="M20 6L9 17l-5-5"/></svg></div><div class="arc-step-label">서류<br>제출</div></div>'
+  + '<div class="arc-step done"><div class="arc-step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="11" height="11"><path d="M20 6L9 17l-5-5"/></svg></div><div class="arc-step-label">접수<br>완료</div></div>'
+  + '<div class="arc-step done"><div class="arc-step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="11" height="11"><path d="M20 6L9 17l-5-5"/></svg></div><div class="arc-step-label">심사<br>중</div></div>'
+  + '<div class="arc-step done"><div class="arc-step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="11" height="11"><path d="M20 6L9 17l-5-5"/></svg></div><div class="arc-step-label">SMS<br>수신</div></div>'
+  + '<div class="arc-step done"><div class="arc-step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="11" height="11"><path d="M20 6L9 17l-5-5"/></svg></div><div class="arc-step-label">수령<br>완료</div></div>'
+  + '</div>'
+  + '<div style="margin-top:12px;display:flex;gap:8px">'
+  + '<div class="arc-action-btn" style="flex:1" onclick="switchTab(\'checklist\')">'
+  + '<span>하나은행 계좌 개설하기</span>'
+  + '<span style="font-size:14px;opacity:0.8">&rarr;</span></div></div>'
+  + '<div style="margin-top:8px;background:rgba(255,255,255,.15);border-radius:10px;padding:8px 12px;display:flex;gap:8px;align-items:center">'
+  + '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>'
+  + '<div><div style="font-size:11px;font-weight:600;color:#fff">추천 지점: 하나은행 신촌점</div>'
+  + '<div style="font-size:10px;color:rgba(255,255,255,.75)">외국인 전담 창구 · 영어 상담 · 도보 12분</div>'
+  + '</div></div></div>';
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('screen-' + id).classList.add('active');
+  var tabBar = document.getElementById('tab-bar');
+  if (id === 'onboarding' || id === 'loading') {
+    tabBar.style.display = 'none';
+  } else {
+    tabBar.style.display = 'flex';
+    setActiveTab(id);
+  }
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('screen-' + tab).classList.add('active');
+  setActiveTab(tab);
+  document.getElementById('tab-bar').style.display = 'flex';
+}
+
+function setActiveTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  var el = document.getElementById('tab-' + tab);
+  if (el) el.classList.add('active');
+}
+
+// ============================================================
+// ONBOARDING / LOADING
+// ============================================================
+function startLoading() {
+  showScreen('loading');
+  var bar = document.getElementById('loading-bar');
+  var univ = document.getElementById('sel-univ');
+  var nation = document.getElementById('sel-nation');
+  var univText = univ.options[univ.selectedIndex] ? univ.options[univ.selectedIndex].text : '서울대학교';
+  var nationText = nation.options[nation.selectedIndex] ? nation.options[nation.selectedIndex].text : '중국';
+  document.getElementById('loading-conditions').textContent = univText + ' x D-2 x ' + nationText;
+  var progress = 0;
+  var interval = setInterval(function() {
+    progress += Math.random() * 20 + 10;
+    if (progress > 100) progress = 100;
+    bar.style.width = progress + '%';
+    if (progress >= 100) {
+      clearInterval(interval);
+      setTimeout(function() {
+        showScreen('home');
+        switchTab('home');
+        setArcBanner('progress');
+      }, 400);
+    }
+  }, 300);
+}
+
+// ============================================================
+// ARC BANNER
+// ============================================================
+function setArcBanner(state) {
+  var banner = document.getElementById('arc-banner');
+  if (state === 'done') {
+    banner.innerHTML = ARC_DONE;
+  } else {
+    banner.innerHTML = ARC_PROGRESS;
+  }
+}
+
+// Initialize ARC banner
+setArcBanner('progress');
+
+// ============================================================
+// CHECKLIST
+// ============================================================
+function toggleItem(el) {
+  el.classList.toggle('expanded');
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(text, duration) {
+  var toast = document.getElementById('toast');
+  toast.textContent = text;
+  toast.style.display = 'block';
+  setTimeout(function() { toast.style.display = 'none'; }, duration || 3000);
+}
+
+// ============================================================
+// CHAT
+// ============================================================
+function sendChat() {
+  var input = document.getElementById('chat-input-field');
+  var text = input.value.trim();
+  if (!text) return;
+  addUserMessage(text);
+  input.value = '';
+  document.getElementById('quick-btns').style.display = 'none';
+}
+
+function sendQuickChat(text) {
+  addUserMessage(text);
+  document.getElementById('quick-btns').style.display = 'none';
+}
+
+function addUserMessage(text) {
+  var messages = document.getElementById('chat-messages');
+  var div = document.createElement('div');
+  div.className = 'msg-row user';
+  div.style.animation = 'fadeUp 0.28s ease';
+  div.innerHTML = '<div class="bubble">' + text + '</div>';
+  messages.appendChild(div);
+
+  setTimeout(function() {
+    if (text.includes('ARC') && (text.includes('받았') || text.includes('수령') || text.includes('got') || text.includes('received'))) {
+      addBotConfirmCard();
+    } else if (text.includes('계좌') || text.includes('은행') || text.toLowerCase().includes('account')) {
+      addBotMessage(
+        '서울대의 경우, ARC + 재학증명서 + 여권이 필요합니다. '
+        + '하나은행 관악지점이 영어 대응이 좋아요!'
+        + '<div style="margin-top:6px"><span class="src-chip src-hana">하나은행</span><span class="src-chip src-school">서울대</span></div>'
+      );
+    } else if (text.includes('이체') || text.includes('한도') || text.toLowerCase().includes('transfer')) {
+      addBotMessage(
+        '외국인 금융거래제한계좌의 기본 한도는 일 100만원입니다. '
+        + '지점 방문 시 재학증명서를 가져가면 한도 상향이 가능해요. '
+        + '하나은행 안암지점(고려대 앞)에서 처리 가능합니다.'
+        + '<div style="margin-top:6px"><span class="src-chip src-hana">하나은행</span><span class="src-chip src-gov">금융규정</span></div>'
+      );
+    } else if (text.includes('ARC') && (text.includes('언제') || text.toLowerCase().includes('when'))) {
+      addBotMessage(
+        '현재 처리 속도 기준, ARC 예상 수령일은 4월 20일경입니다. '
+        + 'SMS 알림이 오면 출입국사무소를 방문하세요.'
+        + '<div style="margin-top:6px"><span class="src-chip src-gov">출입국관리</span></div>'
+      );
+    } else {
+      addBotMessage('네, 도와드릴게요! 좀 더 구체적으로 물어보시면 정확한 안내를 해드릴 수 있어요.');
+    }
+  }, 800);
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function addBotMessage(html) {
+  var messages = document.getElementById('chat-messages');
+  var div = document.createElement('div');
+  div.className = 'msg-row';
+  div.style.animation = 'fadeUp 0.28s ease';
+  div.innerHTML = '<div class="av32"><svg viewBox="0 0 40 40" fill="none" width="20" height="20">'
+    + '<circle cx="20" cy="22" r="12" fill="currentColor" opacity="0.15"/>'
+    + '<circle cx="15" cy="20" r="2" fill="currentColor"/>'
+    + '<circle cx="25" cy="20" r="2" fill="currentColor"/>'
+    + '<path d="M15 26c0 0 2.5 2.5 5 2.5s5-2.5 5-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>'
+    + '<path d="M17 10 L20 5 L23 10" fill="#4ADE80"/>'
+    + '</svg></div>'
+    + '<div class="bubble">' + html + '</div>';
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function addBotConfirmCard() {
+  var messages = document.getElementById('chat-messages');
+  var div = document.createElement('div');
+  div.className = 'msg-row';
+  div.style.animation = 'fadeUp 0.28s ease';
+  div.innerHTML = '<div class="av32"><svg viewBox="0 0 40 40" fill="none" width="20" height="20">'
+    + '<circle cx="20" cy="22" r="12" fill="currentColor" opacity="0.15"/>'
+    + '<circle cx="15" cy="20" r="2" fill="currentColor"/>'
+    + '<circle cx="25" cy="20" r="2" fill="currentColor"/>'
+    + '<path d="M15 26c0 0 2.5 2.5 5 2.5s5-2.5 5-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>'
+    + '<path d="M17 10 L20 5 L23 10" fill="#4ADE80"/>'
+    + '</svg></div>'
+    + '<div>'
+    + '<div class="bubble">축하해요! ARC 수령을 확인할까요?</div>'
+    + '<div class="confirm-card">'
+    + '<div class="confirm-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> ARC 발급 완료</div>'
+    + '<div class="confirm-btns">'
+    + '<button class="btn-confirm" onclick="confirmARC(this)">완료 확인</button>'
+    + '<button class="btn-deny">아직 아니에요</button>'
+    + '</div></div></div>';
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function confirmARC(btn) {
+  var card = btn.closest('.confirm-card');
+  card.innerHTML = '<div class="confirm-title" style="color:var(--teal)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> ARC 발급 완료!</div>';
+  card.style.borderColor = 'var(--teal)';
+  card.style.background = 'var(--teal-light)';
+
+  setTimeout(function() {
+    addBotMessage(
+      '<strong>2가지가 새로 가능해졌어요!</strong><br><br>'
+      + '<div style="display:flex;align-items:center;gap:6px;margin:4px 0;color:var(--teal);font-weight:600">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> 하나은행 계좌 개설하기</div>'
+      + '<div style="display:flex;align-items:center;gap:6px;margin:4px 0;color:var(--teal);font-weight:600">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> 후불폰 전환</div>'
+      + '<br>먼저 어떤 걸 하시겠어요?'
+      + '<div style="margin-top:6px"><span class="src-chip src-hana">하나은행</span></div>'
+    );
+
+    showToast('2개 항목이 새로 가능해졌어요!');
+    setArcBanner('done');
+
+    // Update checklist: unlock bank account
+    var bankItem = document.getElementById('cl-bank-account');
+    if (bankItem) {
+      bankItem.className = 'cl-item can';
+      bankItem.querySelector('.task-ico').className = 'task-ico ico-can';
+      bankItem.querySelector('.task-ico').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="8"/></svg>';
+      bankItem.querySelector('.cl-detail').innerHTML =
+        '<div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> 하나은행 관악지점 (영어 가능)</div>'
+        + '<div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 30~40분 소요</div>'
+        + '<div class="cl-detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg> ARC + 재학증명서 + 여권</div>'
+        + '<div class="cl-actions"><button class="btn-sec" onclick="event.stopPropagation()">지점 위치 보기</button></div>';
+    }
+
+    // Update summary
+    document.getElementById('sum-done').textContent = '4';
+    document.getElementById('sum-todo').textContent = '1';
+    document.getElementById('sum-locked').textContent = '2';
+    document.getElementById('cl-count').textContent = '4/8 완료';
+    document.getElementById('my-arc-status').textContent = '수령 완료';
+    document.getElementById('my-arc-status').style.color = 'var(--teal)';
+  }, 500);
+}
+
+// ============================================================
+// SCHOLARSHIP
+// ============================================================
+function toggleScholarship() {
+  if (scholarshipAdded) return;
+  scholarshipAdded = true;
+  document.getElementById('my-scholarship').textContent = '예정';
+  document.getElementById('my-scholarship').style.color = 'var(--teal)';
+  document.getElementById('scholarship-items').style.display = 'block';
+  showToast('장학금 조건에 따라 2개 항목이 추가되었어요!');
+}
+
+// ============================================================
+// DEMO SCENARIOS
+// ============================================================
+function runScenario(name) {
+  document.querySelectorAll('.demo-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (event && event.target) event.target.classList.add('active');
+
+  // Reset chat
+  resetChat();
+
+  switch(name) {
+    case 'onboarding':
+      showScreen('onboarding');
+      break;
+    case 'wangwei':
+      setPersona('왕웨이 (王伟)', 'SNU | D-2 | 중국', '왕웨이 | 서울대 | D-2 | 중국', '안녕 왕웨이!');
+      showScreen('home');
+      switchTab('chat');
+      setTimeout(function() { addUserMessage('ARC 받았어요!'); }, 500);
+      break;
+    case 'nguyen':
+      setPersona('응우옌 민', '연세대 | D-2 | 베트남', '응우옌 민 | 연세대 | D-2 | 베트남', '안녕 민!');
+      scholarshipAdded = false;
+      document.getElementById('scholarship-items').style.display = 'none';
+      document.getElementById('my-scholarship').textContent = 'None';
+      document.getElementById('my-scholarship').style.color = 'var(--gray-400)';
+      showScreen('home');
+      switchTab('my');
+      break;
+    case 'sarah':
+      setPersona('Sarah Johnson', '고려대 | D-2 | 독일', 'Sarah | 고려대 | D-2 | 독일', '안녕 Sarah!');
+      document.getElementById('sum-done').textContent = '5';
+      document.getElementById('sum-todo').textContent = '1';
+      document.getElementById('sum-locked').textContent = '2';
+      showScreen('home');
+      switchTab('chat');
+      setTimeout(function() { addUserMessage('이체한도 올리고 싶은데 어떻게 해요?'); }, 500);
+      break;
+  }
+}
+
+function setPersona(name, info, profileInfo, greeting) {
+  document.getElementById('my-name').textContent = name;
+  document.getElementById('my-info').textContent = info;
+  document.getElementById('profile-info').textContent = profileInfo;
+  document.getElementById('home-greeting').textContent = greeting;
+}
+
+function resetChat() {
+  var messages = document.getElementById('chat-messages');
+  messages.innerHTML = '<div class="ai-disclaimer">'
+    + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>'
+    + '<span>AI 답변은 참고용입니다. 체크리스트는 검증된 DB 기반입니다.</span>'
+    + '</div>'
+    + '<div class="quick-btns" id="quick-btns">'
+    + '<button class="qbtn" onclick="sendQuickChat(\'How to open account?\')">계좌 개설</button>'
+    + '<button class="qbtn" onclick="sendQuickChat(\'When will ARC arrive?\')">ARC 언제?</button>'
+    + '<button class="qbtn" onclick="sendQuickChat(\'Raise transfer limit\')">이체한도</button>'
+    + '</div>'
+    + '<div class="msg-row"><div class="av32"><svg viewBox="0 0 40 40" fill="none" width="20" height="20">'
+    + '<circle cx="20" cy="22" r="12" fill="currentColor" opacity="0.15"/>'
+    + '<circle cx="15" cy="20" r="2" fill="currentColor"/>'
+    + '<circle cx="25" cy="20" r="2" fill="currentColor"/>'
+    + '<path d="M15 26c0 0 2.5 2.5 5 2.5s5-2.5 5-2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>'
+    + '<path d="M17 10 L20 5 L23 10" fill="#4ADE80"/>'
+    + '</svg></div><div class="bubble">무엇이든 물어보세요! 금융, 비자, 생활 질문 모두 도와드릴게요.</div></div>';
+}
+</script>
+</body>
+</html>

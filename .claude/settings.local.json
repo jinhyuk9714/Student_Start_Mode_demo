@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git clone:*)",
+      "Read(//c/Users/jsk45/.claude/skills/gstack/**)",
+      "Bash(./setup)",
+      "WebFetch(domain:www.nowak-partner.com)",
+      "WebFetch(domain:stay.enko.kr)",
+      "WebFetch(domain:www.haniseoul.com)",
+      "WebFetch(domain:snusisa.com)",
+      "WebFetch(domain:www.asiae.co.kr)",
+      "Bash(~/.claude/skills/gstack/bin/gstack-learnings-log '{\"skill\":\"office-hours\",\"type\":\"preference\",\"key\":\"use_browse_not_websearch\",\"insight\":\"User requires gstack /browse for all web browsing. Never use WebSearch tool.\",\"confidence\":10,\"source\":\"user-stated\",\"files\":[\"CLAUDE.md\"]}')",
+      "Bash(~/.claude/skills/gstack/bin/gstack-learnings-log '{\"skill\":\"office-hours\",\"type\":\"architecture\",\"key\":\"hybrid_db_architecture\",\"insight\":\"AdroadEZ uses Hybrid architecture: Structured DB for checklist rules \\(accuracy\\) + Vector DB for AI Q&A \\(flexibility\\). byul.ai pipeline reference for data collection.\",\"confidence\":9,\"source\":\"user-stated\",\"files\":[\"user_documents/2.아이디어제안.md\"]}')",
+      "Bash(~/.claude/skills/gstack/bin/gstack-learnings-log '{\"skill\":\"office-hours\",\"type\":\"operational\",\"key\":\"korean_encoding_python\",\"insight\":\"Python scripts on Windows with Korean filenames need PYTHONIOENCODING=utf-8 and sys.stdout.reconfigure\\(encoding=utf-8\\) to avoid cp949 codec errors.\",\"confidence\":9,\"source\":\"observed\",\"files\":[]}')",
+      "Skill(plan-ceo-review)",
+      "Bash(python3 -m http.server 8847 --bind 127.0.0.1)",
+      "Bash(echo \"PID: $!\")",
+      "mcp__playwright__playwright_navigate",
+      "mcp__playwright__playwright_screenshot",
+      "mcp__playwright__playwright_click",
+      "mcp__playwright__playwright_evaluate",
+      "Bash(python -m http.server 9125)"
+    ]
+  }
+}

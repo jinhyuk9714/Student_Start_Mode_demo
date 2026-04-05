@@ -1,0 +1,441 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:transparent;color:var(--color-text-primary)}
+.phone{width:340px;min-height:680px;background:var(--color-background-primary);border-radius:36px;border:2px solid var(--color-border-secondary);overflow:hidden;display:flex;flex-direction:column}
+.status-bar{height:44px;background:#0F6E56;display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+.status-bar span{color:#fff;font-size:11px;font-weight:500}
+.screen{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.screen.hidden{display:none}
+.tab-bar{height:60px;border-top:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;background:var(--color-background-primary);flex-shrink:0}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:8px 0;opacity:.4;transition:opacity .2s}
+.tab.active{opacity:1}
+.tab span{font-size:10px;color:var(--color-text-secondary)}
+.tab.active span{color:#0F6E56}
+
+.pill{display:inline-block;font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500}
+.pill-green{background:#E1F5EE;color:#0F6E56}
+.pill-amber{background:#FAEEDA;color:#854F0B}
+.pill-red{background:#FCEBEB;color:#A32D2D}
+.pill-blue{background:#E6F1FB;color:#185FA5}
+.pill-gray{background:#F1EFE8;color:#5F5E5A}
+
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:14px;padding:14px;margin:0 12px 10px}
+
+.input-box{width:100%;border:0.5px solid var(--color-border-secondary);border-radius:8px;padding:8px 10px;font-size:13px;background:var(--color-background-secondary);color:var(--color-text-primary)}
+
+.btn-primary{width:100%;padding:12px;background:#0F6E56;color:#fff;border-radius:12px;border:none;font-size:14px;cursor:pointer;font-weight:500}
+
+.social-bar{background:#E1F5EE;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin:0 12px 10px}
+.social-bar p{font-size:11px;color:#0F6E56;line-height:1.4}
+
+.chat-room{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer}
+.room-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.room-name{font-size:13px;font-weight:500}
+.room-preview{font-size:11px;color:var(--color-text-secondary);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{background:#0F6E56;color:#fff;border-radius:10px;font-size:10px;padding:2px 6px}
+
+.tournament-card{border:0.5px solid var(--color-border-tertiary);border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer}
+.tournament-card.safe{border-left:3px solid #1D9E75}
+.tournament-card.balanced{border-left:3px solid #185FA5}
+.tournament-card.aggressive{border-left:3px solid #BA7517}
+
+.msg{margin:6px 12px;max-width:82%}
+.msg.user{margin-left:auto}
+.bubble{padding:8px 12px;border-radius:14px;font-size:12px;line-height:1.5}
+.bubble.bot{background:var(--color-background-secondary);border-bottom-left-radius:4px}
+.bubble.user{background:#0F6E56;color:#fff;border-bottom-right-radius:4px}
+
+.dead-zone-item{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.dz-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
+
+.nav-back{display:flex;align-items:center;gap:6px;padding:12px 16px;cursor:pointer;font-size:13px;color:#0F6E56;border-bottom:0.5px solid var(--color-border-tertiary);flex-shrink:0}
+
+/* ARC STATUS BANNER */
+.arc-banner{margin:12px;border-radius:16px;overflow:hidden}
+.arc-in-progress{background:linear-gradient(135deg,#0F6E56,#1D9E75);padding:18px 16px;color:#fff}
+.arc-done{background:linear-gradient(135deg,#185FA5,#378ADD);padding:18px 16px;color:#fff}
+.arc-banner h3{font-size:15px;font-weight:500;margin-bottom:4px}
+.arc-banner p{font-size:11px;opacity:.85;line-height:1.5}
+.arc-step-row{display:flex;gap:0;margin-top:14px}
+.arc-step{flex:1;text-align:center;position:relative}
+.arc-step:not(:last-child)::after{content:'';position:absolute;top:12px;right:-1px;width:50%;height:2px;background:rgba(255,255,255,.3);z-index:0}
+.arc-step:not(:first-child)::before{content:'';position:absolute;top:12px;left:-1px;width:50%;height:2px;background:rgba(255,255,255,.3);z-index:0}
+.arc-step.done::after,.arc-step.done::before{background:rgba(255,255,255,.85)}
+.arc-step-dot{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;margin:0 auto 5px;font-size:11px;position:relative;z-index:1;background:rgba(255,255,255,.15)}
+.arc-step.done .arc-step-dot{background:#fff;border-color:#fff;color:#0F6E56;font-weight:500}
+.arc-step.active .arc-step-dot{border-color:#fff;background:rgba(255,255,255,.35);border-width:2px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.4)}50%{box-shadow:0 0 0 5px rgba(255,255,255,0)}}
+.arc-step-label{font-size:9px;color:rgba(255,255,255,.75);line-height:1.3}
+.arc-step.done .arc-step-label,.arc-step.active .arc-step-label{color:#fff}
+.arc-action-btn{margin-top:14px;background:rgba(255,255,255,.2);border:0.5px solid rgba(255,255,255,.4);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.arc-action-btn span{font-size:12px;font-weight:500;color:#fff}
+.arc-action-btn .arrow{font-size:14px;color:rgba(255,255,255,.8)}
+
+/* CALENDAR */
+.cal-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 8px}
+.cal-nav{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--color-text-secondary)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:0 10px}
+.cal-day-label{text-align:center;font-size:10px;color:var(--color-text-secondary);padding:4px 0}
+.cal-day-label:first-child{color:#E24B4A}
+.cal-day-label:last-child{color:#185FA5}
+.cal-cell{text-align:center;padding:4px 2px;font-size:12px;border-radius:8px;cursor:pointer;position:relative;min-height:36px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:4px}
+.cal-cell:hover{background:var(--color-background-secondary)}
+.cal-cell.other{color:var(--color-text-secondary);opacity:.4}
+.cal-cell.today .day-num{background:#0F6E56;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:500}
+.cal-cell.has-event::after{content:'';width:5px;height:5px;border-radius:50%;margin-top:2px}
+.cal-cell.ev-red::after{background:#E24B4A}
+.cal-cell.ev-green::after{background:#1D9E75}
+.cal-cell.ev-blue::after{background:#378ADD}
+.cal-cell.ev-amber::after{background:#EF9F27}
+.day-num{width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+.cal-events{padding:10px 12px}
+.cal-event-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.cal-ev-dot{width:10px;height:10px;border-radius:50%;margin-top:3px;flex-shrink:0}
+.cal-ev-title{font-size:12px;font-weight:500}
+.cal-ev-sub{font-size:10px;color:var(--color-text-secondary);margin-top:2px}
+
+.wrapper{display:flex;flex-direction:column;align-items:center;padding:20px 12px}
+.nav-tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:16px}
+.nav-tab{padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);transition:all .2s}
+.nav-tab.active{background:#0F6E56;color:#fff;border-color:#0F6E56}
+.screen-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:6px;text-align:center}
+
+.arc-toggle{display:flex;gap:8px;margin:0 12px 12px}
+.arc-toggle-btn{flex:1;padding:8px;border-radius:10px;border:0.5px solid var(--color-border-secondary);font-size:11px;cursor:pointer;text-align:center;transition:all .2s;background:var(--color-background-primary);color:var(--color-text-secondary)}
+.arc-toggle-btn.active{background:#0F6E56;color:#fff;border-color:#0F6E56}
+</style>
+
+<div class="wrapper">
+  <div class="nav-tabs" id="screenTabs">
+    <div class="nav-tab active" onclick="showScreen('home')">홈</div>
+    <div class="nav-tab" onclick="showScreen('chat')">채팅</div>
+    <div class="nav-tab" onclick="showScreen('tournament')">추천</div>
+    <div class="nav-tab" onclick="showScreen('deadzone')">데드존</div>
+    <div class="nav-tab" onclick="showScreen('calendar')">캘린더</div>
+  </div>
+  <div class="screen-label" id="screenLabel">홈 화면</div>
+
+  <div class="phone" id="phoneFrame">
+    <div class="status-bar"><span>KoLife</span><span>9:41</span></div>
+
+    <!-- HOME -->
+    <div class="screen" id="screen-home">
+      <div style="background:#0F6E56;padding:14px 16px 14px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:42px;height:42px;border-radius:14px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px">W</div>
+          <div>
+            <div style="color:#fff;font-size:15px;font-weight:500">Wang Lei님</div>
+            <div style="color:rgba(255,255,255,.8);font-size:11px">D-2 비자 · 서울대학교 · 12일째</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARC STATE TOGGLE -->
+      <div style="padding:12px 12px 4px;font-size:11px;font-weight:500;color:var(--color-text-secondary)">ARC 상태 미리보기</div>
+      <div class="arc-toggle">
+        <div class="arc-toggle-btn active" id="tog1" onclick="setArc('progress')">진행 중</div>
+        <div class="arc-toggle-btn" id="tog2" onclick="setArc('done')">수령 완료</div>
+      </div>
+
+      <!-- ARC BANNER -->
+      <div class="arc-banner" id="arcBanner">
+        <!-- injected by JS -->
+      </div>
+
+      <!-- TOP 3 TODAY -->
+      <div style="padding:4px 12px 6px;font-size:12px;font-weight:500;color:var(--color-text-secondary)">오늘 할 수 있는 일 TOP 3</div>
+      <div class="card" style="border-left:3px solid #1D9E75">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div><div style="font-size:13px;font-weight:500">선불 유심 구매하기</div><div style="font-size:11px;color:var(--color-text-secondary)">ARC 없이 가능 · 명동 GS25</div></div>
+          <span class="pill pill-green">지금 가능</span>
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid #185FA5">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div><div style="font-size:13px;font-weight:500">은행 방문 사전인증 신청</div><div style="font-size:11px;color:var(--color-text-secondary)">서류 업로드 → 지점 20분 단축</div></div>
+          <span class="pill pill-blue">권장</span>
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid #888780">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div><div style="font-size:13px;font-weight:500">통장 개설 (ARC 수령 후)</div><div style="font-size:11px;color:var(--color-text-secondary)">예상 대기: 약 18일</div></div>
+          <span class="pill pill-gray">대기 필요</span>
+        </div>
+      </div>
+      <div class="social-bar">
+        <div style="font-size:18px">👥</div>
+        <p>비슷한 상황의 <strong>1,245명</strong>은 선불 유심 → 하나은행 순서로 진행했어요</p>
+      </div>
+      <div style="height:8px"></div>
+    </div>
+
+    <!-- CHAT -->
+    <div class="screen hidden" id="screen-chat">
+      <div style="background:#0F6E56;padding:14px 16px;color:#fff">
+        <div style="font-size:16px;font-weight:500">채팅방</div>
+        <div style="font-size:11px;opacity:.8">맞춤 AI 어시스턴트</div>
+      </div>
+      <div class="chat-room"><div class="room-icon" style="background:#E1F5EE">💳</div><div class="room-info"><div class="room-name">금융 상품 도우미</div><div class="room-preview">하나은행 외국인 통장 개설 서류 안내 완료</div></div><div class="badge">3</div></div>
+      <div class="chat-room"><div class="room-icon" style="background:#E6F1FB">📋</div><div class="room-info"><div class="room-name">비자 · 행정 도우미</div><div class="room-preview">ARC 신청 후 D+17일 예상 수령일: 3월 24일</div></div><div class="badge">1</div></div>
+      <div class="chat-room"><div class="room-icon" style="background:#FAEEDA">🎓</div><div class="room-info"><div class="room-name">학교 · 생활 혜택</div><div class="room-preview">서울대 외국인 무료 건강검진 신청 기간: ~3/31</div></div><div></div></div>
+      <div class="chat-room"><div class="room-icon" style="background:#FBEAF0">🏠</div><div class="room-info"><div class="room-name">주거 · 생활 정보</div><div class="room-preview">관악구 외국인 임시 주거 지원 2건 발견됨</div></div><div></div></div>
+      <div style="padding:12px"><div style="border:0.5px dashed var(--color-border-secondary);border-radius:12px;padding:14px;text-align:center;cursor:pointer"><div style="font-size:13px;color:var(--color-text-secondary)">+ 나만의 어시스턴트 만들기</div></div></div>
+    </div>
+
+    <!-- TOURNAMENT -->
+    <div class="screen hidden" id="screen-tournament">
+      <div style="background:#0F6E56;padding:14px 16px;color:#fff"><div style="font-size:15px;font-weight:500">TOP 3 추천</div><div style="font-size:11px;opacity:.8">100개 → 3개로 압축</div></div>
+      <div style="padding:12px">
+        <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:12px">D-2 비자 · ARC 대기 중 · Wang Lei님 기준</div>
+        <div class="tournament-card safe">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span class="pill pill-green">안전형</span><span style="font-size:10px;color:var(--color-text-secondary)">872명 선택</span></div>
+          <div style="font-size:13px;font-weight:500">하나은행 외국인 우대통장</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">환전 수수료 우대 90% · 영어 상담 가능</div>
+          <div style="font-size:10px;color:var(--color-text-secondary);margin-top:6px;padding-top:6px;border-top:0.5px solid var(--color-border-tertiary)">ARC 없이 사전등록 가능 · 개설 최단시간</div>
+        </div>
+        <div class="tournament-card balanced">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span class="pill pill-blue">균형형</span><span style="font-size:10px;color:var(--color-text-secondary)">341명 선택</span></div>
+          <div style="font-size:13px;font-weight:500">카카오뱅크 외국인 계좌</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">앱으로 모든 처리 · 영상통화 인증</div>
+          <div style="font-size:10px;color:var(--color-text-secondary);margin-top:6px;padding-top:6px;border-top:0.5px solid var(--color-border-tertiary)">지점 방문 불필요</div>
+        </div>
+        <div class="tournament-card aggressive">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span class="pill pill-amber">공격형</span><span style="font-size:10px;color:var(--color-text-secondary)">32명 선택</span></div>
+          <div style="font-size:13px;font-weight:500">토스뱅크 외국인 계좌</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">이자 연 2.3% · 체크카드 즉시 발급</div>
+          <div style="font-size:10px;color:var(--color-text-secondary);margin-top:6px;padding-top:6px;border-top:0.5px solid var(--color-border-tertiary)">ARC 필수 · 수령 후 신청 권장</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:12px;padding:12px">
+          <div style="font-size:11px;font-weight:500;margin-bottom:6px">제외된 97개 이유</div>
+          <div style="font-size:11px;color:var(--color-text-secondary)">· 외국인 계좌 불가 (23개)<br>· ARC 필수 (61개)<br>· 영어 상담 미지원 (13개)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEADZONE -->
+    <div class="screen hidden" id="screen-deadzone">
+      <div style="background:#0F6E56;padding:14px 16px;color:#fff"><div style="font-size:15px;font-weight:500">ARC 대기 기간 가이드</div><div style="font-size:11px;opacity:.8">지금 vs 나중에</div></div>
+      <div style="padding:12px">
+        <div style="background:#E1F5EE;border-radius:12px;padding:10px 12px;margin-bottom:12px;display:flex;gap:8px;align-items:center"><div style="font-size:20px">📅</div><div><div style="font-size:12px;font-weight:500;color:#0F6E56">예상 수령일</div><div style="font-size:13px;font-weight:500;color:#085041">2025년 3월 24일 (D-18)</div></div></div>
+        <div style="font-size:12px;font-weight:500;margin-bottom:6px">지금 가능한 일</div>
+        <div class="dead-zone-item"><div class="dz-dot" style="background:#1D9E75"></div><div><div style="font-size:12px">선불 유심 구매</div><div style="font-size:10px;color:var(--color-text-secondary)">여권만 있으면 됨</div></div></div>
+        <div class="dead-zone-item"><div class="dz-dot" style="background:#1D9E75"></div><div><div style="font-size:12px">은행 사전 서류 인증</div><div style="font-size:10px;color:var(--color-text-secondary)">앱에서 미리 처리 가능</div></div></div>
+        <div class="dead-zone-item"><div class="dz-dot" style="background:#1D9E75"></div><div><div style="font-size:12px">교통카드 구매</div><div style="font-size:10px;color:var(--color-text-secondary)">T-머니, 캐시비 편의점</div></div></div>
+        <div style="font-size:12px;font-weight:500;margin:12px 0 6px">ARC 후 가능한 일</div>
+        <div class="dead-zone-item"><div class="dz-dot" style="background:#BA7517"></div><div><div style="font-size:12px">정규 통신 요금제</div><div style="font-size:10px;color:var(--color-text-secondary)">대안: 선불 유심</div></div></div>
+        <div class="dead-zone-item"><div class="dz-dot" style="background:#BA7517"></div><div><div style="font-size:12px">은행 계좌 개설</div><div style="font-size:10px;color:var(--color-text-secondary)">사전인증은 지금 시작</div></div></div>
+        <div class="dead-zone-item"><div class="dz-dot" style="background:#A32D2D"></div><div><div style="font-size:12px">신용카드 신청</div><div style="font-size:10px;color:var(--color-text-secondary)">계좌 + 3개월 거래 필요</div></div></div>
+        <div style="height:12px"></div>
+      </div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="screen hidden" id="screen-calendar">
+      <div style="background:#0F6E56;padding:14px 16px;color:#fff"><div style="font-size:15px;font-weight:500">스마트 캘린더</div><div style="font-size:11px;opacity:.8">중요 일정 자동 추적</div></div>
+      <div class="cal-header">
+        <div class="cal-nav" onclick="changeMonth(-1)">‹</div>
+        <div style="font-size:14px;font-weight:500" id="calMonthLabel">2025년 3월</div>
+        <div class="cal-nav" onclick="changeMonth(1)">›</div>
+      </div>
+      <div class="cal-grid" id="calDayLabels">
+        <div class="cal-day-label">일</div>
+        <div class="cal-day-label">월</div>
+        <div class="cal-day-label">화</div>
+        <div class="cal-day-label">수</div>
+        <div class="cal-day-label">목</div>
+        <div class="cal-day-label">금</div>
+        <div class="cal-day-label">토</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div style="display:flex;gap:12px;padding:8px 14px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#E24B4A"></div><span style="font-size:10px;color:var(--color-text-secondary)">긴급</span></div>
+        <div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#1D9E75"></div><span style="font-size:10px;color:var(--color-text-secondary)">ARC</span></div>
+        <div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#378ADD"></div><span style="font-size:10px;color:var(--color-text-secondary)">금융</span></div>
+        <div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:#EF9F27"></div><span style="font-size:10px;color:var(--color-text-secondary)">학교</span></div>
+      </div>
+      <div style="height:0.5px;background:var(--color-border-tertiary);margin:0 12px"></div>
+      <div class="cal-events" id="calEvents"></div>
+    </div>
+
+    <div class="tab-bar">
+      <div class="tab active" id="tab-home" onclick="switchTab('home')"><div style="font-size:18px">🏠</div><span>홈</span></div>
+      <div class="tab" id="tab-chat" onclick="switchTab('chat')"><div style="font-size:18px">💬</div><span>채팅</span></div>
+      <div class="tab" id="tab-calendar" onclick="switchTab('calendar')"><div style="font-size:18px">📅</div><span>캘린더</span></div>
+      <div class="tab" id="tab-me" onclick="switchTab('me')"><div style="font-size:18px">👤</div><span>내 정보</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── ARC STATE ──────────────────────────────────────────
+const arcStates = {
+  progress: `
+    <div class="arc-in-progress">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2px">
+        <div>
+          <div style="font-size:11px;opacity:.8;margin-bottom:3px">외국인등록증 (ARC) 진행 상황</div>
+          <h3>신청 완료 · 심사 중</h3>
+          <p>예상 수령일 <strong>3월 24일</strong> · 현재 D-18</p>
+        </div>
+        <div style="background:rgba(255,255,255,.2);border-radius:10px;padding:4px 8px;text-align:center">
+          <div style="font-size:18px;font-weight:500;color:#fff">18</div>
+          <div style="font-size:9px;color:rgba(255,255,255,.8)">일 남음</div>
+        </div>
+      </div>
+      <div class="arc-step-row">
+        <div class="arc-step done"><div class="arc-step-dot">✓</div><div class="arc-step-label">서류<br>제출</div></div>
+        <div class="arc-step done"><div class="arc-step-dot">✓</div><div class="arc-step-label">접수<br>완료</div></div>
+        <div class="arc-step active"><div class="arc-step-dot" style="font-size:8px">●</div><div class="arc-step-label">심사<br>중</div></div>
+        <div class="arc-step"><div class="arc-step-dot"></div><div class="arc-step-label">SMS<br>수신</div></div>
+        <div class="arc-step"><div class="arc-step-dot"></div><div class="arc-step-label">수령<br>완료</div></div>
+      </div>
+      <div class="arc-action-btn" onclick="showScreen('deadzone')">
+        <span>지금 할 수 있는 일 보기</span>
+        <span class="arrow">→</span>
+      </div>
+    </div>`,
+  done: `
+    <div class="arc-done">
+      <div style="margin-bottom:4px">
+        <div style="font-size:11px;opacity:.8;margin-bottom:3px">외국인등록증 (ARC) 진행 상황</div>
+        <h3>수령 완료</h3>
+        <p>이제 은행 계좌 개설이 가능해요</p>
+      </div>
+      <div class="arc-step-row">
+        <div class="arc-step done"><div class="arc-step-dot">✓</div><div class="arc-step-label">서류<br>제출</div></div>
+        <div class="arc-step done"><div class="arc-step-dot">✓</div><div class="arc-step-label">접수<br>완료</div></div>
+        <div class="arc-step done"><div class="arc-step-dot">✓</div><div class="arc-step-label">심사<br>완료</div></div>
+        <div class="arc-step done"><div class="arc-step-dot">✓</div><div class="arc-step-label">SMS<br>수신</div></div>
+        <div class="arc-step done"><div class="arc-step-dot">✓</div><div class="arc-step-label">수령<br>완료</div></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <div class="arc-action-btn" style="flex:1">
+          <span>하나은행 신촌점 예약</span>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+      <div style="margin-top:8px;background:rgba(255,255,255,.15);border-radius:10px;padding:8px 12px;display:flex;gap:8px;align-items:center">
+        <div style="font-size:14px">📍</div>
+        <div>
+          <div style="font-size:11px;font-weight:500;color:#fff">추천 지점: 하나은행 신촌점</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.75)">외국인 전담 창구 · 영어 상담 · 도보 12분</div>
+        </div>
+      </div>
+    </div>`
+};
+
+function setArc(state){
+  document.getElementById('arcBanner').innerHTML = arcStates[state];
+  document.getElementById('tog1').classList.toggle('active', state==='progress');
+  document.getElementById('tog2').classList.toggle('active', state==='done');
+}
+setArc('progress');
+
+// ── CALENDAR ──────────────────────────────────────────
+let calYear=2025, calMonth=2; // 0-indexed: 2 = March
+
+const events = {
+  '2025-3-6': [{color:'#E24B4A',title:'비자 만료일',sub:'연장 신청 필수 · 이민청 예약 권장',pill:'긴급'}],
+  '2025-3-24': [
+    {color:'#1D9E75',title:'ARC 예상 수령일',sub:'출입국사무소 SMS 확인 후 방문',pill:'ARC'},
+    {color:'#378ADD',title:'은행 계좌 개설 권장일',sub:'ARC 수령 당일 → 하나은행 방문',pill:'금융'}
+  ],
+  '2025-3-31': [{color:'#EF9F27',title:'건강검진 신청 마감',sub:'서울대 외국인 무료 혜택',pill:'학교'}],
+  '2025-4-15': [{color:'#378ADD',title:'체크카드 발급 예정',sub:'계좌 개설 후 약 3주 소요',pill:'금융'}],
+};
+
+function getEventKey(y,m,d){return `${y}-${m+1}-${d}`}
+
+function renderCal(){
+  const months=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+  document.getElementById('calMonthLabel').textContent=`${calYear}년 ${months[calMonth]}`;
+  const grid=document.getElementById('calGrid');
+  grid.innerHTML='';
+  const first=new Date(calYear,calMonth,1).getDay();
+  const days=new Date(calYear,calMonth+1,0).getDate();
+  const prevDays=new Date(calYear,calMonth,0).getDate();
+  const today=new Date();
+  let cells=[];
+  for(let i=first-1;i>=0;i--) cells.push({d:prevDays-i,cur:false});
+  for(let d=1;d<=days;d++) cells.push({d,cur:true});
+  while(cells.length%7!==0) cells.push({d:cells.length-first-days+1,cur:false});
+  cells.forEach(c=>{
+    const el=document.createElement('div');
+    el.className='cal-cell'+(c.cur?'':' other');
+    const isToday=c.cur&&calYear===today.getFullYear()&&calMonth===today.getMonth()&&c.d===today.getDate();
+    if(isToday) el.classList.add('today');
+    const key=getEventKey(calYear,calMonth,c.d);
+    const evs=c.cur&&events[key];
+    let dotHtml='';
+    if(evs) evs.forEach(e=>{
+      const cls=e.color==='#E24B4A'?'ev-red':e.color==='#1D9E75'?'ev-green':e.color==='#378ADD'?'ev-blue':'ev-amber';
+      el.classList.add('has-event',cls);
+    });
+    el.innerHTML=`<div class="day-num">${c.d}</div>`;
+    if(evs) el.innerHTML+=`<div style="width:5px;height:5px;border-radius:50%;background:${evs[0].color};margin-top:1px"></div>`;
+    if(c.cur&&evs) el.onclick=()=>scrollToEvent(key);
+    grid.appendChild(el);
+  });
+  renderEvents();
+}
+
+function renderEvents(){
+  const container=document.getElementById('calEvents');
+  container.innerHTML='<div style="font-size:12px;font-weight:500;margin-bottom:8px;color:var(--color-text-primary)">이번 달 주요 일정</div>';
+  const monthEvs=Object.entries(events).filter(([k])=>{
+    const [y,m]=k.split('-').map(Number);
+    return y===calYear&&m===calMonth+1;
+  }).sort((a,b)=>{
+    const da=parseInt(a[0].split('-')[2]),db=parseInt(b[0].split('-')[2]);
+    return da-db;
+  });
+  if(!monthEvs.length){container.innerHTML+='<div style="font-size:12px;color:var(--color-text-secondary)">이번 달 일정이 없어요</div>';return;}
+  monthEvs.forEach(([k,evList])=>{
+    const day=k.split('-')[2];
+    evList.forEach(e=>{
+      const el=document.createElement('div');
+      el.className='cal-event-item';
+      el.id='ev-'+k;
+      el.innerHTML=`<div class="cal-ev-dot" style="background:${e.color}"></div><div style="flex:1"><div class="cal-ev-title">${e.title}</div><div class="cal-ev-sub">${calMonth+1}월 ${day}일 · ${e.sub}</div></div>`;
+      container.appendChild(el);
+    });
+  });
+}
+
+function scrollToEvent(key){
+  const el=document.getElementById('ev-'+key);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function changeMonth(d){
+  calMonth+=d;
+  if(calMonth>11){calMonth=0;calYear++;}
+  if(calMonth<0){calMonth=11;calYear--;}
+  renderCal();
+}
+
+// ── NAV ──────────────────────────────────────────────
+const screenMap={home:'홈 화면',chat:'채팅방 목록',tournament:'TOP 3 추천',deadzone:'데드존 가이드',calendar:'스마트 캘린더'};
+const allScreens=['home','chat','tournament','deadzone','calendar'];
+
+function showScreen(id){
+  allScreens.forEach(s=>{
+    document.getElementById('screen-'+s).classList.toggle('hidden',s!==id);
+  });
+  document.getElementById('screenLabel').textContent=screenMap[id]||id;
+  document.querySelectorAll('.nav-tab').forEach(t=>{
+    const map={home:'홈',chat:'채팅',tournament:'추천',deadzone:'데드존',calendar:'캘린더'};
+    t.classList.toggle('active',t.textContent===map[id]);
+  });
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const ti=document.getElementById('tab-'+id);
+  if(ti) ti.classList.add('active');
+  if(id==='calendar') renderCal();
+}
+
+function switchTab(t){
+  const m={home:'home',chat:'chat',calendar:'calendar',me:'home'};
+  showScreen(m[t]||'home');
+}
+</script>
