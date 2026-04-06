@@ -130,6 +130,7 @@
         gap: 64px;
         position: relative;
         z-index: 1;
+        transform-origin: center center;
       }
       .phone-wrapper {
         width: 340px;
@@ -144,6 +145,24 @@
         position: relative;
         display: flex;
         flex-direction: column;
+      }
+      @media (max-height: 820px) {
+        body {
+          padding: 12px;
+        }
+        .demo-stage {
+          gap: 40px;
+          transform: scale(0.92);
+        }
+      }
+      @media (max-height: 760px) {
+        body {
+          padding: 8px;
+        }
+        .demo-stage {
+          gap: 28px;
+          transform: scale(0.86);
+        }
       }
       .notch {
         height: 28px;
@@ -427,6 +446,58 @@
         z-index: 20;
         display: none;
         animation: fadeUp 0.28s ease;
+      }
+      .push-banner {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        right: 12px;
+        z-index: 26;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        box-shadow: 0 18px 38px rgba(28, 28, 26, 0.18);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-16px) scale(0.98);
+        transition:
+          opacity 0.56s ease,
+          transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .push-banner.visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      .push-banner-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--teal-light);
+        color: var(--teal);
+        flex-shrink: 0;
+      }
+      .push-banner-copy {
+        min-width: 0;
+      }
+      .push-banner-app {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--gray-900);
+        letter-spacing: 0.2px;
+      }
+      .push-banner-msg {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--gray-600);
+        line-height: 1.45;
+        margin-top: 2px;
       }
       .q-opt {
         padding: 8px 16px;
@@ -907,9 +978,18 @@
             <div class="tc-num" id="tc-num"></div>
             <div class="tc-title" id="tc-title"></div>
           </div>
+          <div id="push-banner" class="push-banner">
+            <div class="push-banner-icon">
+              <iconify-icon icon="solar:bell-bing-bold" width="18"></iconify-icon>
+            </div>
+            <div class="push-banner-copy">
+              <div class="push-banner-app">Hana EZ</div>
+              <div id="push-banner-msg" class="push-banner-msg"></div>
+            </div>
+          </div>
 
           <!-- SCREEN: ONBOARDING -->
-          <div id="screen-onboarding" class="screen active">
+          <div id="screen-onboarding" class="screen">
             <div
               style="
                 background: var(--teal);
@@ -1474,7 +1554,7 @@
           </div>
 
           <!-- SCREEN: HOME -->
-          <div id="screen-home" class="screen">
+          <div id="screen-home" class="screen active">
             <div
               style="
                 background: var(--teal-dark);
@@ -4342,6 +4422,37 @@
           to.style.display = "none";
         }, d || 3000);
       }
+      var pushBannerTimer = null;
+      var pushBannerExitTimer = null;
+      var pushBannerResolve = null;
+      var PUSH_BANNER_EXIT_MS = 800;
+      function resolvePushBannerWait() {
+        if (!pushBannerResolve) return;
+        var resolve = pushBannerResolve;
+        pushBannerResolve = null;
+        resolve();
+      }
+      function showPushBanner(message, duration) {
+        var banner = document.getElementById("push-banner");
+        var msg = document.getElementById("push-banner-msg");
+        if (!banner || !msg) return Promise.resolve();
+        if (pushBannerTimer) clearTimeout(pushBannerTimer);
+        if (pushBannerExitTimer) clearTimeout(pushBannerExitTimer);
+        resolvePushBannerWait();
+        msg.textContent = message;
+        banner.classList.add("visible");
+        return new Promise(function (resolve) {
+          pushBannerResolve = resolve;
+          pushBannerTimer = setTimeout(function () {
+            pushBannerTimer = null;
+            banner.classList.remove("visible");
+            pushBannerExitTimer = setTimeout(function () {
+              pushBannerExitTimer = null;
+              resolvePushBannerWait();
+            }, PUSH_BANNER_EXIT_MS);
+          }, duration == null ? 2200 : duration);
+        });
+      }
       function sendChat() {
         var inp = document.getElementById("chat-input-field");
         var t = inp.value.trim();
@@ -4799,7 +4910,7 @@
         else el.scrollTo({ top: amount, behavior: "smooth" });
         await sleep(500);
       }
-      function setTypo(num, head, sub) {
+      function setTypo(num, head, sub, delayMs) {
         var area = document.getElementById("typo-area");
         area.classList.remove("visible");
         setTimeout(function () {
@@ -4807,7 +4918,7 @@
           document.getElementById("typo-head").innerHTML = head || "";
           document.getElementById("typo-sub").innerHTML = sub || "";
           area.classList.add("visible");
-        }, 350);
+        }, delayMs == null ? 350 : delayMs);
       }
       function clearTypo() {
         document.getElementById("typo-area").classList.remove("visible");
@@ -4834,9 +4945,9 @@
       // ========== SCENARIOS ==========
       async function scenario1() {
         // scene:'1/4 온보딩';
-        await showTitleCard("SCENARIO 1", "온보딩 설문", 2500);
-        setTypo("SCENARIO 01", "3분 설문으로", "나만의 금융 여정이 시작됩니다");
         showScreen("onboarding");
+        setTypo("SCENARIO 01", "3분 설문으로", "나만의 금융 여정이 시작됩니다");
+        await showTitleCard("SCENARIO 1", "온보딩 설문", 2500);
         await sleep(1500);
         setTypo("SCENARIO 01", "학교, 비자, 국적", "당신의 상황을 알려주세요");
         await animateTap('#q-univ .q-opt[data-val="SNU"]');
@@ -5025,8 +5136,11 @@
         if (demoRunning) return;
         demoRunning = true;
         demoAbort = false;
-        setTypo("", "Student Start Mode", "유학생을 위한 맞춤 금융 온보딩");
+        resetAll();
         await sleep(2000);
+        setTypo("", "Student Start Mode", "유학생을 위한 맞춤 금융 온보딩", 0);
+        await sleep(2000);
+        await showPushBanner("오늘은 서울대 무료 건강검진 신청 마감일이예요!", 3500);
         await scenario1();
         if (demoAbort) return;
         await scenario2();
@@ -5038,6 +5152,7 @@
         await showEnding();
         demoRunning = false;
       }
+      resetAll();
       setTimeout(function () {
         startDemo();
       }, 2000);
