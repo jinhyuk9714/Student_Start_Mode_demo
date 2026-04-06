@@ -19,7 +19,13 @@
       "mcp__playwright__playwright_screenshot",
       "mcp__playwright__playwright_click",
       "mcp__playwright__playwright_evaluate",
-      "Bash(python -m http.server 9125)"
+      "Bash(python -m http.server 9125)",
+      "mcp__playwright__playwright_console_logs",
+      "Bash(python -m http.server 9130)",
+      "Skill(browse)",
+      "Bash(python -m http.server 9132)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:9132/prototype.html)",
+      "Bash(npx -y http-server -p 8766 --cors -c-1)"
     ]
   }
 }
