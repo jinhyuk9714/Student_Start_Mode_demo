@@ -4365,6 +4365,147 @@
         var bar = document.getElementById("onboard-progress");
         if (bar) bar.style.width = pct + "%";
       }
+      var DEMO_MODE =
+        new URLSearchParams(window.location.search).get("mode") === "short"
+          ? "short"
+          : "normal";
+      var DEMO_PACING = {
+        normal: {
+          intro: { autostart: 2000, home: 2000, typo: 2000 },
+          push: { hold: 3500, exit: 800 },
+          titleCard: { defaultHold: 2000, scenario: 2500, outro: 400 },
+          loading: { initial: 500, step: 800, complete: 600 },
+          helpers: {
+            tapDown: 200,
+            tapUp: 300,
+            typeChar: 80,
+            scrollSettle: 500,
+            typoDelay: 350,
+          },
+          highlight: 2000,
+          ending: { hold: 1800 },
+          chat: { botReply: 800, confirmUpdate: 500 },
+          s1: {
+            introFocus: 1500,
+            selectGap: 700,
+            scrollGap: 400,
+            multiGap: 600,
+            submitGap: 500,
+            homeReveal: 800,
+            bannerFocus: 2500,
+            checklistReveal: 800,
+            checklistFocus: 2500,
+            calendarFocus: 2500,
+            outro: 1000,
+          },
+          s2: {
+            reset: 300,
+            homeFocus: 2000,
+            checklistFocus: 2500,
+            calendarFocus: 2500,
+            preChat: 1000,
+            chatListFocus: 1200,
+            chatRoomFocus: 1200,
+            typedPause: 600,
+            sentPause: 1500,
+            confirmFocus: 1200,
+            unlockFocus: 3000,
+            homeReturn: 1200,
+            homeBannerFocus: 3000,
+            outro: 1000,
+          },
+          s3: {
+            reset: 300,
+            myFocus: 1200,
+            myScroll: 800,
+            scholarshipHighlight: 500,
+            scholarshipOpen: 2000,
+            checklistFocus: 800,
+            checklistReveal: 2500,
+            outro: 1000,
+          },
+          s4: {
+            reset: 300,
+            titleIntro: 1500,
+            chatListFocus: 1200,
+            chatRoomFocus: 1200,
+            typedPause: 600,
+            answerFocus: 2200,
+            sourceFocus: 3500,
+            outro: 1000,
+          },
+        },
+        short: {
+          intro: { autostart: 900, home: 1500, typo: 1500 },
+          push: { hold: 2800, exit: 650 },
+          titleCard: { defaultHold: 1500, scenario: 1500, outro: 220 },
+          loading: { initial: 320, step: 430, complete: 320 },
+          helpers: {
+            tapDown: 140,
+            tapUp: 190,
+            typeChar: 50,
+            scrollSettle: 280,
+            typoDelay: 220,
+          },
+          highlight: 1500,
+          ending: { hold: 1400 },
+          chat: { botReply: 550, confirmUpdate: 320 },
+          s1: {
+            introFocus: 900,
+            selectGap: 320,
+            scrollGap: 220,
+            multiGap: 280,
+            submitGap: 280,
+            homeReveal: 650,
+            bannerFocus: 1800,
+            checklistReveal: 450,
+            checklistFocus: 1800,
+            calendarFocus: 1900,
+            outro: 450,
+          },
+          s2: {
+            reset: 180,
+            homeFocus: 1300,
+            checklistFocus: 1500,
+            calendarFocus: 1500,
+            preChat: 400,
+            chatListFocus: 650,
+            chatRoomFocus: 650,
+            typedPause: 320,
+            sentPause: 850,
+            confirmFocus: 600,
+            unlockFocus: 2200,
+            homeReturn: 650,
+            homeBannerFocus: 2000,
+            outro: 450,
+          },
+          s3: {
+            reset: 180,
+            myFocus: 900,
+            myScroll: 320,
+            scholarshipHighlight: 280,
+            scholarshipOpen: 1100,
+            checklistFocus: 450,
+            checklistReveal: 1800,
+            outro: 450,
+          },
+          s4: {
+            reset: 180,
+            titleIntro: 1000,
+            chatListFocus: 650,
+            chatRoomFocus: 650,
+            typedPause: 320,
+            answerFocus: 1500,
+            sourceFocus: 2600,
+            outro: 450,
+          },
+        },
+      };
+      function pace(group, key) {
+        var value = DEMO_PACING[DEMO_MODE];
+        if (key == null) return value[group];
+        return value[group][key];
+      }
       function startLoading() {
         showScreen("loading");
         var bar = document.getElementById("loading-bar");
@@ -4388,7 +4529,7 @@
               showScreen("home");
               switchTab("home");
               setArcBanner("progress");
-            }, 600);
+            }, pace("loading", "complete"));
             return;
           }
           var s = steps[si];
@@ -4407,9 +4548,9 @@
             }
           }
           si++;
-          setTimeout(doStep, 800);
+          setTimeout(doStep, pace("loading", "step"));
         }
-        setTimeout(doStep, 500);
+        setTimeout(doStep, pace("loading", "initial"));
       }
       function toggleItem(el) {
         el.classList.toggle("expanded");
@@ -4425,7 +4566,6 @@
       var pushBannerTimer = null;
       var pushBannerExitTimer = null;
       var pushBannerResolve = null;
-      var PUSH_BANNER_EXIT_MS = 800;
       function resolvePushBannerWait() {
         if (!pushBannerResolve) return;
         var resolve = pushBannerResolve;
@@ -4442,6 +4582,7 @@
         msg.textContent = message;
         banner.classList.add("visible");
         return new Promise(function (resolve) {
+          var exitMs = pace("push", "exit");
           pushBannerResolve = resolve;
           pushBannerTimer = setTimeout(function () {
             pushBannerTimer = null;
@@ -4449,8 +4590,8 @@
             pushBannerExitTimer = setTimeout(function () {
               pushBannerExitTimer = null;
               resolvePushBannerWait();
-            }, PUSH_BANNER_EXIT_MS);
-          }, duration == null ? 2200 : duration);
+            }, exitMs);
+          }, duration == null ? pace("push", "hold") : duration);
         });
       }
       function sendChat() {
@@ -4500,7 +4641,7 @@
               "네, 도와드릴게요! 좀 더 구체적으로 물어보시면 정확한 안내를 해드릴 수 있어요.",
             );
           }
-        }, 800);
+        }, pace("chat", "botReply"));
         c.scrollTop = c.scrollHeight;
       }
       function addBotMsg(h) {
@@ -4570,7 +4711,7 @@
           document.getElementById("cl-count").textContent = "4/8 완료";
           document.getElementById("my-arc-status").textContent = "수령 완료";
           document.getElementById("my-arc-status").style.color = "var(--teal)";
-        }, 500);
+        }, pace("chat", "confirmUpdate"));
       }
       function toggleScholarship() {
         if (scholarshipAdded) return;
@@ -4883,10 +5024,10 @@
         ind.style.left = cx + "px";
         ind.style.top = cy + "px";
         ind.className = "touch-indicator active";
-        await sleep(200);
+        await sleep(pace("helpers", "tapDown"));
         el.click();
         ind.className = "touch-indicator fade";
-        await sleep(300);
+        await sleep(pace("helpers", "tapUp"));
         ind.className = "touch-indicator";
       }
       async function animateType(sel, text) {
@@ -4898,7 +5039,7 @@
           if (demoAbort) return;
           inp.value += text[i];
           inp.dispatchEvent(new Event("input", { bubbles: true }));
-          await sleep(80);
+          await sleep(pace("helpers", "typeChar"));
         }
       }
       async function animateScroll(sel, amount) {
@@ -4908,7 +5049,7 @@
           el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
         else if (amount === "top") el.scrollTo({ top: 0, behavior: "smooth" });
         else el.scrollTo({ top: amount, behavior: "smooth" });
-        await sleep(500);
+        await sleep(pace("helpers", "scrollSettle"));
       }
       function setTypo(num, head, sub, delayMs) {
         var area = document.getElementById("typo-area");
@@ -4918,7 +5059,7 @@
           document.getElementById("typo-head").innerHTML = head || "";
           document.getElementById("typo-sub").innerHTML = sub || "";
           area.classList.add("visible");
-        }, delayMs == null ? 350 : delayMs);
+        }, delayMs == null ? pace("helpers", "typoDelay") : delayMs);
       }
       function clearTypo() {
         document.getElementById("typo-area").classList.remove("visible");
@@ -4928,9 +5069,9 @@
         document.getElementById("tc-num").textContent = num;
         document.getElementById("tc-title").textContent = title;
         tc.classList.add("visible");
-        await sleep(ms || 2000);
+        await sleep(ms == null ? pace("titleCard", "defaultHold") : ms);
         tc.classList.remove("visible");
-        await sleep(400);
+        await sleep(pace("titleCard", "outro"));
       }
       function highlight(sel) {
         var el = document.querySelector(sel);
@@ -4938,7 +5079,7 @@
           el.classList.add("demo-highlight");
           setTimeout(function () {
             el.classList.remove("demo-highlight");
-          }, 2000);
+          }, pace("highlight"));
         }
       }
 
@@ -4947,25 +5088,25 @@
         // scene:'1/4 온보딩';
         showScreen("onboarding");
         setTypo("SCENARIO 01", "3분 설문으로", "나만의 금융 여정이 시작됩니다");
-        await showTitleCard("SCENARIO 1", "온보딩 설문", 2500);
-        await sleep(1500);
+        await showTitleCard("SCENARIO 1", "온보딩 설문", pace("titleCard", "scenario"));
+        await sleep(pace("s1", "introFocus"));
         setTypo("SCENARIO 01", "학교, 비자, 국적", "당신의 상황을 알려주세요");
         await animateTap('#q-univ .q-opt[data-val="SNU"]');
-        await sleep(700);
+        await sleep(pace("s1", "selectGap"));
         await animateTap('#q-visa .q-opt[data-val="D2"]');
-        await sleep(700);
+        await sleep(pace("s1", "selectGap"));
         await animateTap('#q-nation .q-opt[data-val="CN"]');
-        await sleep(700);
+        await sleep(pace("s1", "selectGap"));
         await animateTap("#q-arc .q-opt:nth-child(2)");
-        await sleep(700);
+        await sleep(pace("s1", "selectGap"));
         await animateScroll("#screen-onboarding .scr-body", 300);
-        await sleep(400);
+        await sleep(pace("s1", "scrollGap"));
         await animateTap("#q-needs .q-opt:nth-child(2)");
-        await sleep(400);
+        await sleep(pace("s1", "scrollGap"));
         await animateTap("#q-needs .q-opt:nth-child(3)");
-        await sleep(600);
+        await sleep(pace("s1", "multiGap"));
         await animateScroll("#screen-onboarding .scr-body", "bottom");
-        await sleep(500);
+        await sleep(pace("s1", "submitGap"));
         setTypo("SCENARIO 01", "AI가 분석합니다", "비자 조건 x 학교 x 국적");
         await animateTap("#cta-btn");
         await waitForScreen("home", 8000);
@@ -4974,86 +5115,86 @@
           "맞춤 체크리스트 완성",
           "해야 할 일, 순서까지 한눈에",
         );
-        await sleep(800);
+        await sleep(pace("s1", "homeReveal"));
         highlight("#arc-banner");
-        await sleep(2500);
+        await sleep(pace("s1", "bannerFocus"));
         await animateTap("#tab-checklist");
-        await sleep(800);
+        await sleep(pace("s1", "checklistReveal"));
         setTypo(
           "SCENARIO 01",
           "잠금 조건까지 자동 계산",
           "지금 가능한 것 vs 기다려야 할 것",
         );
         await animateTap("#cl-arc-item");
-        await sleep(2500);
+        await sleep(pace("s1", "checklistFocus"));
         await animateTap("#tab-calendar");
         setTypo(
           "SCENARIO 01",
           "스마트 캘린더",
           "중요 일정을 자동으로 추적합니다",
         );
-        await sleep(2500);
-        await sleep(1000);
+        await sleep(pace("s1", "calendarFocus"));
+        await sleep(pace("s1", "outro"));
       }
 
       async function scenario2() {
         // scene:'2/4 ARC 수령';
         resetAll();
-        await sleep(300);
+        await sleep(pace("s2", "reset"));
         setTypo("SCENARIO 02", "왕웨이, 중국 유학생", "서울대 D-2 비자");
-        await showTitleCard("SCENARIO 2", "왕웨이: ARC 수령", 2500);
+        await showTitleCard("SCENARIO 2", "왕웨이: ARC 수령", pace("titleCard", "scenario"));
         // Start from home
         switchTab("home");
-        await sleep(2000); // Show checklist
+        await sleep(pace("s2", "homeFocus"));
         setTypo(
           "SCENARIO 02",
           "체크리스트 확인",
           "완료, 가능, 잠김 항목을 한눈에",
         );
         await animateTap("#tab-checklist");
-        await sleep(2500); // Show calendar
+        await sleep(pace("s2", "checklistFocus"));
         await animateTap("#tab-calendar");
         setTypo(
           "SCENARIO 02",
           "캘린더로 일정 확인",
           "ARC 수령 예정일, 비자 만료일",
         );
-        await sleep(2500); // Go to chat
-        await sleep(1000);
+        await sleep(pace("s2", "calendarFocus"));
+        await sleep(pace("s2", "preChat"));
         await animateTap("#tab-chat-list");
-        await sleep(1200);
+        await sleep(pace("s2", "chatListFocus"));
         setTypo("SCENARIO 02", "ARC 수령 시", "체크리스트도 바뀝니다");
         await animateTap("#chat-room-0");
-        await sleep(1200);
+        await sleep(pace("s2", "chatRoomFocus"));
         await animateType("#chat-input-field", "ARC 받았어요!");
-        await sleep(600);
+        await sleep(pace("s2", "typedPause"));
         await animateTap("#send-btn");
-        await sleep(1500);
+        await sleep(pace("s2", "sentPause"));
         var confirmBtn = await waitForElement("#confirm-arc-btn", 5000);
-        await sleep(1200);
+        await sleep(pace("s2", "confirmFocus"));
         setTypo(
           "SCENARIO 02",
           "ARC 수령 → 잠금 해제",
           "은행 계좌, 후불폰이 가능해져요",
         );
         if (confirmBtn) await animateTap("#confirm-arc-btn");
-        await sleep(3000);
+        await sleep(pace("s2", "unlockFocus"));
         setTypo(
           "SCENARIO 02",
           "다음 할 일을 자동 안내",
           "하나은행 계좌 개설하러 가기",
         );
         await animateTap("#tab-home");
-        await sleep(1200);
+        await sleep(pace("s2", "homeReturn"));
         highlight("#arc-banner");
-        await sleep(3000);
-        await sleep(1000);
+        await sleep(pace("s2", "homeBannerFocus"));
+        await sleep(pace("s2", "outro"));
       }
 
       async function scenario3() {
         // scene:'3/4 장학금';
         resetAll();
-        await sleep(300);
+        await sleep(pace("s3", "reset"));
         setPers(
           "응우옌 민",
           "연세대학교 | D-2 | 베트남",
@@ -5064,32 +5205,32 @@
         document.getElementById("scholarship-items").style.display = "none";
         document.getElementById("my-scholarship").textContent = "없음";
         setTypo("SCENARIO 03", "응우옌 민, 베트남 유학생", "연세대 D-2 비자");
-        await showTitleCard("SCENARIO 3", "응우옌: 장학금 추가", 2500);
+        await showTitleCard("SCENARIO 3", "응우옌: 장학금 추가", pace("titleCard", "scenario"));
         await animateTap("#tab-my");
         setTypo("SCENARIO 03", "상황이 달라지면", "체크리스트가 자동 업데이트");
-        await sleep(1200);
+        await sleep(pace("s3", "myFocus"));
         await animateScroll("#screen-my .scr-body", 200);
-        await sleep(800);
+        await sleep(pace("s3", "myScroll"));
         highlight("#my-scholarship");
-        await sleep(500);
+        await sleep(pace("s3", "scholarshipHighlight"));
         await animateTap("#my-scholarship");
-        await sleep(2000);
+        await sleep(pace("s3", "scholarshipOpen"));
         setTypo(
           "SCENARIO 03",
           "장학금 수령 계좌, 증빙 서류",
           "필요한 것만 딱 추가됩니다",
         );
         await animateTap("#tab-checklist");
-        await sleep(800);
+        await sleep(pace("s3", "checklistFocus"));
         await animateScroll("#screen-checklist .scr-body", "bottom");
-        await sleep(2500);
-        await sleep(1000);
+        await sleep(pace("s3", "checklistReveal"));
+        await sleep(pace("s3", "outro"));
       }
 
       async function scenario4() {
         // scene:'4/4 이체한도';
         resetAll();
-        await sleep(300);
+        await sleep(pace("s4", "reset"));
         setPers(
           "Sarah Johnson",
           "고려대학교 | D-2 | 독일",
@@ -5100,28 +5241,28 @@
         document.getElementById("sum-todo").textContent = "1";
         document.getElementById("sum-locked").textContent = "2";
         setTypo("SCENARIO 04", "Sarah, 독일 유학생", "고려대 D-2 비자");
-        await showTitleCard("SCENARIO 4", "Sarah: 이체한도 문의", 2500);
-        await sleep(1500);
+        await showTitleCard("SCENARIO 4", "Sarah: 이체한도 문의", pace("titleCard", "scenario"));
+        await sleep(pace("s4", "titleIntro"));
         await animateTap("#tab-chat-list");
-        await sleep(1200);
+        await sleep(pace("s4", "chatListFocus"));
         setTypo(
           "SCENARIO 04",
           "궁금한 건 담당 AI 비서에게",
           "검증된 DB 기반 답변",
         );
         await animateTap("#chat-room-0");
-        await sleep(1200);
+        await sleep(pace("s4", "chatRoomFocus"));
         await animateType(
           "#chat-input-field",
           "이체한도 올리고 싶은데 어떻게 해요?",
         );
-        await sleep(600);
+        await sleep(pace("s4", "typedPause"));
         await animateTap("#send-btn");
-        await sleep(2200);
+        await sleep(pace("s4", "answerFocus"));
         setTypo("SCENARIO 04", "출처까지 투명하게", "하나은행 · 금융규정");
         await animateScroll("#chat-messages", "bottom");
-        await sleep(3500);
-        await sleep(1000);
+        await sleep(pace("s4", "sourceFocus"));
+        await sleep(pace("s4", "outro"));
       }
 
       async function showEnding() {
@@ -5130,6 +5271,7 @@
         document.getElementById("tc-title").textContent = "Student Start Mode";
         tc.classList.add("visible");
         setTypo("", "Student Start Mode", "유학생 금융, 더 이상 헤매지 마세요");
+        await sleep(pace("ending", "hold"));
       }
 
       async function startDemo() {
@@ -5137,10 +5279,10 @@
         demoRunning = true;
         demoAbort = false;
         resetAll();
-        await sleep(2000);
+        await sleep(pace("intro", "home"));
         setTypo("", "Student Start Mode", "유학생을 위한 맞춤 금융 온보딩", 0);
-        await sleep(2000);
-        await showPushBanner("오늘은 서울대 무료 건강검진 신청 마감일이예요!", 3500);
+        await sleep(pace("intro", "typo"));
+        await showPushBanner("오늘은 서울대 무료 건강검진 신청 마감일이예요!", pace("push", "hold"));
         await scenario1();
         if (demoAbort) return;
         await scenario2();
@@ -5155,7 +5297,7 @@
       resetAll();
       setTimeout(function () {
         startDemo();
-      }, 2000);
+      }, pace("intro", "autostart"));
     </script>
   </body>
 </html>
