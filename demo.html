@@ -127,10 +127,16 @@
       .demo-stage {
         display: flex;
         align-items: center;
-        gap: 64px;
+        justify-content: center;
+        gap: clamp(40px, 4vw, 80px);
         position: relative;
         z-index: 1;
+        width: max-content;
+        max-width: 100%;
+        margin: 0 auto;
+        transform: scale(1);
         transform-origin: center center;
+        will-change: transform;
       }
       .phone-wrapper {
         width: 340px;
@@ -152,7 +158,6 @@
         }
         .demo-stage {
           gap: 40px;
-          transform: scale(0.92);
         }
       }
       @media (max-height: 760px) {
@@ -161,7 +166,6 @@
         }
         .demo-stage {
           gap: 28px;
-          transform: scale(0.86);
         }
       }
       .notch {
@@ -222,7 +226,7 @@
 
       /* TYPO AREA */
       .typo-area {
-        width: 420px;
+        width: clamp(420px, 42vw, 840px);
         min-height: 400px;
         display: flex;
         flex-direction: column;
@@ -4365,10 +4369,13 @@
         var bar = document.getElementById("onboard-progress");
         if (bar) bar.style.width = pct + "%";
       }
+      var requestedMode = new URLSearchParams(window.location.search).get("mode");
       var DEMO_MODE =
-        new URLSearchParams(window.location.search).get("mode") === "short"
-          ? "short"
-          : "normal";
+        requestedMode === "short67" || requestedMode === "short-67"
+          ? "short67"
+          : requestedMode === "short"
+            ? "short"
+            : "normal";
       var DEMO_PACING = {
         normal: {
           intro: { autostart: 2000, home: 2000, typo: 2000 },
@@ -4436,6 +4443,71 @@
           },
         },
         short: {
+          intro: { autostart: 900, home: 900, typo: 900 },
+          push: { hold: 2400, exit: 650 },
+          titleCard: { defaultHold: 1500, scenario: 1100, outro: 220 },
+          loading: { initial: 320, step: 430, complete: 320 },
+          helpers: {
+            tapDown: 140,
+            tapUp: 190,
+            typeChar: 42,
+            scrollSettle: 220,
+            typoDelay: 220,
+          },
+          highlight: 1500,
+          ending: { hold: 1100 },
+          chat: { botReply: 450, confirmUpdate: 320 },
+          s1: {
+            introFocus: 700,
+            selectGap: 250,
+            scrollGap: 160,
+            multiGap: 220,
+            submitGap: 220,
+            homeReveal: 650,
+            bannerFocus: 1500,
+            checklistReveal: 450,
+            checklistFocus: 1200,
+            calendarFocus: 1800,
+            outro: 450,
+          },
+          s2: {
+            reset: 180,
+            homeFocus: 900,
+            checklistFocus: 950,
+            calendarFocus: 950,
+            preChat: 250,
+            chatListFocus: 500,
+            chatRoomFocus: 500,
+            typedPause: 320,
+            sentPause: 750,
+            confirmFocus: 450,
+            unlockFocus: 2000,
+            homeReturn: 450,
+            homeBannerFocus: 1900,
+            outro: 450,
+          },
+          s3: {
+            reset: 180,
+            myFocus: 650,
+            myScroll: 220,
+            scholarshipHighlight: 220,
+            scholarshipOpen: 1050,
+            checklistFocus: 450,
+            checklistReveal: 1700,
+            outro: 450,
+          },
+          s4: {
+            reset: 180,
+            titleIntro: 850,
+            chatListFocus: 500,
+            chatRoomFocus: 500,
+            typedPause: 220,
+            answerFocus: 1400,
+            sourceFocus: 2700,
+            outro: 450,
+          },
+        },
+        short67: {
           intro: { autostart: 900, home: 1500, typo: 1500 },
           push: { hold: 2800, exit: 650 },
           titleCard: { defaultHold: 1500, scenario: 1500, outro: 220 },
@@ -4505,6 +4577,42 @@
         var value = DEMO_PACING[DEMO_MODE];
         if (key == null) return value[group];
         return value[group][key];
+      }
+      function updateStageScale() {
+        var stage = document.querySelector(".demo-stage");
+        if (!stage) return;
+
+        var bodyStyle = window.getComputedStyle(document.body);
+        var padX =
+          parseFloat(bodyStyle.paddingLeft || "0") +
+          parseFloat(bodyStyle.paddingRight || "0");
+        var padY =
+          parseFloat(bodyStyle.paddingTop || "0") +
+          parseFloat(bodyStyle.paddingBottom || "0");
+        var availableWidth = Math.max(window.innerWidth - padX, 320);
+        var availableHeight = Math.max(window.innerHeight - padY, 320);
+        var naturalWidth = stage.offsetWidth || 1;
+        var naturalHeight = stage.offsetHeight || 1;
+        var fitScale = Math.min(
+          availableWidth / naturalWidth,
+          availableHeight / naturalHeight,
+        );
+        var nextScale = Math.max(0.72, Math.min(3, fitScale));
+
+        stage.style.transform = "scale(" + nextScale.toFixed(3) + ")";
+      }
+      var stageScaleFrame = null;
+      function scheduleStageScale() {
+        if (stageScaleFrame != null) cancelAnimationFrame(stageScaleFrame);
+        stageScaleFrame = requestAnimationFrame(function () {
+          stageScaleFrame = null;
+          updateStageScale();
+        });
+      }
+      window.addEventListener("resize", scheduleStageScale);
+      window.addEventListener("load", scheduleStageScale);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(scheduleStageScale);
       }
       function startLoading() {
         showScreen("loading");
@@ -5278,6 +5386,7 @@
         if (demoRunning) return;
         demoRunning = true;
         demoAbort = false;
+        scheduleStageScale();
         resetAll();
         await sleep(pace("intro", "home"));
         setTypo("", "Student Start Mode", "유학생을 위한 맞춤 금융 온보딩", 0);
@@ -5295,6 +5404,7 @@
         demoRunning = false;
       }
       resetAll();
+      scheduleStageScale();
       setTimeout(function () {
         startDemo();
       }, pace("intro", "autostart"));
