@@ -3268,7 +3268,7 @@
                           width="14"
                           style="color: var(--slate); flex-shrink: 0"
                         ></iconify-icon
-                        >우리은행 연세대지점
+                        >하나은행 관악지점
                       </div>
                       <div class="detail-pill slate">
                         <iconify-icon
@@ -4376,6 +4376,16 @@
           : requestedMode === "short"
             ? "short"
             : "normal";
+      var SHORT_READ_CUT_SCALE = 0.934;
+      function scalePacingTree(value, scale) {
+        if (typeof value === "number") return Math.round(value * scale);
+        if (!value || typeof value !== "object") return value;
+        var next = Array.isArray(value) ? [] : {};
+        Object.keys(value).forEach(function (key) {
+          next[key] = scalePacingTree(value[key], scale);
+        });
+        return next;
+      }
       var DEMO_PACING = {
         normal: {
           intro: { autostart: 2000, home: 2000, typo: 2000 },
@@ -4467,7 +4477,7 @@
             bannerFocus: 2600,
             checklistReveal: 550,
             checklistFocus: 2100,
-            calendarFocus: 2900,
+            calendarFocus: 2400,
             outro: 700,
           },
           s2: {
@@ -4573,6 +4583,7 @@
           },
         },
       };
+      DEMO_PACING.short = scalePacingTree(DEMO_PACING.short, SHORT_READ_CUT_SCALE);
       function pace(group, key) {
         var value = DEMO_PACING[DEMO_MODE];
         if (key == null) return value[group];
@@ -4777,6 +4788,39 @@
         c.scrollTop = c.scrollHeight;
       }
 
+      function applyARCCompletedState() {
+        setArcBanner("done");
+        ["cl-bank-account", "cl-phone"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) {
+            el.style.background = "var(--teal-light)";
+            el.style.border = "1px solid rgba(93,202,165,.4)";
+            var iconWrap = el.querySelector(
+              'div[style*="background:var(--gray-200)"]',
+            );
+            if (iconWrap) iconWrap.style.background = "var(--teal)";
+            var lockIcon = el.querySelector(
+              'iconify-icon[icon="solar:lock-keyhole-bold"]',
+            );
+            if (lockIcon)
+              lockIcon.setAttribute("icon", "solar:record-circle-linear");
+            var nameDiv = el.querySelector(
+              'div[style*="color:var(--gray-600)"]',
+            );
+            if (nameDiv) {
+              nameDiv.style.color = "var(--gray-800)";
+              nameDiv.style.fontWeight = "600";
+            }
+          }
+        });
+        document.getElementById("sum-done").textContent = "4";
+        document.getElementById("sum-todo").textContent = "1";
+        document.getElementById("sum-locked").textContent = "2";
+        document.getElementById("cl-count").textContent = "4/8 완료";
+        document.getElementById("my-arc-status").textContent = "수령 완료";
+        document.getElementById("my-arc-status").style.color = "var(--teal)";
+      }
+
       function confirmARC(btn) {
         var card = document.getElementById("arc-confirm-card");
         if (!card) card = btn.parentElement.parentElement;
@@ -4789,36 +4833,7 @@
             '<strong>2가지가 새로 가능해졌어요!</strong><br><br><div style="display:flex;align-items:center;gap:6px;color:var(--teal);font-weight:600;font-size:12px;margin:4px 0"><iconify-icon icon="solar:lock-keyhole-unlocked-linear" width="14"></iconify-icon>하나은행 계좌 개설</div><div style="display:flex;align-items:center;gap:6px;color:var(--teal);font-weight:600;font-size:12px;margin:4px 0"><iconify-icon icon="solar:smartphone-linear" width="14"></iconify-icon>후불폰 전환</div><br>먼저 어떤 걸 하시겠어요?<div style="display:flex;gap:4px;margin-top:6px"><span class="src-chip src-hana">하나은행</span></div>',
           );
           showToast("2개 항목이 새로 가능해졌어요!");
-          setArcBanner("done");
-          ["cl-bank-account", "cl-phone"].forEach(function (id) {
-            var el = document.getElementById(id);
-            if (el) {
-              el.style.background = "var(--teal-light)";
-              el.style.border = "1px solid rgba(93,202,165,.4)";
-              var iconWrap = el.querySelector(
-                'div[style*="background:var(--gray-200)"]',
-              );
-              if (iconWrap) iconWrap.style.background = "var(--teal)";
-              var lockIcon = el.querySelector(
-                'iconify-icon[icon="solar:lock-keyhole-bold"]',
-              );
-              if (lockIcon)
-                lockIcon.setAttribute("icon", "solar:record-circle-linear");
-              var nameDiv = el.querySelector(
-                'div[style*="color:var(--gray-600)"]',
-              );
-              if (nameDiv) {
-                nameDiv.style.color = "var(--gray-800)";
-                nameDiv.style.fontWeight = "600";
-              }
-            }
-          });
-          document.getElementById("sum-done").textContent = "4";
-          document.getElementById("sum-todo").textContent = "1";
-          document.getElementById("sum-locked").textContent = "2";
-          document.getElementById("cl-count").textContent = "4/8 완료";
-          document.getElementById("my-arc-status").textContent = "수령 완료";
-          document.getElementById("my-arc-status").style.color = "var(--teal)";
+          applyARCCompletedState();
         }, pace("chat", "confirmUpdate"));
       }
       function toggleScholarship() {
@@ -5249,7 +5264,7 @@
         // scene:'2/4 ARC 수령';
         resetAll();
         await sleep(pace("s2", "reset"));
-        setTypo("SCENARIO 02", "왕웨이, 중국 유학생", "서울대 D-2 비자");
+        setTypo("SCENARIO 02", "ARC 수령 전", "왕웨이, 중국 유학생");
         await showTitleCard("SCENARIO 2", "왕웨이: ARC 수령", pace("titleCard", "scenario"));
         // Start from home
         switchTab("home");
@@ -5269,9 +5284,9 @@
         );
         await sleep(pace("s2", "calendarFocus"));
         await sleep(pace("s2", "preChat"));
+        setTypo("SCENARIO 02", "ARC 수령 시", "체크리스트도 바뀝니다");
         await animateTap("#tab-chat-list");
         await sleep(pace("s2", "chatListFocus"));
-        setTypo("SCENARIO 02", "ARC 수령 시", "체크리스트도 바뀝니다");
         await animateTap("#chat-room-0");
         await sleep(pace("s2", "chatRoomFocus"));
         await animateType("#chat-input-field", "ARC 받았어요!");
@@ -5302,18 +5317,19 @@
       async function scenario3() {
         // scene:'3/4 장학금';
         resetAll();
+        applyARCCompletedState();
         await sleep(pace("s3", "reset"));
         setPers(
-          "응우옌 민",
-          "연세대학교 | D-2 | 베트남",
-          "응우옌 민 | 연세대 | D-2 | 베트남",
-          "안녕 민!",
+          "왕웨이 (王伟)",
+          "서울대학교 | D-2 | 중국",
+          "왕웨이 | 서울대 | D-2 | 중국",
+          "안녕 왕웨이!",
         );
         scholarshipAdded = false;
         document.getElementById("scholarship-items").style.display = "none";
         document.getElementById("my-scholarship").textContent = "없음";
-        setTypo("SCENARIO 03", "응우옌 민, 베트남 유학생", "연세대 D-2 비자");
-        await showTitleCard("SCENARIO 3", "응우옌: 장학금 추가", pace("titleCard", "scenario"));
+        setTypo("SCENARIO 03", "장학금 수령 시", "왕웨이, 중국 유학생");
+        await showTitleCard("SCENARIO 3", "왕웨이: 장학금 수령", pace("titleCard", "scenario"));
         await animateTap("#tab-my");
         setTypo("SCENARIO 03", "상황이 달라지면", "체크리스트가 자동 업데이트");
         await sleep(pace("s3", "myFocus"));
@@ -5338,18 +5354,16 @@
       async function scenario4() {
         // scene:'4/4 이체한도';
         resetAll();
+        applyARCCompletedState();
         await sleep(pace("s4", "reset"));
         setPers(
-          "Sarah Johnson",
-          "고려대학교 | D-2 | 독일",
-          "Sarah | 고려대 | D-2 | 독일",
-          "안녕 Sarah!",
+          "왕웨이 (王伟)",
+          "서울대학교 | D-2 | 중국",
+          "왕웨이 | 서울대 | D-2 | 중국",
+          "안녕 왕웨이!",
         );
-        document.getElementById("sum-done").textContent = "5";
-        document.getElementById("sum-todo").textContent = "1";
-        document.getElementById("sum-locked").textContent = "2";
-        setTypo("SCENARIO 04", "Sarah, 독일 유학생", "고려대 D-2 비자");
-        await showTitleCard("SCENARIO 4", "Sarah: 이체한도 문의", pace("titleCard", "scenario"));
+        setTypo("SCENARIO 04", "이체한도 문의 시", "왕웨이, 중국 유학생");
+        await showTitleCard("SCENARIO 4", "왕웨이: 이체한도 문의", pace("titleCard", "scenario"));
         await sleep(pace("s4", "titleIntro"));
         await animateTap("#tab-chat-list");
         await sleep(pace("s4", "chatListFocus"));

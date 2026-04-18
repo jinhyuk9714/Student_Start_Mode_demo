@@ -1,0 +1,5526 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Start Mode - Demo Video</title>
+    <meta
+      name="description"
+      content="유학생 금융 온보딩 체크리스트 시연 영상"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css"
+    />
+    <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+    <style>
+      :root {
+        --teal: #0f6e56;
+        --teal-light: #e1f5ee;
+        --teal-mid: #5dcaa5;
+        --teal-dark: #0a5a46;
+        --amber: #ef9f27;
+        --amber-light: #faeeda;
+        --coral: #d85a30;
+        --coral-light: #faece7;
+        --blue: #378add;
+        --blue-light: #e6f1fb;
+        --green: #639922;
+        --green-light: #eaf3de;
+        --gold: #cba258;
+        --gold-light: #f7f0e4;
+        --gray-50: #f7f6f3;
+        --gray-100: #eeedea;
+        --gray-200: #d8d7d3;
+        --gray-400: #9b9a96;
+        --gray-600: #6b6a67;
+        --gray-800: #3a3937;
+        --gray-900: #1c1c1a;
+        --slate: #537d96;
+        --slate-light: #eaf0f5;
+        --slate-dark: #3d5f73;
+        --coral-dark: #a3421f;
+        --pink-light: #fbeaf0;
+        --font-sans: "Pretendard", system-ui, -apple-system, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: var(--font-sans);
+        background: #17181b;
+        color: var(--gray-900);
+        word-break: keep-all;
+        min-height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        position: relative;
+        overflow: hidden;
+        background-image:
+          radial-gradient(
+            ellipse at 18% 0%,
+            rgba(15, 110, 86, 0.10) 0%,
+            transparent 46%
+          ),
+          radial-gradient(
+            ellipse at 82% 100%,
+            rgba(83, 125, 150, 0.07) 0%,
+            transparent 48%
+          );
+      }
+      body::after {
+        content: none;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
+        }
+      }
+      @keyframes blink {
+        0%,
+        80%,
+        100% {
+          opacity: 0.3;
+        }
+        40% {
+          opacity: 1;
+        }
+      }
+      .fade-up {
+        animation: fadeUp 0.32s ease both;
+      }
+
+      /* DEMO LAYOUT */
+      .demo-stage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(40px, 4vw, 80px);
+        position: relative;
+        z-index: 1;
+        width: max-content;
+        max-width: 100%;
+        margin: 0 auto;
+        transform: scale(1);
+        transform-origin: center center;
+        will-change: transform;
+      }
+      .phone-wrapper {
+        width: 340px;
+        flex-shrink: 0;
+        border-radius: 36px;
+        border: 2px solid rgba(255, 255, 255, 0.08);
+        background: #18181b;
+        box-shadow:
+          0 40px 100px rgba(0, 0, 0, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      @media (max-height: 820px) {
+        body {
+          padding: 12px;
+        }
+        .demo-stage {
+          gap: 40px;
+        }
+      }
+      @media (max-height: 760px) {
+        body {
+          padding: 8px;
+        }
+        .demo-stage {
+          gap: 28px;
+        }
+      }
+      .notch {
+        height: 28px;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .notch-pill {
+        width: 96px;
+        height: 22px;
+        background: #000;
+        border-radius: 12px;
+      }
+      .brand-bar {
+        background: var(--teal);
+        padding: 8px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .brand-bar .name {
+        font-size: 13px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.5px;
+      }
+      .brand-bar .badge-label {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.85);
+        background: rgba(255, 255, 255, 0.18);
+        padding: 2px 10px;
+        border-radius: 20px;
+        font-weight: 500;
+      }
+      .phone-body {
+        height: 680px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        background: #fff;
+      }
+      .home-indicator {
+        height: 20px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .home-indicator div {
+        width: 112px;
+        height: 4px;
+        background: var(--gray-200);
+        border-radius: 4px;
+      }
+
+      /* TYPO AREA */
+      .typo-area {
+        width: clamp(420px, 42vw, 840px);
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+      }
+      .typo-scene-num {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--teal-mid);
+        margin-bottom: 12px;
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          opacity 0.4s,
+          transform 0.4s;
+      }
+      .typo-headline {
+        font-size: 38px;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.3;
+        letter-spacing: -0.5px;
+        opacity: 0;
+        transform: translateY(16px);
+        transition:
+          opacity 0.5s 0.1s,
+          transform 0.5s 0.1s;
+      }
+      .typo-sub {
+        font-size: 18px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.55);
+        line-height: 1.6;
+        margin-top: 14px;
+        opacity: 0;
+        transform: translateY(12px);
+        transition:
+          opacity 0.5s 0.25s,
+          transform 0.5s 0.25s;
+      }
+      .typo-area.visible .typo-scene-num,
+      .typo-area.visible .typo-headline,
+      .typo-area.visible .typo-sub {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .typo-area.card-mode .typo-scene-num {
+        font-size: 13px;
+        letter-spacing: 2.2px;
+        color: #46d0ab;
+        margin-bottom: 14px;
+      }
+      .typo-area.card-mode .typo-headline {
+        font-size: 48px;
+        line-height: 1.15;
+        letter-spacing: -0.8px;
+      }
+      .typo-area.card-mode .typo-sub {
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.66);
+        line-height: 1.5;
+        margin-top: 12px;
+        max-width: 520px;
+      }
+
+      /* CONTROL BAR - removed */
+
+      /* TOUCH INDICATOR */
+      .touch-indicator {
+        position: fixed;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(15, 110, 86, 0.10);
+        border: 1.5px solid rgba(15, 110, 86, 0.28);
+        pointer-events: none;
+        z-index: 100;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+        transition:
+          transform 0.15s ease-out,
+          opacity 0.15s;
+      }
+      .touch-indicator.active {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      .touch-indicator.fade {
+        transform: translate(-50%, -50%) scale(1.4);
+        opacity: 0;
+      }
+
+      /* TITLE CARD */
+      .title-card {
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        background:
+          radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.08), transparent 24%),
+          linear-gradient(180deg, #0c8c7b 0%, #0f7f68 36%, #13684f 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 28px 24px 36px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(14px) scale(0.985);
+        transition:
+          opacity 0.34s ease,
+          transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+        overflow: hidden;
+      }
+      .title-card.visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      .title-card::before {
+        content: "";
+        position: absolute;
+        inset: 22px;
+        border-radius: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        opacity: 0.9;
+      }
+      .title-card::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 220px;
+        height: 220px;
+        transform: translate(-50%, -38%);
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 68%);
+        filter: blur(6px);
+      }
+      .title-card .tc-num {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 2.6px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.64);
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+      .title-card .tc-title {
+        font-size: 36px;
+        font-weight: 800;
+        color: #fff;
+        margin-top: 4px;
+        line-height: 1.22;
+        letter-spacing: -0.8px;
+        text-align: center;
+        max-width: 286px;
+        position: relative;
+        z-index: 1;
+      }
+      .title-card .tc-mascot {
+        width: 96px;
+        height: 96px;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Screens */
+      .screen {
+        display: none;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+      }
+      .screen.active {
+        display: flex;
+        animation: fadeUp 0.28s ease;
+      }
+      .scr-body::-webkit-scrollbar {
+        width: 3px;
+      }
+      .scr-body::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.12);
+        border-radius: 3px;
+      }
+      .pill {
+        display: inline-block;
+        font-size: 10px;
+        padding: 3px 8px;
+        border-radius: 20px;
+        font-weight: 500;
+      }
+      .pill-green {
+        background: var(--teal-light);
+        color: var(--teal);
+      }
+      .pill-amber {
+        background: var(--amber-light);
+        color: #854f0b;
+      }
+      .pill-blue {
+        background: var(--blue-light);
+        color: #185fa5;
+      }
+      .pill-gray {
+        background: var(--gray-100);
+        color: var(--gray-600);
+      }
+      .card {
+        background: #fff;
+        border: 0.5px solid var(--gray-100);
+        border-radius: 14px;
+        padding: 14px;
+        margin-bottom: 10px;
+      }
+      .btn-primary {
+        width: 100%;
+        padding: 12px;
+        background: var(--teal);
+        color: #fff;
+        border-radius: 12px;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .btn-primary:hover {
+        opacity: 0.9;
+      }
+      .btn-primary:active {
+        transform: scale(0.97);
+      }
+      .tab-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border-top: 0.5px solid var(--gray-100);
+        display: none;
+        z-index: 10;
+        height: 52px;
+      }
+      .tab-btn {
+        flex: 1;
+        padding: 6px 0 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--gray-400);
+        transition: color 0.2s;
+        font-family: var(--font-sans);
+      }
+      .tab-btn.active {
+        color: var(--teal);
+      }
+      .tab-btn span {
+        font-size: 10px;
+        font-weight: 600;
+        margin-top: 2px;
+      }
+      .toast {
+        position: absolute;
+        bottom: 64px;
+        left: 16px;
+        right: 16px;
+        background: var(--gray-900);
+        color: #fff;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 500;
+        z-index: 20;
+        display: none;
+        animation: fadeUp 0.28s ease;
+      }
+      .push-banner {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        right: 12px;
+        z-index: 26;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        box-shadow: 0 14px 28px rgba(28, 28, 26, 0.14);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-12px);
+        transition:
+          opacity 0.36s ease,
+          transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .push-banner.visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      .push-banner-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--teal-light);
+        color: var(--teal);
+        flex-shrink: 0;
+      }
+      .push-banner-copy {
+        min-width: 0;
+      }
+      .push-banner-app {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--gray-900);
+        letter-spacing: 0.2px;
+      }
+      .push-banner-msg {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--gray-600);
+        line-height: 1.45;
+        margin-top: 2px;
+      }
+      .q-opt {
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 500;
+        background: var(--gray-50);
+        border: 1px solid var(--gray-100);
+        color: var(--gray-600);
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: var(--font-sans);
+      }
+      .q-opt:hover {
+        border-color: var(--teal-mid);
+        color: var(--teal);
+      }
+      .q-opt:active {
+        transform: scale(0.95);
+      }
+      .q-opt.selected {
+        background: var(--teal);
+        border-color: var(--teal);
+        color: #fff;
+      }
+      .q-opt.selected-multi {
+        background: var(--blue);
+        border-color: var(--blue);
+        color: #fff;
+      }
+      .loading-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        animation: blink 1.4s infinite both;
+      }
+      .cl-detail {
+        display: none;
+        background: #fff;
+      }
+      .cl-item.expanded .cl-detail {
+        display: block;
+      }
+      .cl-item.expanded .chev {
+        transform: rotate(180deg);
+      }
+      .arc-banner {
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 14px;
+      }
+      .arc-step-row {
+        display: flex;
+        margin-top: 14px;
+      }
+      .arc-step {
+        flex: 1;
+        text-align: center;
+        position: relative;
+      }
+      .arc-step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 12px;
+        right: -1px;
+        width: 50%;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.3);
+        z-index: 0;
+      }
+      .arc-step:not(:first-child)::before {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: -1px;
+        width: 50%;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.3);
+        z-index: 0;
+      }
+      .arc-step.done::after,
+      .arc-step.done::before {
+        background: rgba(255, 255, 255, 0.85);
+      }
+      .arc-step-dot {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 5px;
+        font-size: 11px;
+        position: relative;
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .arc-step.done .arc-step-dot {
+        background: #fff;
+        border-color: #fff;
+        color: var(--teal);
+        font-weight: 600;
+      }
+      .arc-step.active .arc-step-dot {
+        border-color: #fff;
+        background: rgba(255, 255, 255, 0.35);
+        animation: pulse 1.5s infinite;
+      }
+      .arc-step-label {
+        font-size: 9px;
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 1.3;
+      }
+      .arc-step.done .arc-step-label,
+      .arc-step.active .arc-step-label {
+        color: #fff;
+      }
+      .arc-action-btn {
+        margin-top: 14px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 0.5px solid rgba(255, 255, 255, 0.4);
+        border-radius: 10px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .arc-action-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      .arc-action-btn span {
+        font-size: 12px;
+        font-weight: 500;
+        color: #fff;
+      }
+      .cal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px 8px;
+      }
+      .cal-nav {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 0.5px solid var(--gray-200);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 13px;
+        color: var(--gray-600);
+        background: none;
+        font-family: var(--font-sans);
+      }
+      .cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+        padding: 0 10px;
+      }
+      .cal-day-label {
+        text-align: center;
+        font-size: 10px;
+        color: var(--gray-600);
+        padding: 4px 0;
+      }
+      .cal-day-label:first-child {
+        color: #e24b4a;
+      }
+      .cal-day-label:last-child {
+        color: #185fa5;
+      }
+      .cal-cell {
+        text-align: center;
+        padding: 4px 2px;
+        font-size: 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        position: relative;
+        min-height: 36px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 4px;
+      }
+      .cal-cell:hover {
+        background: var(--gray-50);
+      }
+      .cal-cell.other {
+        color: var(--gray-400);
+        opacity: 0.4;
+      }
+      .cal-cell.today .day-num {
+        background: var(--teal);
+        color: #fff;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+      }
+      .day-num {
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .cal-events {
+        padding: 10px 12px;
+      }
+      .cal-event-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 9px 0;
+        border-bottom: 0.5px solid var(--gray-100);
+      }
+      .cal-ev-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-top: 3px;
+        flex-shrink: 0;
+      }
+      .cal-ev-title {
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .cal-ev-sub {
+        font-size: 11px;
+        color: var(--gray-900);
+        margin-top: 2px;
+      }
+      .chat-room {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        border-bottom: 0.5px solid var(--gray-100);
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .chat-room:hover {
+        background: var(--gray-50);
+      }
+      .room-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .room-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .room-name {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .room-preview {
+        font-size: 11px;
+        color: var(--gray-600);
+        margin-top: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .badge {
+        background: var(--teal);
+        color: #fff;
+        border-radius: 10px;
+        font-size: 10px;
+        padding: 2px 7px;
+        font-weight: 600;
+        flex-shrink: 0;
+      }
+      .msg-bot-wrap {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+        align-items: flex-end;
+      }
+      .msg-bot-wrap .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--teal-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .bubble-bot {
+        max-width: 76%;
+        padding: 10px 14px;
+        border-radius: 16px;
+        border-bottom-left-radius: 4px;
+        background: #fff;
+        border: 0.5px solid var(--gray-100);
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--gray-900);
+      }
+      .msg-user-wrap {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .bubble-user {
+        max-width: 76%;
+        padding: 10px 14px;
+        border-radius: 16px;
+        border-bottom-right-radius: 4px;
+        background: var(--teal);
+        color: #fff;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .src-chip {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 2px 6px;
+        border-radius: 4px;
+        margin-right: 4px;
+        margin-top: 4px;
+      }
+      .src-hana {
+        background: var(--teal-light);
+        color: var(--teal-dark);
+      }
+      .src-gov {
+        background: var(--green-light);
+        color: var(--green);
+      }
+      .src-school {
+        background: var(--blue-light);
+        color: var(--blue);
+      }
+      .nav-back {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 12px 16px;
+        cursor: pointer;
+        font-size: 13px;
+        color: var(--teal);
+        border-bottom: 0.5px solid var(--gray-100);
+        flex-shrink: 0;
+        background: #fff;
+        font-weight: 500;
+      }
+      .social-bar {
+        background: var(--teal-light);
+        border-radius: 12px;
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .social-bar p {
+        font-size: 11px;
+        color: var(--teal);
+        line-height: 1.4;
+      }
+      .detail-pill {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 4px;
+      }
+      .detail-pill.slate {
+        background: var(--slate-light);
+        color: var(--slate-dark);
+      }
+      .detail-pill.amber {
+        background: var(--amber-light);
+        color: #8b6914;
+      }
+      .detail-pill.coral {
+        background: var(--coral-light);
+        color: var(--coral-dark);
+      }
+      .detail-pill.teal {
+        background: var(--teal-light);
+        color: var(--teal);
+      }
+      .step-ind {
+        display: flex;
+        margin-bottom: 14px;
+      }
+      .step-ind .step {
+        flex: 1;
+        text-align: center;
+        position: relative;
+      }
+      .step-ind .step .dot {
+        width: 28px;
+        height: 28px;
+        margin: 0 auto;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+      }
+      .step-ind .step .lbl {
+        font-size: 10px;
+        margin-top: 4px;
+        line-height: 1.3;
+      }
+      .step-ind .step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 14px;
+        left: 50%;
+        width: 100%;
+        height: 2px;
+        z-index: 0;
+      }
+      @keyframes demoHighlight {
+        0% {
+          box-shadow: 0 0 0 0 rgba(93, 202, 165, 0.26);
+        }
+        50% {
+          box-shadow: 0 0 0 6px rgba(93, 202, 165, 0.08);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(93, 202, 165, 0);
+        }
+      }
+      .demo-highlight {
+        animation: demoHighlight 0.75s ease 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="touch-indicator" id="touch-ind"></div>
+
+    <div class="demo-stage">
+      <div class="phone-wrapper">
+        <div class="notch"><div class="notch-pill"></div></div>
+        <div class="brand-bar">
+          <span class="name">Student Start Mode</span>
+          <span class="badge-label">Hana EZ</span>
+        </div>
+
+        <div class="phone-body" id="phone-body">
+          <!-- Title Card Overlay -->
+          <div class="title-card" id="title-card">
+            <div class="tc-mascot">
+              <img
+                src="./imgs/star.png"
+                alt="별벗"
+                style="width: 68px; height: 68px; object-fit: contain"
+                onerror="this.style.display = 'none'"
+              />
+            </div>
+            <div class="tc-num" id="tc-num"></div>
+            <div class="tc-title" id="tc-title"></div>
+          </div>
+          <div id="push-banner" class="push-banner">
+            <div class="push-banner-icon">
+              <iconify-icon icon="solar:bell-bing-bold" width="18"></iconify-icon>
+            </div>
+            <div class="push-banner-copy">
+              <div class="push-banner-app">Hana EZ</div>
+              <div id="push-banner-msg" class="push-banner-msg"></div>
+            </div>
+          </div>
+
+          <!-- SCREEN: ONBOARDING -->
+          <div id="screen-onboarding" class="screen">
+            <div
+              style="
+                background: var(--teal);
+                padding: 24px 20px 28px;
+                text-align: center;
+                flex-shrink: 0;
+              "
+            >
+              <img
+                src="./imgs/star.png"
+                alt="별벗"
+                style="
+                  width: 56px;
+                  height: 56px;
+                  object-fit: contain;
+                  margin-bottom: 8px;
+                "
+                onerror="this.style.display = 'none'"
+              />
+              <div
+                style="
+                  font-size: 18px;
+                  font-weight: 700;
+                  color: #fff;
+                  letter-spacing: 0.5px;
+                "
+              >
+                Student Start Mode
+              </div>
+              <p
+                style="
+                  font-size: 13px;
+                  color: rgba(255, 255, 255, 0.75);
+                  margin-top: 4px;
+                "
+              >
+                한국 금융, 맞춤 체크리스트를 만들어드려요
+              </p>
+              <div
+                style="
+                  margin-top: 12px;
+                  height: 4px;
+                  background: rgba(255, 255, 255, 0.2);
+                  border-radius: 4px;
+                  overflow: hidden;
+                "
+              >
+                <div
+                  id="onboard-progress"
+                  style="
+                    height: 100%;
+                    background: #fff;
+                    border-radius: 4px;
+                    transition: width 0.5s;
+                    width: 0%;
+                  "
+                ></div>
+              </div>
+            </div>
+            <div
+              style="
+                flex: 1;
+                overflow-y: auto;
+                background: #fff;
+                padding: 16px 16px 24px;
+              "
+              class="scr-body"
+            >
+              <div
+                style="
+                  background: #fff;
+                  border-radius: 16px;
+                  border: 1px solid var(--gray-100);
+                  padding: 16px;
+                  margin-bottom: 12px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--teal);
+                    margin-bottom: 6px;
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                  "
+                >
+                  <iconify-icon
+                    icon="solar:square-academic-cap-linear"
+                    width="14"
+                  ></iconify-icon
+                  >학교
+                </div>
+                <div
+                  style="
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: var(--gray-900);
+                    margin-bottom: 12px;
+                  "
+                >
+                  어느 학교에 다니시나요?
+                </div>
+                <div
+                  style="display: flex; flex-wrap: wrap; gap: 8px"
+                  id="q-univ"
+                >
+                  <button
+                    onclick="ansQ(this, 'univ')"
+                    class="q-opt"
+                    data-val="SNU"
+                  >
+                    서울대학교
+                  </button>
+                  <button
+                    onclick="ansQ(this, 'univ')"
+                    class="q-opt"
+                    data-val="YONSEI"
+                  >
+                    다른 대학교
+                  </button>
+                  <button
+                    onclick="ansQ(this, 'univ')"
+                    class="q-opt"
+                    data-val="KOREA"
+                  >
+                    아직 결정 전
+                  </button>
+                </div>
+              </div>
+              <div
+                style="
+                  background: #fff;
+                  border-radius: 16px;
+                  border: 1px solid var(--gray-100);
+                  padding: 16px;
+                  margin-bottom: 12px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--teal);
+                    margin-bottom: 6px;
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                  "
+                >
+                  <iconify-icon
+                    icon="solar:document-text-linear"
+                    width="14"
+                  ></iconify-icon
+                  >비자
+                </div>
+                <div
+                  style="
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: var(--gray-900);
+                    margin-bottom: 12px;
+                  "
+                >
+                  비자 유형을 알려주세요
+                </div>
+                <div
+                  style="display: flex; flex-wrap: wrap; gap: 8px"
+                  id="q-visa"
+                >
+                  <button
+                    onclick="ansQ(this, 'visa')"
+                    class="q-opt"
+                    data-val="D2"
+                  >
+                    D-2 (유학)
+                  </button>
+                  <button
+                    onclick="ansQ(this, 'visa')"
+                    class="q-opt"
+                    data-val="D4"
+                  >
+                    D-4 (어학연수)
+                  </button>
+                </div>
+              </div>
+              <div
+                style="
+                  background: #fff;
+                  border-radius: 16px;
+                  border: 1px solid var(--gray-100);
+                  padding: 16px;
+                  margin-bottom: 12px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--teal);
+                    margin-bottom: 6px;
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                  "
+                >
+                  <iconify-icon
+                    icon="solar:global-linear"
+                    width="14"
+                  ></iconify-icon
+                  >국적
+                </div>
+                <div
+                  style="
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: var(--gray-900);
+                    margin-bottom: 12px;
+                  "
+                >
+                  어디에서 오셨나요?
+                </div>
+                <div
+                  style="display: flex; flex-wrap: wrap; gap: 8px"
+                  id="q-nation"
+                >
+                  <button
+                    onclick="ansQ(this, 'nation')"
+                    class="q-opt"
+                    data-val="CN"
+                  >
+                    중국
+                  </button>
+                  <button
+                    onclick="ansQ(this, 'nation')"
+                    class="q-opt"
+                    data-val="VN"
+                  >
+                    기타 아시아
+                  </button>
+                  <button
+                    onclick="ansQ(this, 'nation')"
+                    class="q-opt"
+                    data-val="DE"
+                  >
+                    기타 국가
+                  </button>
+                </div>
+              </div>
+              <div
+                style="
+                  background: #fff;
+                  border-radius: 16px;
+                  border: 1px solid var(--gray-100);
+                  padding: 16px;
+                  margin-bottom: 12px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--teal);
+                    margin-bottom: 6px;
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                  "
+                >
+                  <iconify-icon
+                    icon="solar:card-linear"
+                    width="14"
+                  ></iconify-icon
+                  >외국인등록증 (ARC)
+                </div>
+                <div
+                  style="
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: var(--gray-900);
+                    margin-bottom: 12px;
+                  "
+                >
+                  ARC가 있으신가요?
+                </div>
+                <div
+                  style="display: flex; flex-wrap: wrap; gap: 8px"
+                  id="q-arc"
+                >
+                  <button onclick="ansQ(this, 'arc')" class="q-opt">
+                    네, 있어요
+                  </button>
+                  <button onclick="ansQ(this, 'arc')" class="q-opt">
+                    신청 중이에요
+                  </button>
+                  <button onclick="ansQ(this, 'arc')" class="q-opt">
+                    아직 없어요
+                  </button>
+                </div>
+              </div>
+              <div
+                style="
+                  background: #fff;
+                  border-radius: 16px;
+                  border: 1px solid var(--gray-100);
+                  padding: 16px;
+                  margin-bottom: 12px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--teal);
+                    margin-bottom: 6px;
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                  "
+                >
+                  <iconify-icon
+                    icon="solar:checklist-linear"
+                    width="14"
+                  ></iconify-icon
+                  >필요사항
+                  <span
+                    style="
+                      font-size: 10px;
+                      color: var(--gray-400);
+                      font-weight: 400;
+                    "
+                    >(복수 선택 가능)</span
+                  >
+                </div>
+                <div
+                  style="
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: var(--gray-900);
+                    margin-bottom: 12px;
+                  "
+                >
+                  필요한 항목을 골라주세요
+                </div>
+                <div
+                  style="display: flex; flex-wrap: wrap; gap: 8px"
+                  id="q-needs"
+                >
+                  <button onclick="toggleMulti(this)" class="q-opt">
+                    생활비 관리
+                  </button>
+                  <button onclick="toggleMulti(this)" class="q-opt">
+                    해외송금
+                  </button>
+                  <button onclick="toggleMulti(this)" class="q-opt">
+                    등록금 납부
+                  </button>
+                  <button onclick="toggleMulti(this)" class="q-opt">
+                    건강보험
+                  </button>
+                </div>
+              </div>
+              <button
+                onclick="startLoading()"
+                class="btn-primary"
+                id="cta-btn"
+                style="margin-top: 4px"
+              >
+                나만의 체크리스트 만들기
+              </button>
+            </div>
+          </div>
+
+          <!-- SCREEN: LOADING -->
+          <div id="screen-loading" class="screen">
+            <div
+              style="
+                flex: 1;
+                background: linear-gradient(
+                  180deg,
+                  var(--teal),
+                  var(--teal-dark)
+                );
+                color: #fff;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 0 32px;
+              "
+            >
+              <div
+                style="
+                  width: 88px;
+                  height: 88px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  animation: bounce 1.5s ease-in-out infinite;
+                "
+              >
+                <img
+                  src="./imgs/star.png"
+                  alt="별벗"
+                  style="width: 80px; height: 80px; object-fit: contain"
+                  onerror="this.style.display = 'none'"
+                />
+              </div>
+              <div
+                style="font-size: 15px; font-weight: 700; margin-top: 20px"
+                id="loading-conditions"
+              >
+                서울대학교 x D-2 x 중국
+              </div>
+              <div
+                style="
+                  font-size: 14px;
+                  color: rgba(255, 255, 255, 0.75);
+                  margin-top: 8px;
+                "
+                id="loading-step"
+              >
+                프로필 정보를 분석하고 있어요...
+              </div>
+              <div style="display: flex; gap: 8px; margin-top: 16px">
+                <span class="loading-dot"></span>
+                <span class="loading-dot" style="animation-delay: 0.2s"></span>
+                <span class="loading-dot" style="animation-delay: 0.4s"></span>
+              </div>
+              <div
+                style="
+                  margin-top: 24px;
+                  text-align: left;
+                  width: 100%;
+                  max-width: 220px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 12px;
+                    color: rgba(255, 255, 255, 0.4);
+                    margin-bottom: 10px;
+                  "
+                  id="ls-1"
+                >
+                  <div
+                    style="
+                      width: 20px;
+                      height: 20px;
+                      border-radius: 50%;
+                      border: 1px solid rgba(255, 255, 255, 0.3);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  ></div>
+                  비자 · 학교 정보 확인
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 12px;
+                    color: rgba(255, 255, 255, 0.4);
+                    margin-bottom: 10px;
+                  "
+                  id="ls-2"
+                >
+                  <div
+                    style="
+                      width: 20px;
+                      height: 20px;
+                      border-radius: 50%;
+                      border: 1px solid rgba(255, 255, 255, 0.3);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  ></div>
+                  필요 금융 서비스 매칭
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 12px;
+                    color: rgba(255, 255, 255, 0.4);
+                    margin-bottom: 10px;
+                  "
+                  id="ls-3"
+                >
+                  <div
+                    style="
+                      width: 20px;
+                      height: 20px;
+                      border-radius: 50%;
+                      border: 1px solid rgba(255, 255, 255, 0.3);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  ></div>
+                  순서 · 잠금 조건 계산
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 12px;
+                    color: rgba(255, 255, 255, 0.4);
+                    margin-bottom: 10px;
+                  "
+                  id="ls-4"
+                >
+                  <div
+                    style="
+                      width: 20px;
+                      height: 20px;
+                      border-radius: 50%;
+                      border: 1px solid rgba(255, 255, 255, 0.3);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  ></div>
+                  맞춤 체크리스트 생성
+                </div>
+              </div>
+              <div
+                style="
+                  width: 192px;
+                  height: 4px;
+                  background: rgba(255, 255, 255, 0.2);
+                  border-radius: 4px;
+                  margin-top: 20px;
+                  overflow: hidden;
+                "
+              >
+                <div
+                  id="loading-bar"
+                  style="
+                    height: 100%;
+                    background: #fff;
+                    border-radius: 4px;
+                    transition: width 0.3s;
+                    width: 0%;
+                  "
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCREEN: HOME -->
+          <div id="screen-home" class="screen active">
+            <div
+              style="
+                background: var(--teal-dark);
+                padding: 8px 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex-shrink: 0;
+              "
+            >
+              <div
+                style="
+                  width: 28px;
+                  height: 28px;
+                  border-radius: 50%;
+                  background: rgba(255, 255, 255, 0.2);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <iconify-icon
+                  icon="solar:user-linear"
+                  width="16"
+                  style="color: #fff"
+                ></iconify-icon>
+              </div>
+              <span
+                style="
+                  font-size: 12px;
+                  font-weight: 600;
+                  color: rgba(255, 255, 255, 0.9);
+                "
+                id="profile-info"
+                >왕웨이 | 서울대 | D-2 | 중국</span
+              >
+            </div>
+            <div
+              style="
+                background: var(--teal);
+                padding: 16px 20px 20px;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+              "
+            >
+              <div>
+                <div style="font-size: 13px; color: rgba(255, 255, 255, 0.75)">
+                  한국 금융 여정
+                </div>
+                <h2
+                  style="
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: #fff;
+                    margin-top: 2px;
+                  "
+                  id="home-greeting"
+                >
+                  안녕 왕웨이!
+                </h2>
+              </div>
+              <img
+                src="./imgs/greet.png"
+                alt="별벗"
+                style="width: 72px; height: 72px; object-fit: contain"
+                onerror="this.style.display = 'none'"
+              />
+            </div>
+            <div
+              class="scr-body"
+              style="
+                flex: 1;
+                overflow-y: auto;
+                background: #fff;
+                padding: 16px 16px 96px;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  background: #fff;
+                  border-radius: 16px;
+                  border: 1px solid var(--gray-100);
+                  overflow: hidden;
+                  margin-bottom: 14px;
+                "
+              >
+                <div style="flex: 1; padding: 12px 0; text-align: center">
+                  <div
+                    style="
+                      font-size: 22px;
+                      font-weight: 700;
+                      color: var(--teal);
+                    "
+                    id="sum-done"
+                  >
+                    3
+                  </div>
+                  <div
+                    style="
+                      font-size: 10px;
+                      font-weight: 500;
+                      color: var(--gray-900);
+                    "
+                  >
+                    완료
+                  </div>
+                </div>
+                <div
+                  style="
+                    flex: 1;
+                    padding: 12px 0;
+                    text-align: center;
+                    border-left: 1px solid var(--gray-100);
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 22px;
+                      font-weight: 700;
+                      color: var(--amber);
+                    "
+                    id="sum-todo"
+                  >
+                    2
+                  </div>
+                  <div
+                    style="
+                      font-size: 10px;
+                      font-weight: 500;
+                      color: var(--gray-900);
+                    "
+                  >
+                    할 일
+                  </div>
+                </div>
+                <div
+                  style="
+                    flex: 1;
+                    padding: 12px 0;
+                    text-align: center;
+                    border-left: 1px solid var(--gray-100);
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 22px;
+                      font-weight: 700;
+                      color: var(--gray-400);
+                    "
+                    id="sum-locked"
+                  >
+                    3
+                  </div>
+                  <div
+                    style="
+                      font-size: 10px;
+                      font-weight: 500;
+                      color: var(--gray-900);
+                    "
+                  >
+                    잠김
+                  </div>
+                </div>
+              </div>
+              <div id="arc-banner" class="arc-banner"></div>
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 600;
+                  color: var(--gray-900);
+                  margin-top: 4px;
+                  margin-bottom: 8px;
+                "
+              >
+                지금 할 수 있는 일 TOP 3
+              </div>
+              <div
+                class="card"
+                style="border-left: 3px solid #1d9e75; cursor: pointer"
+                onclick="switchTab('checklist')"
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                  "
+                >
+                  <div>
+                    <div style="font-size: 13px; font-weight: 600">
+                      선불유심 구매하기
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        color: var(--gray-900);
+                        margin-top: 2px;
+                      "
+                    >
+                      ARC 없이 가능 · 명동 GS25
+                    </div>
+                  </div>
+                  <span class="pill pill-green">지금 가능</span>
+                </div>
+              </div>
+              <div
+                class="card"
+                style="border-left: 3px solid #185fa5; cursor: pointer"
+                onclick="switchTab('checklist')"
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                  "
+                >
+                  <div>
+                    <div style="font-size: 13px; font-weight: 600">
+                      은행 방문 사전인증 신청
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        color: var(--gray-900);
+                        margin-top: 2px;
+                      "
+                    >
+                      서류 업로드 → 지점 20분 단축
+                    </div>
+                  </div>
+                  <span class="pill pill-blue">권장</span>
+                </div>
+              </div>
+              <div
+                class="card"
+                style="border-left: 3px solid var(--gray-400); cursor: pointer"
+                onclick="switchTab('checklist')"
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                  "
+                >
+                  <div>
+                    <div style="font-size: 13px; font-weight: 600">
+                      통장 개설 (ARC 수령 후)
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        color: var(--gray-900);
+                        margin-top: 2px;
+                      "
+                    >
+                      예상 대기 약 18일
+                    </div>
+                  </div>
+                  <span class="pill pill-gray">대기 필요</span>
+                </div>
+              </div>
+              <div class="social-bar">
+                <div
+                  style="
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    background: var(--teal);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                  "
+                >
+                  <iconify-icon
+                    icon="solar:users-group-rounded-bold"
+                    width="14"
+                    style="color: #fff"
+                  ></iconify-icon>
+                </div>
+                <p>
+                  비슷한 상황의 <strong>1,245명</strong>은 선불 유심 → 하나은행
+                  순서로 진행했어요
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCREEN: CHECKLIST -->
+          <div id="screen-checklist" class="screen">
+            <div
+              style="
+                background: var(--teal);
+                padding: 16px 20px 20px;
+                flex-shrink: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <h2 style="font-size: 21px; font-weight: 700; color: #fff">
+                나의 체크리스트
+              </h2>
+              <span
+                style="font-size: 13px; color: rgba(255, 255, 255, 0.85)"
+                id="cl-count"
+                >3/8 완료</span
+              >
+            </div>
+            <div
+              class="scr-body"
+              style="
+                flex: 1;
+                overflow-y: auto;
+                background: #fff;
+                padding: 16px 16px 96px;
+              "
+            >
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 600;
+                  color: var(--gray-900);
+                  margin-bottom: 8px;
+                "
+              >
+                완료 (3)
+              </div>
+              <!-- Done items with gold icons -->
+              <div
+                class="cl-item"
+                style="
+                  background: #fff;
+                  border-radius: 16px;
+                  border: 1px solid var(--gray-100);
+                  margin-bottom: 8px;
+                  overflow: hidden;
+                  cursor: pointer;
+                "
+                onclick="toggleItem(this)"
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 14px;
+                  "
+                >
+                  <div
+                    style="
+                      width: 28px;
+                      height: 28px;
+                      border-radius: 50%;
+                      background: var(--gold);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  >
+                    <iconify-icon
+                      icon="solar:check-circle-bold"
+                      width="16"
+                      style="color: #fff"
+                    ></iconify-icon>
+                  </div>
+                  <div
+                    style="
+                      flex: 1;
+                      font-size: 13px;
+                      font-weight: 500;
+                      color: var(--gray-400);
+                      text-decoration: line-through;
+                    "
+                  >
+                    선불폰 유지
+                  </div>
+                  <iconify-icon
+                    icon="solar:alt-arrow-down-linear"
+                    width="16"
+                    style="color: var(--gold); transition: transform 0.2s"
+                    class="chev"
+                  ></iconify-icon>
+                </div>
+                <div
+                  class="cl-detail"
+                  style="
+                    border-top: 1px solid var(--gray-100);
+                    padding: 0 14px 14px;
+                  "
+                >
+                  <div style="margin-top: 10px">
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:map-point-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >편의점에서 선불유심 구매
+                    </div>
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:clock-circle-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >10분 소요
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cl-item"
+                style="
+                  background: #fff;
+                  border-radius: 16px;
+                  border: 1px solid var(--gray-100);
+                  margin-bottom: 8px;
+                  overflow: hidden;
+                  cursor: pointer;
+                "
+                onclick="toggleItem(this)"
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 14px;
+                  "
+                >
+                  <div
+                    style="
+                      width: 28px;
+                      height: 28px;
+                      border-radius: 50%;
+                      background: var(--gold);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  >
+                    <iconify-icon
+                      icon="solar:check-circle-bold"
+                      width="16"
+                      style="color: #fff"
+                    ></iconify-icon>
+                  </div>
+                  <div
+                    style="
+                      flex: 1;
+                      font-size: 13px;
+                      font-weight: 500;
+                      color: var(--gray-400);
+                      text-decoration: line-through;
+                    "
+                  >
+                    서류 미리 준비
+                  </div>
+                  <iconify-icon
+                    icon="solar:alt-arrow-down-linear"
+                    width="16"
+                    style="color: var(--gold); transition: transform 0.2s"
+                    class="chev"
+                  ></iconify-icon>
+                </div>
+                <div
+                  class="cl-detail"
+                  style="
+                    border-top: 1px solid var(--gray-100);
+                    padding: 0 14px 14px;
+                  "
+                >
+                  <div style="margin-top: 10px">
+                    <div class="detail-pill amber">
+                      <iconify-icon
+                        icon="solar:paperclip-bold"
+                        width="14"
+                        style="color: var(--amber); flex-shrink: 0"
+                      ></iconify-icon
+                      >여권, 입학허가서, 재학증명서
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cl-item"
+                style="
+                  background: #fff;
+                  border-radius: 16px;
+                  border: 1px solid var(--gray-100);
+                  margin-bottom: 8px;
+                  overflow: hidden;
+                  cursor: pointer;
+                "
+                onclick="toggleItem(this)"
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 14px;
+                  "
+                >
+                  <div
+                    style="
+                      width: 28px;
+                      height: 28px;
+                      border-radius: 50%;
+                      background: var(--gold);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  >
+                    <iconify-icon
+                      icon="solar:check-circle-bold"
+                      width="16"
+                      style="color: #fff"
+                    ></iconify-icon>
+                  </div>
+                  <div
+                    style="
+                      flex: 1;
+                      font-size: 13px;
+                      font-weight: 500;
+                      color: var(--gray-400);
+                      text-decoration: line-through;
+                    "
+                  >
+                    은행 알아보기
+                  </div>
+                  <iconify-icon
+                    icon="solar:alt-arrow-down-linear"
+                    width="16"
+                    style="color: var(--gold); transition: transform 0.2s"
+                    class="chev"
+                  ></iconify-icon>
+                </div>
+                <div
+                  class="cl-detail"
+                  style="
+                    border-top: 1px solid var(--gray-100);
+                    padding: 0 14px 14px;
+                  "
+                >
+                  <div style="margin-top: 10px">
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:bank-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >하나 / 우리 / 신한 비교 완료
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Available items -->
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 600;
+                  color: var(--gray-900);
+                  margin-top: 12px;
+                  margin-bottom: 8px;
+                "
+              >
+                지금 가능 (2)
+              </div>
+              <div
+                class="cl-item"
+                id="cl-arc-item"
+                style="
+                  background: var(--teal-light);
+                  border: 1px solid rgba(93, 202, 165, 0.4);
+                  border-radius: 16px;
+                  margin-bottom: 8px;
+                  overflow: hidden;
+                  cursor: pointer;
+                "
+                onclick="toggleItem(this)"
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 14px;
+                  "
+                >
+                  <div
+                    style="
+                      width: 28px;
+                      height: 28px;
+                      border-radius: 50%;
+                      background: var(--teal);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  >
+                    <iconify-icon
+                      icon="solar:record-circle-linear"
+                      width="16"
+                      style="color: #fff"
+                    ></iconify-icon>
+                  </div>
+                  <div style="flex: 1">
+                    <div
+                      style="
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: var(--gray-800);
+                      "
+                    >
+                      ARC 발급받기
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        color: var(--gray-900);
+                        margin-top: 2px;
+                      "
+                    >
+                      출입국관리사무소 방문, 2~4주 소요
+                    </div>
+                  </div>
+                  <iconify-icon
+                    icon="solar:alt-arrow-down-linear"
+                    width="16"
+                    style="color: var(--gray-400); transition: transform 0.2s"
+                    class="chev"
+                  ></iconify-icon>
+                </div>
+                <div
+                  class="cl-detail"
+                  style="
+                    border-top: 1px solid var(--gray-100);
+                    padding: 0 14px 14px;
+                  "
+                >
+                  <div style="display: flex; gap: 12px; margin-top: 12px">
+                    <div style="flex: 1">
+                      <div
+                        style="
+                          font-size: 11px;
+                          color: var(--gray-600);
+                          margin-bottom: 4px;
+                        "
+                      >
+                        준비물
+                      </div>
+                      <div
+                        style="
+                          font-size: 12px;
+                          font-weight: 600;
+                          color: var(--amber);
+                        "
+                      >
+                        여권, 입학허가서
+                      </div>
+                    </div>
+                    <div style="flex: 1">
+                      <div
+                        style="
+                          font-size: 11px;
+                          color: var(--gray-600);
+                          margin-bottom: 4px;
+                        "
+                      >
+                        지금 바로
+                      </div>
+                      <div
+                        style="
+                          font-size: 12px;
+                          font-weight: 600;
+                          color: var(--teal);
+                        "
+                      >
+                        HiKorea에서 방문 예약
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px">
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:map-point-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >출입국관리사무소
+                    </div>
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:clock-circle-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >2~4주 소요
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      margin-top: 10px;
+                      padding-top: 10px;
+                      border-top: 1px dashed var(--gray-200);
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--gray-600);
+                        margin-bottom: 6px;
+                      "
+                    >
+                      이걸 완료하면
+                    </div>
+                    <div class="detail-pill teal">
+                      <iconify-icon
+                        icon="solar:lock-keyhole-unlocked-bold"
+                        width="14"
+                      ></iconify-icon
+                      >은행 계좌 개설 해제
+                    </div>
+                    <div class="detail-pill teal">
+                      <iconify-icon
+                        icon="solar:smartphone-bold"
+                        width="14"
+                      ></iconify-icon
+                      >후불폰 전환 해제
+                    </div>
+                  </div>
+                  <div style="display: flex; gap: 8px; margin-top: 10px">
+                    <button
+                      onclick="event.stopPropagation()"
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: #fff;
+                        color: var(--teal);
+                        border: 1px solid rgba(15, 110, 86, 0.3);
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        font-family: var(--font-sans);
+                      "
+                    >
+                      HiKorea
+                    </button>
+                    <button
+                      onclick="
+                        event.stopPropagation();
+                        openChatRoom(0);
+                      "
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: #fff;
+                        color: var(--gray-900);
+                        border: 1px solid var(--gray-200);
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                        font-family: var(--font-sans);
+                      "
+                    >
+                      <iconify-icon
+                        icon="solar:chat-round-dots-linear"
+                        width="14"
+                      ></iconify-icon
+                      >AI에게 물어보기
+                    </button>
+                    <button
+                      onclick="event.stopPropagation()"
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: var(--teal);
+                        color: #fff;
+                        border: none;
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        font-family: var(--font-sans);
+                      "
+                    >
+                      완료
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cl-item"
+                style="
+                  background: var(--teal-light);
+                  border: 1px solid rgba(93, 202, 165, 0.4);
+                  border-radius: 16px;
+                  margin-bottom: 8px;
+                  overflow: hidden;
+                  cursor: pointer;
+                "
+                onclick="toggleItem(this)"
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 14px;
+                  "
+                >
+                  <div
+                    style="
+                      width: 28px;
+                      height: 28px;
+                      border-radius: 50%;
+                      background: var(--teal);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  >
+                    <iconify-icon
+                      icon="solar:record-circle-linear"
+                      width="16"
+                      style="color: #fff"
+                    ></iconify-icon>
+                  </div>
+                  <div style="flex: 1">
+                    <div
+                      style="
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: var(--gray-800);
+                      "
+                    >
+                      재학증명서 발급
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        color: var(--gray-900);
+                        margin-top: 2px;
+                      "
+                    >
+                      영문 재학증명서, 계좌 개설 시 필요
+                    </div>
+                  </div>
+                  <iconify-icon
+                    icon="solar:alt-arrow-down-linear"
+                    width="16"
+                    style="color: var(--gray-400); transition: transform 0.2s"
+                    class="chev"
+                  ></iconify-icon>
+                </div>
+                <div
+                  class="cl-detail"
+                  style="
+                    border-top: 1px solid var(--gray-100);
+                    padding: 0 14px 14px;
+                  "
+                >
+                  <div style="display: flex; gap: 12px; margin-top: 12px">
+                    <div style="flex: 1">
+                      <div
+                        style="
+                          font-size: 11px;
+                          color: var(--gray-600);
+                          margin-bottom: 4px;
+                        "
+                      >
+                        준비물
+                      </div>
+                      <div
+                        style="
+                          font-size: 12px;
+                          font-weight: 600;
+                          color: var(--amber);
+                        "
+                      >
+                        학생증 (또는 포털 로그인)
+                      </div>
+                    </div>
+                    <div style="flex: 1">
+                      <div
+                        style="
+                          font-size: 11px;
+                          color: var(--gray-600);
+                          margin-bottom: 4px;
+                        "
+                      >
+                        지금 바로
+                      </div>
+                      <div
+                        style="
+                          font-size: 12px;
+                          font-weight: 600;
+                          color: var(--teal);
+                        "
+                      >
+                        증명서 발급 메뉴 선택
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px">
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:map-point-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                        >학교 포털 증명서 발급
+                    </div>
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:clock-circle-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >5분 소요
+                    </div>
+                  </div>
+                  <div style="display: flex; gap: 8px; margin-top: 10px">
+                    <button
+                      onclick="event.stopPropagation()"
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: #fff;
+                        color: var(--teal);
+                        border: 1px solid rgba(15, 110, 86, 0.3);
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        font-family: var(--font-sans);
+                      "
+                    >
+                      학교 포털 바로가기
+                    </button>
+                    <button
+                      onclick="
+                        event.stopPropagation();
+                        openChatRoom(0);
+                      "
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: #fff;
+                        color: var(--gray-900);
+                        border: 1px solid var(--gray-200);
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                        font-family: var(--font-sans);
+                      "
+                    >
+                      <iconify-icon
+                        icon="solar:chat-round-dots-linear"
+                        width="14"
+                      ></iconify-icon
+                      >AI에게 물어보기
+                    </button>
+                    <button
+                      onclick="event.stopPropagation()"
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: var(--teal);
+                        color: #fff;
+                        border: none;
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        font-family: var(--font-sans);
+                      "
+                    >
+                      완료
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Locked items -->
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 600;
+                  color: var(--gray-900);
+                  margin-top: 12px;
+                  margin-bottom: 8px;
+                "
+              >
+                다음 단계 (3)
+              </div>
+              <div
+                class="cl-item"
+                id="cl-bank-account"
+                style="
+                  background: var(--gray-50);
+                  border: 1px solid var(--gray-100);
+                  border-radius: 16px;
+                  margin-bottom: 8px;
+                  overflow: hidden;
+                  cursor: pointer;
+                "
+                onclick="toggleItem(this)"
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 14px;
+                  "
+                >
+                  <div
+                    style="
+                      width: 28px;
+                      height: 28px;
+                      border-radius: 50%;
+                      background: var(--gray-200);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  >
+                    <iconify-icon
+                      icon="solar:lock-keyhole-bold"
+                      width="14"
+                      style="color: #fff"
+                    ></iconify-icon>
+                  </div>
+                  <div style="flex: 1">
+                    <div
+                      style="
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: var(--gray-600);
+                      "
+                    >
+                      은행 계좌 개설
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        color: var(--gray-900);
+                        margin-top: 2px;
+                      "
+                    >
+                      ARC + 재학증명서 + 여권 필요
+                    </div>
+                  </div>
+                  <iconify-icon
+                    icon="solar:alt-arrow-down-linear"
+                    width="16"
+                    style="color: var(--gray-400); transition: transform 0.2s"
+                    class="chev"
+                  ></iconify-icon>
+                </div>
+                <div
+                  class="cl-detail"
+                  style="
+                    border-top: 1px solid var(--gray-100);
+                    padding: 0 14px 14px;
+                  "
+                >
+                  <div style="display: flex; gap: 12px; margin-top: 12px">
+                    <div style="flex: 1">
+                      <div
+                        style="
+                          font-size: 11px;
+                          color: var(--gray-600);
+                          margin-bottom: 4px;
+                        "
+                      >
+                        불가 사유
+                      </div>
+                      <div
+                        style="
+                          font-size: 12px;
+                          font-weight: 600;
+                          color: var(--coral);
+                        "
+                      >
+                        ARC 미발급 상태
+                      </div>
+                    </div>
+                    <div style="flex: 1">
+                      <div
+                        style="
+                          font-size: 11px;
+                          color: var(--gray-600);
+                          margin-bottom: 4px;
+                        "
+                      >
+                        해제 조건
+                      </div>
+                      <div
+                        style="
+                          font-size: 12px;
+                          font-weight: 500;
+                          color: var(--gray-900);
+                        "
+                      >
+                        ARC 수령 후 가능
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px">
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--gray-600);
+                        margin-bottom: 4px;
+                      "
+                    >
+                      다음 행동
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        font-weight: 600;
+                        color: var(--teal);
+                      "
+                    >
+                      ARC 먼저 발급받기
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px">
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:map-point-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >하나은행 관악지점 (영어 상담 가능)
+                    </div>
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:clock-circle-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >30~40분 소요 · 예상 해제: 4/15~22
+                    </div>
+                  </div>
+                  <div style="display: flex; gap: 8px; margin-top: 10px">
+                    <button
+                      onclick="
+                        event.stopPropagation();
+                        openChatRoom(0);
+                      "
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: #fff;
+                        color: var(--gray-900);
+                        border: 1px solid var(--gray-200);
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                        font-family: var(--font-sans);
+                      "
+                    >
+                      <iconify-icon
+                        icon="solar:chat-round-dots-linear"
+                        width="14"
+                      ></iconify-icon
+                      >AI에게 물어보기
+                    </button>
+                    <button
+                      onclick="event.stopPropagation()"
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: #fff;
+                        color: var(--gray-400);
+                        border: 1px solid var(--gray-200);
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        font-family: var(--font-sans);
+                      "
+                      disabled
+                    >
+                      완료
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cl-item"
+                id="cl-phone"
+                style="
+                  background: var(--gray-50);
+                  border: 1px solid var(--gray-100);
+                  border-radius: 16px;
+                  margin-bottom: 8px;
+                  overflow: hidden;
+                  cursor: pointer;
+                "
+                onclick="toggleItem(this)"
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 14px;
+                  "
+                >
+                  <div
+                    style="
+                      width: 28px;
+                      height: 28px;
+                      border-radius: 50%;
+                      background: var(--gray-200);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  >
+                    <iconify-icon
+                      icon="solar:lock-keyhole-bold"
+                      width="14"
+                      style="color: #fff"
+                    ></iconify-icon>
+                  </div>
+                  <div style="flex: 1">
+                    <div
+                      style="
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: var(--gray-600);
+                      "
+                    >
+                      후불폰 전환
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        color: var(--gray-900);
+                        margin-top: 2px;
+                      "
+                    >
+                      정규 요금제 가입 시 번호 유지 가능
+                    </div>
+                  </div>
+                  <iconify-icon
+                    icon="solar:alt-arrow-down-linear"
+                    width="16"
+                    style="color: var(--gray-400); transition: transform 0.2s"
+                    class="chev"
+                  ></iconify-icon>
+                </div>
+                <div
+                  class="cl-detail"
+                  style="
+                    border-top: 1px solid var(--gray-100);
+                    padding: 0 14px 14px;
+                  "
+                >
+                  <div style="display: flex; gap: 12px; margin-top: 12px">
+                    <div style="flex: 1">
+                      <div
+                        style="
+                          font-size: 11px;
+                          color: var(--gray-600);
+                          margin-bottom: 4px;
+                        "
+                      >
+                        불가 사유
+                      </div>
+                      <div
+                        style="
+                          font-size: 12px;
+                          font-weight: 600;
+                          color: var(--coral);
+                        "
+                      >
+                        ARC 미발급 상태
+                      </div>
+                    </div>
+                    <div style="flex: 1">
+                      <div
+                        style="
+                          font-size: 11px;
+                          color: var(--gray-600);
+                          margin-bottom: 4px;
+                        "
+                      >
+                        해제 조건
+                      </div>
+                      <div
+                        style="
+                          font-size: 12px;
+                          font-weight: 500;
+                          color: var(--gray-900);
+                        "
+                      >
+                        ARC 수령 후 통신사 방문
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px">
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--gray-600);
+                        margin-bottom: 4px;
+                      "
+                    >
+                      다음 행동
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        font-weight: 600;
+                        color: var(--teal);
+                      "
+                    >
+                      ARC 먼저 발급받기
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px">
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:map-point-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >가까운 통신사 대리점
+                    </div>
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:clock-circle-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >30분 소요
+                    </div>
+                  </div>
+                  <div style="display: flex; gap: 8px; margin-top: 10px">
+                    <button
+                      onclick="
+                        event.stopPropagation();
+                        openChatRoom(0);
+                      "
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: #fff;
+                        color: var(--gray-900);
+                        border: 1px solid var(--gray-200);
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                        font-family: var(--font-sans);
+                      "
+                    >
+                      <iconify-icon
+                        icon="solar:chat-round-dots-linear"
+                        width="14"
+                      ></iconify-icon
+                      >AI에게 물어보기
+                    </button>
+                    <button
+                      onclick="event.stopPropagation()"
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: #fff;
+                        color: var(--gray-400);
+                        border: 1px solid var(--gray-200);
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        font-family: var(--font-sans);
+                      "
+                      disabled
+                    >
+                      완료
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cl-item"
+                style="
+                  background: var(--gray-50);
+                  border: 1px solid var(--gray-100);
+                  border-radius: 16px;
+                  margin-bottom: 8px;
+                  overflow: hidden;
+                  cursor: pointer;
+                "
+                onclick="toggleItem(this)"
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 14px;
+                  "
+                >
+                  <div
+                    style="
+                      width: 28px;
+                      height: 28px;
+                      border-radius: 50%;
+                      background: var(--gray-200);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    "
+                  >
+                    <iconify-icon
+                      icon="solar:lock-keyhole-bold"
+                      width="14"
+                      style="color: #fff"
+                    ></iconify-icon>
+                  </div>
+                  <div style="flex: 1">
+                    <div
+                      style="
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: var(--gray-600);
+                      "
+                    >
+                      모바일뱅킹 활성화
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        color: var(--gray-900);
+                        margin-top: 2px;
+                      "
+                    >
+                      하나원큐 앱 설치 후 본인인증
+                    </div>
+                  </div>
+                  <iconify-icon
+                    icon="solar:alt-arrow-down-linear"
+                    width="16"
+                    style="color: var(--gray-400); transition: transform 0.2s"
+                    class="chev"
+                  ></iconify-icon>
+                </div>
+                <div
+                  class="cl-detail"
+                  style="
+                    border-top: 1px solid var(--gray-100);
+                    padding: 0 14px 14px;
+                  "
+                >
+                  <div style="display: flex; gap: 12px; margin-top: 12px">
+                    <div style="flex: 1">
+                      <div
+                        style="
+                          font-size: 11px;
+                          color: var(--gray-600);
+                          margin-bottom: 4px;
+                        "
+                      >
+                        불가 사유
+                      </div>
+                      <div
+                        style="
+                          font-size: 12px;
+                          font-weight: 600;
+                          color: var(--coral);
+                        "
+                      >
+                        계좌 · 후불폰 미보유
+                      </div>
+                    </div>
+                    <div style="flex: 1">
+                      <div
+                        style="
+                          font-size: 11px;
+                          color: var(--gray-600);
+                          margin-bottom: 4px;
+                        "
+                      >
+                        해제 조건
+                      </div>
+                      <div
+                        style="
+                          font-size: 12px;
+                          font-weight: 500;
+                          color: var(--gray-900);
+                        "
+                      >
+                        계좌 + 후불폰 모두 완료 후
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px">
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--gray-600);
+                        margin-bottom: 4px;
+                      "
+                    >
+                      다음 행동
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        font-weight: 600;
+                        color: var(--teal);
+                      "
+                    >
+                      계좌 먼저 개설하기
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px">
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:map-point-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >하나원큐 앱 (앱스토어)
+                    </div>
+                    <div class="detail-pill slate">
+                      <iconify-icon
+                        icon="solar:clock-circle-bold"
+                        width="14"
+                        style="color: var(--slate); flex-shrink: 0"
+                      ></iconify-icon
+                      >10분 소요
+                    </div>
+                  </div>
+                  <div style="display: flex; gap: 8px; margin-top: 10px">
+                    <button
+                      onclick="
+                        event.stopPropagation();
+                        openChatRoom(0);
+                      "
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: #fff;
+                        color: var(--gray-900);
+                        border: 1px solid var(--gray-200);
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                        font-family: var(--font-sans);
+                      "
+                    >
+                      <iconify-icon
+                        icon="solar:chat-round-dots-linear"
+                        width="14"
+                      ></iconify-icon
+                      >AI에게 물어보기
+                    </button>
+                    <button
+                      onclick="event.stopPropagation()"
+                      style="
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        background: #fff;
+                        color: var(--gray-400);
+                        border: 1px solid var(--gray-200);
+                        font-size: 12px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        font-family: var(--font-sans);
+                      "
+                      disabled
+                    >
+                      완료
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- Scholarship hidden items -->
+              <div id="scholarship-items" style="display: none">
+                <div
+                  style="
+                    font-size: 11px;
+                    font-weight: 700;
+                    letter-spacing: 1px;
+                    color: var(--blue);
+                    text-transform: uppercase;
+                    margin-top: 12px;
+                    margin-bottom: 8px;
+                  "
+                  class="fade-up"
+                >
+                  새로 추가됨
+                </div>
+                <div
+                  class="cl-item fade-up"
+                  style="
+                    background: var(--teal-light);
+                    border: 1px solid rgba(93, 202, 165, 0.4);
+                    border-radius: 16px;
+                    margin-bottom: 8px;
+                    overflow: hidden;
+                    cursor: pointer;
+                  "
+                  onclick="toggleItem(this)"
+                >
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 10px;
+                      padding: 14px;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 28px;
+                        height: 28px;
+                        border-radius: 50%;
+                        background: var(--teal);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                      "
+                    >
+                      <iconify-icon
+                        icon="solar:record-circle-linear"
+                        width="16"
+                        style="color: #fff"
+                      ></iconify-icon>
+                    </div>
+                    <div
+                      style="
+                        flex: 1;
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: var(--gray-800);
+                      "
+                    >
+                      계좌 개설 준비 서류 확인
+                      <span
+                        style="
+                          margin-left: 6px;
+                          font-size: 10px;
+                          font-weight: 700;
+                          padding: 2px 8px;
+                          border-radius: 4px;
+                          background: var(--blue);
+                          color: #fff;
+                        "
+                        >NEW</span
+                      >
+                    </div>
+                    <iconify-icon
+                      icon="solar:alt-arrow-down-linear"
+                      width="16"
+                      style="color: var(--gray-400); transition: transform 0.2s"
+                      class="chev"
+                    ></iconify-icon>
+                  </div>
+                  <div
+                    class="cl-detail"
+                    style="
+                      border-top: 1px solid var(--gray-100);
+                      padding: 0 14px 14px;
+                    "
+                  >
+                    <div style="margin-top: 10px">
+                      <div class="detail-pill slate">
+                        <iconify-icon
+                          icon="solar:map-point-bold"
+                          width="14"
+                          style="color: var(--slate); flex-shrink: 0"
+                        ></iconify-icon
+                        >하나은행 관악지점
+                      </div>
+                      <div class="detail-pill slate">
+                        <iconify-icon
+                          icon="solar:clock-circle-bold"
+                          width="14"
+                          style="color: var(--slate); flex-shrink: 0"
+                        ></iconify-icon
+                        >40~60분 소요
+                      </div>
+                      <div class="detail-pill amber">
+                        <iconify-icon
+                          icon="solar:paperclip-bold"
+                          width="14"
+                          style="color: var(--amber); flex-shrink: 0"
+                        ></iconify-icon
+                        >준비물: 여권, ARC, 재학증명서
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="cl-item fade-up"
+                  style="
+                    background: var(--teal-light);
+                    border: 1px solid rgba(93, 202, 165, 0.4);
+                    border-radius: 16px;
+                    margin-bottom: 8px;
+                    overflow: hidden;
+                    cursor: pointer;
+                    animation-delay: 0.1s;
+                  "
+                  onclick="toggleItem(this)"
+                >
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 10px;
+                      padding: 14px;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 28px;
+                        height: 28px;
+                        border-radius: 50%;
+                        background: var(--teal);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                      "
+                    >
+                      <iconify-icon
+                        icon="solar:record-circle-linear"
+                        width="16"
+                        style="color: #fff"
+                      ></iconify-icon>
+                    </div>
+                    <div
+                      style="
+                        flex: 1;
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: var(--gray-800);
+                      "
+                    >
+                      재학증명서 추가 발급
+                      <span
+                        style="
+                          margin-left: 6px;
+                          font-size: 10px;
+                          font-weight: 700;
+                          padding: 2px 8px;
+                          border-radius: 4px;
+                          background: var(--blue);
+                          color: #fff;
+                        "
+                        >NEW</span
+                      >
+                    </div>
+                    <iconify-icon
+                      icon="solar:alt-arrow-down-linear"
+                      width="16"
+                      style="color: var(--gray-400); transition: transform 0.2s"
+                      class="chev"
+                    ></iconify-icon>
+                  </div>
+                  <div
+                    class="cl-detail"
+                    style="
+                      border-top: 1px solid var(--gray-100);
+                      padding: 0 14px 14px;
+                    "
+                  >
+                    <div style="margin-top: 10px">
+                      <div class="detail-pill slate">
+                        <iconify-icon
+                          icon="solar:map-point-bold"
+                          width="14"
+                          style="color: var(--slate); flex-shrink: 0"
+                        ></iconify-icon
+                        >학과 사무실 (경영관 202호)
+                      </div>
+                      <div class="detail-pill slate">
+                        <iconify-icon
+                          icon="solar:clock-circle-bold"
+                          width="14"
+                          style="color: var(--slate); flex-shrink: 0"
+                        ></iconify-icon
+                        >10분 소요
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCREEN: CALENDAR -->
+          <div id="screen-calendar" class="screen">
+            <div
+              style="
+                background: var(--teal);
+                padding: 14px 16px;
+                color: #fff;
+                flex-shrink: 0;
+              "
+            >
+              <div style="font-size: 15px; font-weight: 600">스마트 캘린더</div>
+              <div style="font-size: 11px; opacity: 0.8">
+                중요 일정 자동 추적
+              </div>
+            </div>
+            <div
+              class="scr-body"
+              style="flex: 1; overflow-y: auto; padding-bottom: 96px"
+            >
+              <div class="cal-header">
+                <button class="cal-nav" onclick="changeMonth(-1)">
+                  <iconify-icon
+                    icon="solar:alt-arrow-left-linear"
+                    width="14"
+                  ></iconify-icon>
+                </button>
+                <div
+                  style="font-size: 14px; font-weight: 600"
+                  id="calMonthLabel"
+                >
+                  2026년 4월
+                </div>
+                <button class="cal-nav" onclick="changeMonth(1)">
+                  <iconify-icon
+                    icon="solar:alt-arrow-right-linear"
+                    width="14"
+                  ></iconify-icon>
+                </button>
+              </div>
+              <div class="cal-grid" id="calDayLabels">
+                <div class="cal-day-label">일</div>
+                <div class="cal-day-label">월</div>
+                <div class="cal-day-label">화</div>
+                <div class="cal-day-label">수</div>
+                <div class="cal-day-label">목</div>
+                <div class="cal-day-label">금</div>
+                <div class="cal-day-label">토</div>
+              </div>
+              <div class="cal-grid" id="calGrid"></div>
+              <div
+                style="
+                  display: flex;
+                  gap: 12px;
+                  padding: 8px 14px;
+                  flex-wrap: wrap;
+                "
+              >
+                <div style="display: flex; align-items: center; gap: 4px">
+                  <div
+                    style="
+                      width: 8px;
+                      height: 8px;
+                      border-radius: 50%;
+                      background: #e24b4a;
+                    "
+                  ></div>
+                  <span style="font-size: 10px; color: var(--gray-600)"
+                    >긴급</span
+                  >
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px">
+                  <div
+                    style="
+                      width: 8px;
+                      height: 8px;
+                      border-radius: 50%;
+                      background: #1d9e75;
+                    "
+                  ></div>
+                  <span style="font-size: 10px; color: var(--gray-600)"
+                    >ARC</span
+                  >
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px">
+                  <div
+                    style="
+                      width: 8px;
+                      height: 8px;
+                      border-radius: 50%;
+                      background: #378add;
+                    "
+                  ></div>
+                  <span style="font-size: 10px; color: var(--gray-600)"
+                    >금융</span
+                  >
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px">
+                  <div
+                    style="
+                      width: 8px;
+                      height: 8px;
+                      border-radius: 50%;
+                      background: #ef9f27;
+                    "
+                  ></div>
+                  <span style="font-size: 10px; color: var(--gray-600)"
+                    >학교</span
+                  >
+                </div>
+              </div>
+              <div
+                style="
+                  height: 0.5px;
+                  background: var(--gray-100);
+                  margin: 0 12px;
+                "
+              ></div>
+              <div class="cal-events" id="calEvents"></div>
+            </div>
+          </div>
+
+          <!-- SCREEN: CHAT LIST -->
+          <div id="screen-chat-list" class="screen">
+            <div
+              style="
+                background: var(--teal);
+                padding: 14px 16px;
+                color: #fff;
+                flex-shrink: 0;
+              "
+            >
+              <div style="font-size: 16px; font-weight: 600">채팅방</div>
+              <div style="font-size: 11px; opacity: 0.8">
+                맞춤 AI 어시스턴트
+              </div>
+            </div>
+            <div
+              class="scr-body"
+              style="flex: 1; overflow-y: auto; padding-bottom: 96px"
+            >
+              <div class="chat-room" id="chat-room-0" onclick="openChatRoom(0)">
+                <div class="room-icon" style="background: var(--teal-light)">
+                  <iconify-icon
+                    icon="solar:card-bold"
+                    width="20"
+                    style="color: var(--teal)"
+                  ></iconify-icon>
+                </div>
+                <div class="room-info">
+                  <div class="room-name">금융 상품 도우미</div>
+                  <div class="room-preview">
+                    하나은행 외국인 통장 개설 서류 안내 완료
+                  </div>
+                </div>
+                <div class="badge">3</div>
+              </div>
+              <div class="chat-room" onclick="openChatRoom(1)">
+                <div class="room-icon" style="background: var(--blue-light)">
+                  <iconify-icon
+                    icon="solar:document-text-bold"
+                    width="20"
+                    style="color: var(--blue)"
+                  ></iconify-icon>
+                </div>
+                <div class="room-info">
+                  <div class="room-name">비자 · 행정 도우미</div>
+                  <div class="room-preview">
+                    ARC 신청 후 D+17일 예상 수령일: 4월 20일
+                  </div>
+                </div>
+                <div class="badge">1</div>
+              </div>
+              <div class="chat-room" onclick="openChatRoom(2)">
+                <div class="room-icon" style="background: var(--amber-light)">
+                  <iconify-icon
+                    icon="solar:square-academic-cap-bold"
+                    width="20"
+                    style="color: #854f0b"
+                  ></iconify-icon>
+                </div>
+                <div class="room-info">
+                  <div class="room-name">학교 · 생활 혜택</div>
+                  <div class="room-preview">
+                    서울대 외국인 무료 건강검진 신청 기간: ~4/30
+                  </div>
+                </div>
+                <div></div>
+              </div>
+              <div class="chat-room" onclick="openChatRoom(3)">
+                <div class="room-icon" style="background: var(--pink-light)">
+                  <iconify-icon
+                    icon="solar:home-2-bold"
+                    width="20"
+                    style="color: #c25a7c"
+                  ></iconify-icon>
+                </div>
+                <div class="room-info">
+                  <div class="room-name">주거 · 생활 정보</div>
+                  <div class="room-preview">
+                    관악구 외국인 임시 주거 지원 2건 발견됨
+                  </div>
+                </div>
+                <div></div>
+              </div>
+              <div style="padding: 12px 16px">
+                <div
+                  style="
+                    border: 1px dashed var(--gray-200);
+                    border-radius: 12px;
+                    padding: 14px;
+                    text-align: center;
+                    cursor: pointer;
+                  "
+                >
+                  <div style="font-size: 13px; color: var(--gray-600)">
+                    + 나만의 어시스턴트 만들기
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCREEN: CHAT ROOM -->
+          <div id="screen-chat-room" class="screen">
+            <div
+              class="nav-back"
+              onclick="
+                showScreen('chat-list');
+                setActiveTab('chat-list');
+              "
+            >
+              <iconify-icon
+                icon="solar:alt-arrow-left-linear"
+                width="16"
+              ></iconify-icon>
+              채팅방
+            </div>
+            <div
+              id="chat-messages"
+              style="
+                flex: 1;
+                overflow-y: auto;
+                background: #fff;
+                padding: 14px 14px 96px;
+              "
+              class="scr-body"
+            >
+              <div
+                style="
+                  background: var(--gray-50);
+                  border: 1px solid var(--gray-100);
+                  border-radius: 8px;
+                  padding: 10px;
+                  margin-bottom: 12px;
+                  display: flex;
+                  align-items: flex-start;
+                  gap: 6px;
+                  font-size: 11px;
+                  color: var(--gray-400);
+                "
+              >
+                <iconify-icon
+                  icon="solar:danger-triangle-linear"
+                  width="14"
+                  style="color: var(--amber); flex-shrink: 0; margin-top: 2px"
+                ></iconify-icon>
+                <span
+                  >AI 답변은 참고용입니다. 체크리스트는 검증된 DB
+                  기반입니다.</span
+                >
+              </div>
+              <div
+                id="quick-btns"
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 6px;
+                  margin-bottom: 12px;
+                "
+              >
+                <button
+                  onclick="sendQuickChat('ARC 없이 계좌 가능?')"
+                  style="
+                    padding: 6px 12px;
+                    border-radius: 999px;
+                    background: #fff;
+                    border: 1px solid rgba(93, 202, 165, 0.5);
+                    font-size: 12px;
+                    font-weight: 500;
+                    color: var(--teal);
+                    cursor: pointer;
+                    font-family: var(--font-sans);
+                  "
+                >
+                  ARC 없이 계좌?
+                </button>
+                <button
+                  onclick="sendQuickChat('계좌 개설 방법')"
+                  style="
+                    padding: 6px 12px;
+                    border-radius: 999px;
+                    background: #fff;
+                    border: 1px solid rgba(93, 202, 165, 0.5);
+                    font-size: 12px;
+                    font-weight: 500;
+                    color: var(--teal);
+                    cursor: pointer;
+                    font-family: var(--font-sans);
+                  "
+                >
+                  계좌 개설
+                </button>
+                <button
+                  onclick="sendQuickChat('ARC 언제 나와요?')"
+                  style="
+                    padding: 6px 12px;
+                    border-radius: 999px;
+                    background: #fff;
+                    border: 1px solid rgba(93, 202, 165, 0.5);
+                    font-size: 12px;
+                    font-weight: 500;
+                    color: var(--teal);
+                    cursor: pointer;
+                    font-family: var(--font-sans);
+                  "
+                >
+                  ARC 언제?
+                </button>
+                <button
+                  onclick="sendQuickChat('이체한도 올리기')"
+                  style="
+                    padding: 6px 12px;
+                    border-radius: 999px;
+                    background: #fff;
+                    border: 1px solid rgba(93, 202, 165, 0.5);
+                    font-size: 12px;
+                    font-weight: 500;
+                    color: var(--teal);
+                    cursor: pointer;
+                    font-family: var(--font-sans);
+                  "
+                >
+                  이체한도
+                </button>
+              </div>
+              <div class="msg-bot-wrap">
+                <div class="avatar">
+                  <svg viewBox="0 0 40 40" fill="none" width="20" height="20">
+                    <circle
+                      cx="20"
+                      cy="22"
+                      r="12"
+                      fill="#0F6E56"
+                      opacity=".15"
+                    />
+                    <circle cx="15" cy="20" r="2" fill="#0F6E56" />
+                    <circle cx="25" cy="20" r="2" fill="#0F6E56" />
+                    <path
+                      d="M15 26c0 0 2.5 2.5 5 2.5s5-2.5 5-2.5"
+                      stroke="#0F6E56"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                    <path d="M17 10L20 5L23 10" fill="#4ADE80" />
+                  </svg>
+                </div>
+                <div class="bubble-bot">
+                  무엇이든 물어보세요! 금융, 비자, 생활 질문 모두 도와드릴게요.
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                position: absolute;
+                bottom: 52px;
+                left: 0;
+                right: 0;
+                background: #fff;
+                border-top: 1px solid var(--gray-100);
+                padding: 8px 12px;
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                z-index: 5;
+              "
+            >
+              <input
+                id="chat-input-field"
+                type="text"
+                placeholder="메시지 입력..."
+                onkeypress="if (event.key === 'Enter') sendChat();"
+                style="
+                  flex: 1;
+                  padding: 10px 14px;
+                  border-radius: 999px;
+                  border: 1px solid var(--gray-200);
+                  background: var(--gray-50);
+                  font-size: 13px;
+                  outline: none;
+                  font-family: var(--font-sans);
+                "
+              />
+              <button
+                id="send-btn"
+                onclick="sendChat()"
+                style="
+                  width: 36px;
+                  height: 36px;
+                  border-radius: 50%;
+                  background: var(--teal);
+                  border: none;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  cursor: pointer;
+                  flex-shrink: 0;
+                "
+              >
+                <iconify-icon
+                  icon="solar:plain-bold"
+                  width="18"
+                  style="color: #fff"
+                ></iconify-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- SCREEN: MY -->
+          <div id="screen-my" class="screen">
+            <div
+              style="
+                background: var(--teal);
+                padding: 16px 20px 20px;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+              "
+            >
+              <div
+                style="
+                  width: 48px;
+                  height: 48px;
+                  border-radius: 50%;
+                  background: rgba(255, 255, 255, 0.2);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <iconify-icon
+                  icon="solar:user-bold"
+                  width="24"
+                  style="color: #fff"
+                ></iconify-icon>
+              </div>
+              <div>
+                <div
+                  style="font-size: 18px; font-weight: 700; color: #fff"
+                  id="my-name"
+                >
+                  왕웨이 (王伟)
+                </div>
+                <div
+                  style="
+                    font-size: 13px;
+                    color: rgba(255, 255, 255, 0.7);
+                    margin-top: -2px;
+                  "
+                  id="my-info"
+                >
+                  서울대학교 | D-2 | 중국
+                </div>
+              </div>
+            </div>
+            <div
+              class="scr-body"
+              style="
+                flex: 1;
+                overflow-y: auto;
+                background: #fff;
+                padding: 16px 16px 96px;
+              "
+            >
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 600;
+                  color: var(--gray-900);
+                  margin-bottom: 8px;
+                "
+              >
+                여정 진행 상태
+              </div>
+              <div class="step-ind" id="step-indicator">
+                <div class="step">
+                  <div
+                    class="dot"
+                    style="
+                      background: var(--teal);
+                      border: 2px solid var(--teal);
+                    "
+                  >
+                    <iconify-icon
+                      icon="solar:check-circle-bold"
+                      width="14"
+                      style="color: #fff"
+                    ></iconify-icon>
+                  </div>
+                  <div class="lbl" style="color: var(--teal); font-weight: 600">
+                    ARC<br />신청
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      top: 14px;
+                      left: 50%;
+                      width: 100%;
+                      height: 2px;
+                      background: var(--teal);
+                      z-index: 0;
+                    "
+                  ></div>
+                </div>
+                <div class="step">
+                  <div
+                    class="dot"
+                    style="background: #fff; border: 2px solid var(--teal)"
+                  >
+                    <iconify-icon
+                      icon="solar:record-circle-bold"
+                      width="10"
+                      style="color: var(--teal)"
+                    ></iconify-icon>
+                  </div>
+                  <div class="lbl" style="color: var(--gray-400)">
+                    은행<br />계좌
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      top: 14px;
+                      right: 50%;
+                      width: 100%;
+                      height: 2px;
+                      background: var(--gray-200);
+                      z-index: 0;
+                    "
+                  ></div>
+                </div>
+                <div class="step">
+                  <div
+                    class="dot"
+                    style="background: #fff; border: 2px solid var(--gray-200)"
+                  >
+                    <iconify-icon
+                      icon="solar:card-linear"
+                      width="12"
+                      style="color: var(--gray-400)"
+                    ></iconify-icon>
+                  </div>
+                  <div class="lbl" style="color: var(--gray-400)">
+                    체크<br />카드
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      top: 14px;
+                      right: 50%;
+                      width: 100%;
+                      height: 2px;
+                      background: var(--gray-200);
+                      z-index: 0;
+                    "
+                  ></div>
+                </div>
+                <div class="step">
+                  <div
+                    class="dot"
+                    style="background: #fff; border: 2px solid var(--gray-200)"
+                  >
+                    <iconify-icon
+                      icon="solar:smartphone-linear"
+                      width="12"
+                      style="color: var(--gray-400)"
+                    ></iconify-icon>
+                  </div>
+                  <div class="lbl" style="color: var(--gray-400)">
+                    모바일<br />뱅킹
+                  </div>
+                </div>
+              </div>
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 600;
+                  color: var(--gray-900);
+                  margin-bottom: 8px;
+                "
+              >
+                나의 상태
+              </div>
+              <div
+                style="
+                  background: #fff;
+                  border-radius: 16px;
+                  border: 1px solid var(--gray-100);
+                  overflow: hidden;
+                  margin-bottom: 14px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px 14px;
+                    border-bottom: 1px solid var(--gray-100);
+                    font-size: 13px;
+                  "
+                >
+                  <span
+                    style="
+                      color: var(--gray-600);
+                      display: flex;
+                      align-items: center;
+                      gap: 8px;
+                    "
+                    ><iconify-icon
+                      icon="solar:card-linear"
+                      width="16"
+                    ></iconify-icon
+                    >ARC</span
+                  ><span
+                    style="font-weight: 600; color: var(--teal)"
+                    id="my-arc-status"
+                    >대기 중</span
+                  >
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px 14px;
+                    border-bottom: 1px solid var(--gray-100);
+                    font-size: 13px;
+                  "
+                >
+                  <span
+                    style="
+                      color: var(--gray-600);
+                      display: flex;
+                      align-items: center;
+                      gap: 8px;
+                    "
+                    ><iconify-icon
+                      icon="solar:smartphone-linear"
+                      width="16"
+                    ></iconify-icon
+                    >휴대폰</span
+                  ><span style="font-weight: 600; color: var(--gray-600)"
+                    >선불 USIM</span
+                  >
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px 14px;
+                    border-bottom: 1px solid var(--gray-100);
+                    font-size: 13px;
+                  "
+                >
+                  <span
+                    style="
+                      color: var(--gray-600);
+                      display: flex;
+                      align-items: center;
+                      gap: 8px;
+                    "
+                    ><iconify-icon
+                      icon="solar:bank-linear"
+                      width="16"
+                    ></iconify-icon
+                    >은행계좌</span
+                  ><span style="font-weight: 600; color: var(--gray-400)"
+                    >없음</span
+                  >
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px 14px;
+                    font-size: 13px;
+                  "
+                >
+                  <span
+                    style="
+                      color: var(--gray-600);
+                      display: flex;
+                      align-items: center;
+                      gap: 8px;
+                    "
+                    ><iconify-icon
+                      icon="solar:square-academic-cap-linear"
+                      width="16"
+                    ></iconify-icon
+                    >추가 서류</span
+                  ><span
+                    style="
+                      font-weight: 600;
+                      color: var(--teal);
+                      cursor: pointer;
+                    "
+                    id="my-scholarship"
+                    onclick="toggleScholarship()"
+                    >없음</span
+                  >
+                </div>
+              </div>
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 600;
+                  color: var(--gray-900);
+                  margin-bottom: 8px;
+                "
+              >
+                설정
+              </div>
+              <div
+                style="
+                  background: #fff;
+                  border-radius: 16px;
+                  border: 1px solid var(--gray-100);
+                  overflow: hidden;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px 14px;
+                    border-bottom: 1px solid var(--gray-100);
+                    font-size: 13px;
+                    color: var(--gray-800);
+                    cursor: pointer;
+                  "
+                >
+                  <span style="display: flex; align-items: center; gap: 8px"
+                    ><iconify-icon
+                      icon="solar:global-linear"
+                      width="16"
+                      style="color: var(--gray-400)"
+                    ></iconify-icon
+                    >언어: 한국어</span
+                  ><iconify-icon
+                    icon="solar:alt-arrow-right-linear"
+                    width="16"
+                    style="color: var(--gray-400)"
+                  ></iconify-icon>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px 14px;
+                    border-bottom: 1px solid var(--gray-100);
+                    font-size: 13px;
+                    color: var(--gray-800);
+                    cursor: pointer;
+                  "
+                >
+                  <span style="display: flex; align-items: center; gap: 8px"
+                    ><iconify-icon
+                      icon="solar:info-circle-linear"
+                      width="16"
+                      style="color: var(--gray-400)"
+                    ></iconify-icon
+                    >도움말</span
+                  ><iconify-icon
+                    icon="solar:alt-arrow-right-linear"
+                    width="16"
+                    style="color: var(--gray-400)"
+                  ></iconify-icon>
+                </div>
+                <div
+                  onclick="showScreen('onboarding')"
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px 14px;
+                    font-size: 13px;
+                    color: var(--gray-800);
+                    cursor: pointer;
+                  "
+                >
+                  <span style="display: flex; align-items: center; gap: 8px"
+                    ><iconify-icon
+                      icon="solar:restart-linear"
+                      width="16"
+                      style="color: var(--gray-400)"
+                    ></iconify-icon
+                    >온보딩 다시하기</span
+                  ><iconify-icon
+                    icon="solar:alt-arrow-right-linear"
+                    width="16"
+                    style="color: var(--gray-400)"
+                  ></iconify-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB BAR -->
+          <div id="tab-bar" class="tab-bar">
+            <button id="tab-home" onclick="switchTab('home')" class="tab-btn">
+              <iconify-icon icon="solar:home-2-linear" width="22"></iconify-icon
+              ><span>홈</span>
+            </button>
+            <button
+              id="tab-checklist"
+              onclick="switchTab('checklist')"
+              class="tab-btn"
+            >
+              <iconify-icon
+                icon="solar:checklist-linear"
+                width="22"
+              ></iconify-icon
+              ><span>체크리스트</span>
+            </button>
+            <button
+              id="tab-calendar"
+              onclick="switchTab('calendar')"
+              class="tab-btn"
+            >
+              <iconify-icon
+                icon="solar:calendar-linear"
+                width="22"
+              ></iconify-icon
+              ><span>캘린더</span>
+            </button>
+            <button
+              id="tab-chat-list"
+              onclick="switchTab('chat-list')"
+              class="tab-btn"
+            >
+              <iconify-icon
+                icon="solar:chat-round-dots-linear"
+                width="22"
+              ></iconify-icon
+              ><span>챗</span>
+            </button>
+            <button id="tab-my" onclick="switchTab('my')" class="tab-btn">
+              <iconify-icon icon="solar:user-linear" width="22"></iconify-icon
+              ><span>마이</span>
+            </button>
+          </div>
+          <div id="toast" class="toast"></div>
+        </div>
+        <div class="home-indicator"><div></div></div>
+      </div>
+
+      <!-- TYPO AREA -->
+      <div class="typo-area" id="typo-area">
+        <div class="typo-scene-num" id="typo-num"></div>
+        <div class="typo-headline" id="typo-head"></div>
+        <div class="typo-sub" id="typo-sub"></div>
+      </div>
+    </div>
+
+    <script>
+      // ========== PROTOTYPE LOGIC ==========
+      var currentTab = "home",
+        scholarshipAdded = false;
+      var BYULBEOT_SVG =
+        '<svg viewBox="0 0 40 40" fill="none" width="20" height="20"><circle cx="20" cy="22" r="12" fill="#0F6E56" opacity=".15"/><circle cx="15" cy="20" r="2" fill="#0F6E56"/><circle cx="25" cy="20" r="2" fill="#0F6E56"/><path d="M15 26c0 0 2.5 2.5 5 2.5s5-2.5 5-2.5" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round"/><path d="M17 10L20 5L23 10" fill="#4ADE80"/></svg>';
+
+      var ARC_PROGRESS =
+        '<div style="background:linear-gradient(135deg,var(--teal),#1D9E75);padding:18px 16px;color:#fff">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2px"><div>' +
+        '<div style="font-size:11px;opacity:.8;margin-bottom:3px">외국인등록증 (ARC) 진행 상황</div>' +
+        '<div style="font-size:15px;font-weight:600">신청 완료 · 심사 중</div>' +
+        '<div style="font-size:11px;opacity:.85;margin-top:2px;line-height:1.5">예상 수령일 <strong>4월 20일</strong> (D-15)</div>' +
+        '</div><div style="background:rgba(255,255,255,.2);border-radius:10px;padding:4px 10px;text-align:center"><div style="font-size:18px;font-weight:600;color:#fff">15</div><div style="font-size:9px;opacity:.75">일 남음</div></div></div>' +
+        '<div class="arc-step-row">' +
+        '<div class="arc-step done"><div class="arc-step-dot"><iconify-icon icon="solar:check-circle-bold" width="14" style="color:var(--teal)"></iconify-icon></div><div class="arc-step-label">서류<br>제출</div></div>' +
+        '<div class="arc-step done"><div class="arc-step-dot"><iconify-icon icon="solar:check-circle-bold" width="14" style="color:var(--teal)"></iconify-icon></div><div class="arc-step-label">접수<br>완료</div></div>' +
+        '<div class="arc-step active"><div class="arc-step-dot" style="font-size:8px"><div style="width:8px;height:8px;border-radius:50%;background:#fff"></div></div><div class="arc-step-label">심사<br>중</div></div>' +
+        '<div class="arc-step"><div class="arc-step-dot"></div><div class="arc-step-label">SMS<br>수신</div></div>' +
+        '<div class="arc-step"><div class="arc-step-dot"></div><div class="arc-step-label">수령<br>완료</div></div>' +
+        "</div>" +
+        '<div class="arc-action-btn" onclick="switchTab(\'checklist\')"><span>지금 할 수 있는 일 보기</span><iconify-icon icon="solar:arrow-right-linear" width="14" style="opacity:.75"></iconify-icon></div></div>';
+
+      var ARC_DONE =
+        '<div style="background:var(--teal);padding:18px 16px;color:#fff">' +
+        '<div style="font-size:11px;opacity:.8;margin-bottom:3px">외국인등록증 (ARC) 진행 상황</div>' +
+        '<div style="font-size:15px;font-weight:600">수령 완료!</div>' +
+        '<div style="font-size:11px;opacity:.85;margin-top:2px;line-height:1.5">이제 은행 계좌 개설이 가능해요</div>' +
+        '<div class="arc-step-row">' +
+        '<div class="arc-step done"><div class="arc-step-dot"><iconify-icon icon="solar:check-circle-bold" width="14" style="color:var(--teal)"></iconify-icon></div><div class="arc-step-label">서류<br>제출</div></div>' +
+        '<div class="arc-step done"><div class="arc-step-dot"><iconify-icon icon="solar:check-circle-bold" width="14" style="color:var(--teal)"></iconify-icon></div><div class="arc-step-label">접수<br>완료</div></div>' +
+        '<div class="arc-step done"><div class="arc-step-dot"><iconify-icon icon="solar:check-circle-bold" width="14" style="color:var(--teal)"></iconify-icon></div><div class="arc-step-label">심사<br>완료</div></div>' +
+        '<div class="arc-step done"><div class="arc-step-dot"><iconify-icon icon="solar:check-circle-bold" width="14" style="color:var(--teal)"></iconify-icon></div><div class="arc-step-label">SMS<br>수신</div></div>' +
+        '<div class="arc-step done"><div class="arc-step-dot"><iconify-icon icon="solar:check-circle-bold" width="14" style="color:var(--teal)"></iconify-icon></div><div class="arc-step-label">수령<br>완료</div></div>' +
+        "</div>" +
+        '<div class="arc-action-btn" onclick="switchTab(\'checklist\')"><span>하나은행 계좌 개설하기</span><iconify-icon icon="solar:arrow-right-linear" width="14" style="opacity:.75"></iconify-icon></div>' +
+        '<div style="margin-top:8px;background:rgba(255,255,255,.15);border-radius:10px;padding:8px 12px;display:flex;gap:8px;align-items:center"><iconify-icon icon="solar:map-point-bold" width="16"></iconify-icon><div><div style="font-size:11px;font-weight:600;color:#fff">추천 지점: 하나은행 신촌점</div><div style="font-size:10px;opacity:.7">외국인 전담 창구 · 영어 상담 · 도보 12분</div></div></div></div>';
+
+      function setArcBanner(s) {
+        document.getElementById("arc-banner").innerHTML =
+          s === "done" ? ARC_DONE : ARC_PROGRESS;
+      }
+      setArcBanner("progress");
+
+      function showScreen(id) {
+        document.querySelectorAll(".screen").forEach(function (s) {
+          s.classList.remove("active");
+        });
+        document.getElementById("screen-" + id).classList.add("active");
+        var tb = document.getElementById("tab-bar");
+        if (id === "onboarding" || id === "loading") {
+          tb.style.display = "none";
+        } else {
+          tb.style.display = "flex";
+          setActiveTab(id);
+        }
+        if (id === "calendar") renderCal();
+      }
+      function switchTab(t) {
+        currentTab = t;
+        document.querySelectorAll(".screen").forEach(function (s) {
+          s.classList.remove("active");
+        });
+        var screenId = t === "chat" ? "chat-list" : t;
+        var el = document.getElementById("screen-" + screenId);
+        if (el) el.classList.add("active");
+        setActiveTab(t);
+        document.getElementById("tab-bar").style.display = "flex";
+        if (t === "calendar") renderCal();
+      }
+      function setActiveTab(t) {
+        document.querySelectorAll(".tab-btn").forEach(function (b) {
+          b.classList.remove("active");
+        });
+        var tabId = t === "chat-room" ? "chat-list" : t;
+        var el = document.getElementById("tab-" + tabId);
+        if (el) el.classList.add("active");
+      }
+      function openChatRoom(idx) {
+        showScreen("chat-room");
+        setActiveTab("chat-list");
+      }
+      function ansQ(btn, group) {
+        var par = btn.parentElement;
+        par.querySelectorAll(".q-opt").forEach(function (b) {
+          b.classList.remove("selected");
+        });
+        btn.classList.add("selected");
+        updateProgress();
+      }
+      function toggleMulti(btn) {
+        btn.classList.toggle("selected-multi");
+      }
+      function updateProgress() {
+        var answered = 0;
+        ["q-univ", "q-visa", "q-nation", "q-arc"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el && el.querySelector(".selected")) answered++;
+        });
+        var pct = Math.round((answered / 4) * 100);
+        var bar = document.getElementById("onboard-progress");
+        if (bar) bar.style.width = pct + "%";
+      }
+      var requestedMode = new URLSearchParams(window.location.search).get("mode");
+      var DEMO_MODE =
+        requestedMode === "short67" || requestedMode === "short-67"
+          ? "short67"
+          : requestedMode === "short"
+            ? "short"
+            : "normal";
+      var DEMO_PACING = {
+        normal: {
+          intro: { autostart: 2000, home: 2000, typo: 2000 },
+          push: { hold: 3500, exit: 800 },
+          titleCard: { defaultHold: 2000, scenario: 2500, outro: 400 },
+          loading: { initial: 500, step: 800, complete: 600 },
+          helpers: {
+            tapDown: 200,
+            tapUp: 300,
+            typeChar: 80,
+            scrollSettle: 500,
+            typoDelay: 350,
+          },
+          highlight: 2000,
+          ending: { hold: 1800 },
+          chat: { botReply: 800, confirmUpdate: 500 },
+          s1: {
+            introFocus: 1500,
+            selectGap: 700,
+            scrollGap: 400,
+            multiGap: 600,
+            submitGap: 500,
+            homeReveal: 800,
+            bannerFocus: 2500,
+            checklistReveal: 800,
+            checklistFocus: 2500,
+            calendarFocus: 2500,
+            outro: 1000,
+          },
+          s2: {
+            reset: 300,
+            homeFocus: 2000,
+            checklistFocus: 2500,
+            calendarFocus: 2500,
+            preChat: 1000,
+            chatListFocus: 1200,
+            chatRoomFocus: 1200,
+            typedPause: 600,
+            sentPause: 1500,
+            confirmFocus: 1200,
+            unlockFocus: 3000,
+            homeReturn: 1200,
+            homeBannerFocus: 3000,
+            outro: 1000,
+          },
+          s3: {
+            reset: 300,
+            myFocus: 1200,
+            myScroll: 800,
+            scholarshipHighlight: 500,
+            scholarshipOpen: 2000,
+            checklistFocus: 800,
+            checklistReveal: 2500,
+            outro: 1000,
+          },
+          s4: {
+            reset: 300,
+            titleIntro: 1500,
+            chatListFocus: 1200,
+            chatRoomFocus: 1200,
+            typedPause: 600,
+            answerFocus: 2200,
+            sourceFocus: 3500,
+            outro: 1000,
+          },
+        },
+        short: {
+          intro: { autostart: 900, home: 1600, typo: 2400 },
+          push: { hold: 3200, exit: 800 },
+          titleCard: { defaultHold: 1500, scenario: 1900, outro: 280 },
+          loading: { initial: 420, step: 620, complete: 420 },
+          helpers: {
+            tapDown: 140,
+            tapUp: 190,
+            typeChar: 46,
+            scrollSettle: 280,
+            typoDelay: 220,
+          },
+          highlight: 1700,
+          ending: { hold: 1900 },
+          chat: { botReply: 520, confirmUpdate: 360 },
+          s1: {
+            introFocus: 1000,
+            selectGap: 420,
+            scrollGap: 240,
+            multiGap: 320,
+            submitGap: 320,
+            homeReveal: 900,
+            bannerFocus: 2300,
+            checklistReveal: 500,
+            checklistFocus: 1800,
+            calendarFocus: 2600,
+            outro: 650,
+          },
+          s2: {
+            reset: 200,
+            homeFocus: 1700,
+            checklistFocus: 1700,
+            calendarFocus: 1800,
+            preChat: 450,
+            chatListFocus: 750,
+            chatRoomFocus: 750,
+            typedPause: 420,
+            sentPause: 1100,
+            confirmFocus: 750,
+            unlockFocus: 3100,
+            homeReturn: 650,
+            homeBannerFocus: 3100,
+            outro: 650,
+          },
+          s3: {
+            reset: 180,
+            myFocus: 900,
+            myScroll: 320,
+            scholarshipHighlight: 320,
+            scholarshipOpen: 1450,
+            checklistFocus: 600,
+            checklistReveal: 2300,
+            outro: 650,
+          },
+          s4: {
+            reset: 180,
+            titleIntro: 1400,
+            chatListFocus: 750,
+            chatRoomFocus: 750,
+            typedPause: 420,
+            answerFocus: 2600,
+            sourceFocus: 4300,
+            outro: 850,
+          },
+        },
+        short67: {
+          intro: { autostart: 900, home: 1500, typo: 1500 },
+          push: { hold: 2800, exit: 650 },
+          titleCard: { defaultHold: 1500, scenario: 1500, outro: 220 },
+          loading: { initial: 320, step: 430, complete: 320 },
+          helpers: {
+            tapDown: 140,
+            tapUp: 190,
+            typeChar: 50,
+            scrollSettle: 280,
+            typoDelay: 220,
+          },
+          highlight: 1500,
+          ending: { hold: 1400 },
+          chat: { botReply: 550, confirmUpdate: 320 },
+          s1: {
+            introFocus: 900,
+            selectGap: 320,
+            scrollGap: 220,
+            multiGap: 280,
+            submitGap: 280,
+            homeReveal: 650,
+            bannerFocus: 1800,
+            checklistReveal: 450,
+            checklistFocus: 1800,
+            calendarFocus: 1900,
+            outro: 450,
+          },
+          s2: {
+            reset: 180,
+            homeFocus: 1300,
+            checklistFocus: 1500,
+            calendarFocus: 1500,
+            preChat: 400,
+            chatListFocus: 650,
+            chatRoomFocus: 650,
+            typedPause: 320,
+            sentPause: 850,
+            confirmFocus: 600,
+            unlockFocus: 2200,
+            homeReturn: 650,
+            homeBannerFocus: 2000,
+            outro: 450,
+          },
+          s3: {
+            reset: 180,
+            myFocus: 900,
+            myScroll: 320,
+            scholarshipHighlight: 280,
+            scholarshipOpen: 1100,
+            checklistFocus: 450,
+            checklistReveal: 1800,
+            outro: 450,
+          },
+          s4: {
+            reset: 180,
+            titleIntro: 1000,
+            chatListFocus: 650,
+            chatRoomFocus: 650,
+            typedPause: 320,
+            answerFocus: 1500,
+            sourceFocus: 2600,
+            outro: 450,
+          },
+        },
+      };
+      function pace(group, key) {
+        var value = DEMO_PACING[DEMO_MODE];
+        if (key == null) return value[group];
+        return value[group][key];
+      }
+      function updateStageScale() {
+        var stage = document.querySelector(".demo-stage");
+        if (!stage) return;
+
+        var bodyStyle = window.getComputedStyle(document.body);
+        var padX =
+          parseFloat(bodyStyle.paddingLeft || "0") +
+          parseFloat(bodyStyle.paddingRight || "0");
+        var padY =
+          parseFloat(bodyStyle.paddingTop || "0") +
+          parseFloat(bodyStyle.paddingBottom || "0");
+        var availableWidth = Math.max(window.innerWidth - padX, 320);
+        var availableHeight = Math.max(window.innerHeight - padY, 320);
+        var naturalWidth = stage.offsetWidth || 1;
+        var naturalHeight = stage.offsetHeight || 1;
+        var fitScale = Math.min(
+          availableWidth / naturalWidth,
+          availableHeight / naturalHeight,
+        );
+        var nextScale = Math.max(0.72, Math.min(3, fitScale));
+
+        stage.style.transform = "scale(" + nextScale.toFixed(3) + ")";
+      }
+      var stageScaleFrame = null;
+      function scheduleStageScale() {
+        if (stageScaleFrame != null) cancelAnimationFrame(stageScaleFrame);
+        stageScaleFrame = requestAnimationFrame(function () {
+          stageScaleFrame = null;
+          updateStageScale();
+        });
+      }
+      window.addEventListener("resize", scheduleStageScale);
+      window.addEventListener("load", scheduleStageScale);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(scheduleStageScale);
+      }
+      function startLoading() {
+        showScreen("loading");
+        var bar = document.getElementById("loading-bar");
+        var stepEl = document.getElementById("loading-step");
+        var univBtn = document.querySelector("#q-univ .selected");
+        var natBtn = document.querySelector("#q-nation .selected");
+        var ut = univBtn ? univBtn.textContent : "서울대학교";
+        var nt = natBtn ? natBtn.textContent : "중국";
+        document.getElementById("loading-conditions").textContent =
+          ut + " x D-2 x " + nt;
+        var steps = [
+          { id: "ls-1", msg: "비자 · 학교 정보를 확인하고 있어요...", pct: 25 },
+          { id: "ls-2", msg: "필요한 금융 서비스를 매칭 중이에요...", pct: 50 },
+          { id: "ls-3", msg: "순서와 잠금 조건을 계산 중이에요...", pct: 75 },
+          { id: "ls-4", msg: "맞춤 체크리스트를 생성 중이에요!", pct: 100 },
+        ];
+        var si = 0;
+        function doStep() {
+          if (si >= steps.length) {
+            setTimeout(function () {
+              showScreen("home");
+              switchTab("home");
+              setArcBanner("progress");
+            }, pace("loading", "complete"));
+            return;
+          }
+          var s = steps[si];
+          bar.style.width = s.pct + "%";
+          stepEl.textContent = s.msg;
+          var el = document.getElementById(s.id);
+          if (el) {
+            el.style.color = "#fff";
+            el.style.fontWeight = "600";
+            var dot = el.querySelector("div");
+            if (dot) {
+              dot.style.borderColor = "#fff";
+              dot.style.background = "#fff";
+              dot.innerHTML =
+                '<iconify-icon icon="solar:check-circle-bold" width="14" style="color:var(--teal)"></iconify-icon>';
+            }
+          }
+          si++;
+          setTimeout(doStep, pace("loading", "step"));
+        }
+        setTimeout(doStep, pace("loading", "initial"));
+      }
+      function toggleItem(el) {
+        el.classList.toggle("expanded");
+      }
+      function showToast(t, d) {
+        var to = document.getElementById("toast");
+        to.textContent = t;
+        to.style.display = "block";
+        setTimeout(function () {
+          to.style.display = "none";
+        }, d || 3000);
+      }
+      var pushBannerTimer = null;
+      var pushBannerExitTimer = null;
+      var pushBannerResolve = null;
+      function resolvePushBannerWait() {
+        if (!pushBannerResolve) return;
+        var resolve = pushBannerResolve;
+        pushBannerResolve = null;
+        resolve();
+      }
+      function showPushBanner(message, duration) {
+        var banner = document.getElementById("push-banner");
+        var msg = document.getElementById("push-banner-msg");
+        if (!banner || !msg) return Promise.resolve();
+        if (pushBannerTimer) clearTimeout(pushBannerTimer);
+        if (pushBannerExitTimer) clearTimeout(pushBannerExitTimer);
+        resolvePushBannerWait();
+        msg.textContent = message;
+        banner.classList.add("visible");
+        return new Promise(function (resolve) {
+          var exitMs = pace("push", "exit");
+          pushBannerResolve = resolve;
+          pushBannerTimer = setTimeout(function () {
+            pushBannerTimer = null;
+            banner.classList.remove("visible");
+            pushBannerExitTimer = setTimeout(function () {
+              pushBannerExitTimer = null;
+              resolvePushBannerWait();
+            }, exitMs);
+          }, duration == null ? pace("push", "hold") : duration);
+        });
+      }
+      function sendChat() {
+        var inp = document.getElementById("chat-input-field");
+        var t = inp.value.trim();
+        if (!t) return;
+        addUserMsg(t);
+        inp.value = "";
+        document.getElementById("quick-btns").style.display = "none";
+      }
+      function sendQuickChat(t) {
+        addUserMsg(t);
+        document.getElementById("quick-btns").style.display = "none";
+      }
+
+      function addUserMsg(t) {
+        var c = document.getElementById("chat-messages");
+        var d = document.createElement("div");
+        d.className = "msg-user-wrap fade-up";
+        d.innerHTML = '<div class="bubble-user">' + t + "</div>";
+        c.appendChild(d);
+        setTimeout(function () {
+          if (t.includes("ARC") && (t.includes("받았") || t.includes("수령"))) {
+            addBotConfirm();
+          } else if (
+            t.includes("ARC") &&
+            t.includes("없이") &&
+            t.includes("계좌")
+          ) {
+            addBotMsg(
+              '일반적으로 ARC 접수증만으로는 계좌 개설이 어렵습니다. 다만 ARC가 나오면 바로 개설할 수 있도록 재학증명서와 여권을 미리 준비해두는 것이 좋아요.<div style="display:flex;gap:4px;margin-top:6px"><span class="src-chip src-hana">하나은행</span><span class="src-chip src-school">서울대</span></div>',
+            );
+          } else if (t.includes("계좌") || t.includes("은행")) {
+            addBotMsg(
+              '왕웨이의 경우 계좌 개설 전 ARC, 여권, 재학증명서를 먼저 준비하면 됩니다. 하나은행 방문 전에 준비물을 확인하면 대기 시간을 줄일 수 있어요.<div style="display:flex;gap:4px;margin-top:6px"><span class="src-chip src-hana">하나은행</span><span class="src-chip src-school">서울대</span></div>',
+            );
+          } else if (t.includes("이체") || t.includes("한도")) {
+            addBotMsg(
+              '이체 한도는 계좌 상태와 본인확인 수준에 따라 달라질 수 있습니다. 자세한 기준은 은행 안내와 지점 상담을 함께 확인하는 것이 안전합니다.<div style="display:flex;gap:4px;margin-top:6px"><span class="src-chip src-hana">하나은행</span><span class="src-chip src-gov">금융규정</span></div>',
+            );
+          } else if (t.includes("ARC") && t.includes("언제")) {
+            addBotMsg(
+              '현재 처리 속도 기준, ARC 예상 수령일은 4월 20일경입니다. SMS 알림이 오면 출입국사무소를 방문해 주세요.<div style="display:flex;gap:4px;margin-top:6px"><span class="src-chip src-gov">출입국관리</span></div>',
+            );
+          } else {
+            addBotMsg(
+              "네, 도와드릴게요! 좀 더 구체적으로 물어보시면 정확한 안내를 해드릴 수 있어요.",
+            );
+          }
+        }, pace("chat", "botReply"));
+        c.scrollTop = c.scrollHeight;
+      }
+      function addBotMsg(h) {
+        var c = document.getElementById("chat-messages");
+        var d = document.createElement("div");
+        d.className = "msg-bot-wrap fade-up";
+        d.innerHTML =
+          '<div class="avatar">' +
+          BYULBEOT_SVG +
+          '</div><div class="bubble-bot">' +
+          h +
+          "</div>";
+        c.appendChild(d);
+        c.scrollTop = c.scrollHeight;
+      }
+      function addBotConfirm() {
+        var c = document.getElementById("chat-messages");
+        var d = document.createElement("div");
+        d.className = "msg-bot-wrap fade-up";
+        d.innerHTML =
+          '<div class="avatar">' +
+          BYULBEOT_SVG +
+          '</div><div><div class="bubble-bot">축하해요! ARC 수령을 확인할까요?</div><div style="margin-top:8px;background:#fff;border:2px solid rgba(93,202,165,.5);border-radius:12px;padding:12px" id="arc-confirm-card"><div style="font-size:13px;font-weight:700;color:var(--gray-800);display:flex;align-items:center;gap:6px"><iconify-icon icon="solar:check-square-bold" width="16" style="color:var(--teal)"></iconify-icon>ARC 수령 후 상태 반영</div><div style="display:flex;gap:8px;margin-top:8px"><button id="confirm-arc-btn" onclick="confirmARC(this)" style="padding:8px 16px;border-radius:8px;background:var(--teal);color:#fff;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font-sans)">완료 확인</button><button style="padding:8px 16px;border-radius:8px;background:#fff;color:var(--gray-600);border:1px solid var(--gray-200);font-size:12px;cursor:pointer;font-family:var(--font-sans)">아직 아니에요</button></div></div></div>';
+        c.appendChild(d);
+        c.scrollTop = c.scrollHeight;
+      }
+
+      function setArcCompletedState() {
+        setArcBanner("done");
+        ["cl-bank-account", "cl-phone"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) {
+            el.style.background = "var(--teal-light)";
+            el.style.border = "1px solid rgba(93,202,165,.4)";
+            var iconWrap = el.querySelector(
+              'div[style*="background:var(--gray-200)"]',
+            );
+            if (iconWrap) iconWrap.style.background = "var(--teal)";
+            var lockIcon = el.querySelector(
+              'iconify-icon[icon="solar:lock-keyhole-bold"]',
+            );
+            if (lockIcon)
+              lockIcon.setAttribute("icon", "solar:record-circle-linear");
+            var nameDiv = el.querySelector(
+              'div[style*="color:var(--gray-600)"]',
+            );
+            if (nameDiv) {
+              nameDiv.style.color = "var(--gray-800)";
+              nameDiv.style.fontWeight = "600";
+            }
+          }
+        });
+        document.getElementById("sum-done").textContent = "4";
+        document.getElementById("sum-todo").textContent = "1";
+        document.getElementById("sum-locked").textContent = "2";
+        document.getElementById("cl-count").textContent = "4/8 완료";
+        document.getElementById("my-arc-status").textContent = "수령 완료";
+        document.getElementById("my-arc-status").style.color = "var(--teal)";
+      }
+
+      function confirmARC(btn) {
+        var card = document.getElementById("arc-confirm-card");
+        if (!card) card = btn.parentElement.parentElement;
+        card.innerHTML =
+          '<div style="font-size:13px;font-weight:700;color:var(--teal);display:flex;align-items:center;gap:6px"><iconify-icon icon="solar:check-square-bold" width="16"></iconify-icon>ARC 수령 후 상태 반영!</div>';
+        card.style.background = "var(--teal-light)";
+        card.style.borderColor = "var(--teal)";
+        setTimeout(function () {
+          addBotMsg(
+            '<strong>2가지가 새로 가능해졌어요!</strong><br><br><div style="display:flex;align-items:center;gap:6px;color:var(--teal);font-weight:600;font-size:12px;margin:4px 0"><iconify-icon icon="solar:lock-keyhole-unlocked-linear" width="14"></iconify-icon>하나은행 계좌 개설</div><div style="display:flex;align-items:center;gap:6px;color:var(--teal);font-weight:600;font-size:12px;margin:4px 0"><iconify-icon icon="solar:smartphone-linear" width="14"></iconify-icon>후불폰 전환</div><br>먼저 어떤 걸 하시겠어요?<div style="display:flex;gap:4px;margin-top:6px"><span class="src-chip src-hana">하나은행</span></div>',
+          );
+          showToast("2개 항목이 새로 가능해졌어요!");
+          setArcCompletedState();
+        }, pace("chat", "confirmUpdate"));
+      }
+      function toggleScholarship() {
+        if (scholarshipAdded) return;
+        scholarshipAdded = true;
+        document.getElementById("my-scholarship").textContent = "예정";
+        document.getElementById("my-scholarship").style.color = "var(--teal)";
+        document.getElementById("scholarship-items").style.display = "block";
+        showToast("추가 서류 조건에 따라 2개 항목이 추가되었어요!");
+      }
+      function setPers(name, info, prof, greet) {
+        document.getElementById("my-name").textContent = name;
+        document.getElementById("my-info").textContent = info;
+        document.getElementById("profile-info").textContent = prof;
+        document.getElementById("home-greeting").textContent = greet;
+      }
+
+      function resetChat() {
+        var c = document.getElementById("chat-messages");
+        c.innerHTML =
+          '<div style="background:var(--gray-50);border:1px solid var(--gray-100);border-radius:8px;padding:10px;margin-bottom:12px;display:flex;align-items:flex-start;gap:6px;font-size:11px;color:var(--gray-400)"><iconify-icon icon="solar:danger-triangle-linear" width="14" style="color:var(--amber);flex-shrink:0;margin-top:2px"></iconify-icon><span>답변마다 공식 출처와 다음 행동을 함께 보여드립니다.</span></div>' +
+          '<div id="quick-btns" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">' +
+          '<button onclick="sendQuickChat(\'ARC 없이 계좌 가능?\')" style="padding:6px 12px;border-radius:999px;background:#fff;border:1px solid rgba(93,202,165,.5);font-size:12px;font-weight:500;color:var(--teal);cursor:pointer;font-family:var(--font-sans)">ARC 없이 계좌?</button>' +
+          '<button onclick="sendQuickChat(\'계좌 개설은 어떻게 해요?\')" style="padding:6px 12px;border-radius:999px;background:#fff;border:1px solid rgba(93,202,165,.5);font-size:12px;font-weight:500;color:var(--teal);cursor:pointer;font-family:var(--font-sans)">계좌 개설</button>' +
+          '<button onclick="sendQuickChat(\'ARC 언제 나와요?\')" style="padding:6px 12px;border-radius:999px;background:#fff;border:1px solid rgba(93,202,165,.5);font-size:12px;font-weight:500;color:var(--teal);cursor:pointer;font-family:var(--font-sans)">ARC 언제?</button>' +
+          '<button onclick="sendQuickChat(\'필요 서류는 뭐예요?\')" style="padding:6px 12px;border-radius:999px;background:#fff;border:1px solid rgba(93,202,165,.5);font-size:12px;font-weight:500;color:var(--teal);cursor:pointer;font-family:var(--font-sans)">필요 서류</button></div>' +
+          '<div class="msg-bot-wrap"><div class="avatar">' +
+          BYULBEOT_SVG +
+          '</div><div class="bubble-bot">무엇이든 물어보세요! 금융, 비자, 생활 질문 모두 도와드릴게요.</div></div>';
+      }
+
+      function resetAll() {
+        setPers(
+          "왕웨이 (王伟)",
+          "서울대학교 | D-2 | 중국",
+          "왕웨이 | 서울대 | D-2 | 중국",
+          "안녕 왕웨이!",
+        );
+        document.getElementById("sum-done").textContent = "3";
+        document.getElementById("sum-todo").textContent = "2";
+        document.getElementById("sum-locked").textContent = "3";
+        document.getElementById("cl-count").textContent = "3/8 완료";
+        document.getElementById("my-arc-status").textContent = "대기 중";
+        document.getElementById("my-arc-status").style.color = "var(--teal)";
+        scholarshipAdded = false;
+        document.getElementById("scholarship-items").style.display = "none";
+        document.getElementById("my-scholarship").textContent = "없음";
+        document.getElementById("my-scholarship").style.color = "var(--teal)";
+        setArcBanner("progress");
+        resetChat();
+        document.getElementById("title-card").classList.remove("visible");
+        document.getElementById("typo-area").classList.remove("card-mode");
+        ["ls-1", "ls-2", "ls-3", "ls-4"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) {
+            el.style.color = "rgba(255,255,255,.4)";
+            el.style.fontWeight = "400";
+            var dot = el.querySelector("div");
+            if (dot) {
+              dot.style.borderColor = "rgba(255,255,255,.3)";
+              dot.style.background = "transparent";
+              dot.innerHTML = "";
+            }
+          }
+        });
+        document.getElementById("loading-bar").style.width = "0%";
+        document.querySelectorAll(".q-opt").forEach(function (b) {
+          b.classList.remove("selected", "selected-multi");
+        });
+        document.getElementById("onboard-progress").style.width = "0%";
+        document.querySelectorAll(".cl-item").forEach(function (i) {
+          i.classList.remove("expanded");
+        });
+        // Reset locked items
+        ["cl-bank-account", "cl-phone"].forEach(function (id) {
+          var bi = document.getElementById(id);
+          if (bi) {
+            bi.style.background = "var(--gray-50)";
+            bi.style.border = "1px solid var(--gray-100)";
+            var iw = bi.querySelector('div[style*="background:var(--teal)"]');
+            if (iw) iw.style.background = "var(--gray-200)";
+            var ui = bi.querySelector(
+              'iconify-icon[icon="solar:record-circle-linear"]',
+            );
+            if (ui) ui.setAttribute("icon", "solar:lock-keyhole-bold");
+          }
+        });
+        showScreen("home");
+        switchTab("home");
+      }
+
+      // Calendar
+      var calYear = 2026,
+        calMonth = 3;
+      var events = {
+        "2026-4-6": [
+          {
+            color: "#E24B4A",
+            title: "비자 만료일",
+            sub: "연장 신청 필수 · 이민청 예약 권장",
+          },
+        ],
+        "2026-4-20": [
+          {
+            color: "#1D9E75",
+            title: "ARC 수령일",
+            sub: "출입국사무소 SMS 확인 후 방문",
+          },
+          {
+            color: "#378ADD",
+            title: "계좌개설 권장일",
+            sub: "ARC 수령 당일 → 하나은행 방문",
+          },
+        ],
+        "2026-4-30": [
+          {
+            color: "#EF9F27",
+            title: "건강검진 마감",
+            sub: "서울대 외국인 무료 혜택",
+          },
+        ],
+        "2026-5-15": [
+          {
+            color: "#378ADD",
+            title: "체크카드 발급",
+            sub: "계좌 개설 후 약 3주 소요",
+          },
+        ],
+      };
+      function getEventKey(y, m, d) {
+        return y + "-" + (m + 1) + "-" + d;
+      }
+      function renderCal() {
+        var months = [
+          "1월",
+          "2월",
+          "3월",
+          "4월",
+          "5월",
+          "6월",
+          "7월",
+          "8월",
+          "9월",
+          "10월",
+          "11월",
+          "12월",
+        ];
+        document.getElementById("calMonthLabel").textContent =
+          calYear + "년 " + months[calMonth];
+        var grid = document.getElementById("calGrid");
+        grid.innerHTML = "";
+        var first = new Date(calYear, calMonth, 1).getDay();
+        var days = new Date(calYear, calMonth + 1, 0).getDate();
+        var prevDays = new Date(calYear, calMonth, 0).getDate();
+        var today = new Date();
+        var cells = [];
+        for (var i = first - 1; i >= 0; i--)
+          cells.push({ d: prevDays - i, cur: false });
+        for (var d = 1; d <= days; d++) cells.push({ d: d, cur: true });
+        while (cells.length % 7 !== 0)
+          cells.push({ d: cells.length - first - days + 1, cur: false });
+        cells.forEach(function (c) {
+          var el = document.createElement("div");
+          el.className = "cal-cell" + (c.cur ? "" : " other");
+          var isToday =
+            c.cur &&
+            calYear === today.getFullYear() &&
+            calMonth === today.getMonth() &&
+            c.d === today.getDate();
+          if (isToday) el.classList.add("today");
+          var key = getEventKey(calYear, calMonth, c.d);
+          var evs = c.cur && events[key];
+          el.innerHTML = '<div class="day-num">' + c.d + "</div>";
+          if (evs) {
+            el.innerHTML +=
+              '<div style="width:5px;height:5px;border-radius:50%;background:' +
+              evs[0].color +
+              ';margin-top:1px"></div>';
+            if (c.cur)
+              el.onclick = function () {
+                scrollToEvent(key);
+              };
+          }
+          grid.appendChild(el);
+        });
+        renderEvents();
+      }
+      function renderEvents() {
+        var container = document.getElementById("calEvents");
+        container.innerHTML =
+          '<div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--gray-900)">이번 달 주요 일정</div>';
+        var monthEvs = [];
+        Object.keys(events).forEach(function (k) {
+          var parts = k.split("-").map(Number);
+          if (parts[0] === calYear && parts[1] === calMonth + 1)
+            monthEvs.push([k, events[k]]);
+        });
+        monthEvs.sort(function (a, b) {
+          return parseInt(a[0].split("-")[2]) - parseInt(b[0].split("-")[2]);
+        });
+        if (!monthEvs.length) {
+          container.innerHTML +=
+            '<div style="font-size:12px;color:var(--gray-600)">이번 달 일정이 없어요</div>';
+          return;
+        }
+        monthEvs.forEach(function (item) {
+          var k = item[0],
+            evList = item[1];
+          var day = k.split("-")[2];
+          evList.forEach(function (e) {
+            var el = document.createElement("div");
+            el.className = "cal-event-item";
+            el.id = "ev-" + k;
+            el.innerHTML =
+              '<div class="cal-ev-dot" style="background:' +
+              e.color +
+              '"></div><div style="flex:1"><div class="cal-ev-title">' +
+              e.title +
+              '</div><div class="cal-ev-sub">' +
+              (calMonth + 1) +
+              "월 " +
+              day +
+              "일 · " +
+              e.sub +
+              "</div></div>";
+            container.appendChild(el);
+          });
+        });
+      }
+      function scrollToEvent(key) {
+        var el = document.getElementById("ev-" + key);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      function changeMonth(d) {
+        calMonth += d;
+        if (calMonth > 11) {
+          calMonth = 0;
+          calYear++;
+        }
+        if (calMonth < 0) {
+          calMonth = 11;
+          calYear--;
+        }
+        renderCal();
+      }
+
+      // ========== DEMO ENGINE ==========
+      var demoRunning = false,
+        demoAbort = false;
+      function sleep(ms) {
+        return new Promise(function (resolve) {
+          var elapsed = 0,
+            interval = 50;
+          var timer = setInterval(function () {
+            if (demoAbort) {
+              clearInterval(timer);
+              resolve();
+              return;
+            }
+            elapsed += interval;
+            if (elapsed >= ms) {
+              clearInterval(timer);
+              resolve();
+            }
+          }, interval);
+        });
+      }
+      function waitForElement(sel, timeout) {
+        timeout = timeout || 5000;
+        return new Promise(function (resolve) {
+          var elapsed = 0;
+          var timer = setInterval(function () {
+            var el = document.querySelector(sel);
+            if (el) {
+              clearInterval(timer);
+              resolve(el);
+              return;
+            }
+            elapsed += 100;
+            if (elapsed >= timeout) {
+              clearInterval(timer);
+              resolve(null);
+            }
+          }, 100);
+        });
+      }
+      function waitForScreen(screenId, timeout) {
+        timeout = timeout || 8000;
+        return new Promise(function (resolve) {
+          var elapsed = 0;
+          var timer = setInterval(function () {
+            var el = document.getElementById("screen-" + screenId);
+            if (el && el.classList.contains("active")) {
+              clearInterval(timer);
+              resolve();
+              return;
+            }
+            elapsed += 100;
+            if (elapsed >= timeout) {
+              clearInterval(timer);
+              resolve();
+            }
+          }, 100);
+        });
+      }
+      async function animateTap(sel) {
+        var el = document.querySelector(sel);
+        if (!el) return;
+        var rect = el.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2,
+          cy = rect.top + rect.height / 2;
+        var ind = document.getElementById("touch-ind");
+        ind.style.left = cx + "px";
+        ind.style.top = cy + "px";
+        ind.className = "touch-indicator active";
+        await sleep(pace("helpers", "tapDown"));
+        el.click();
+        ind.className = "touch-indicator fade";
+        await sleep(pace("helpers", "tapUp"));
+        ind.className = "touch-indicator";
+      }
+      async function animateType(sel, text) {
+        var inp = document.querySelector(sel);
+        if (!inp) return;
+        inp.value = "";
+        inp.focus();
+        for (var i = 0; i < text.length; i++) {
+          if (demoAbort) return;
+          inp.value += text[i];
+          inp.dispatchEvent(new Event("input", { bubbles: true }));
+          await sleep(pace("helpers", "typeChar"));
+        }
+      }
+      async function animateScroll(sel, amount) {
+        var el = document.querySelector(sel);
+        if (!el) return;
+        if (amount === "bottom")
+          el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+        else if (amount === "top") el.scrollTo({ top: 0, behavior: "smooth" });
+        else el.scrollTo({ top: amount, behavior: "smooth" });
+        await sleep(pace("helpers", "scrollSettle"));
+      }
+      var typoTimer = null;
+      function applyTypoContent(num, head, sub) {
+        document.getElementById("typo-num").textContent = num || "";
+        document.getElementById("typo-head").innerHTML = head || "";
+        document.getElementById("typo-sub").innerHTML = sub || "";
+      }
+      function setTypo(num, head, sub, delayMs) {
+        var area = document.getElementById("typo-area");
+        if (typoTimer != null) {
+          clearTimeout(typoTimer);
+          typoTimer = null;
+        }
+        area.classList.remove("visible");
+        typoTimer = setTimeout(function () {
+          typoTimer = null;
+          applyTypoContent(num, head, sub);
+          area.classList.add("visible");
+        }, delayMs == null ? pace("helpers", "typoDelay") : delayMs);
+      }
+      function setTypoImmediate(num, head, sub) {
+        var area = document.getElementById("typo-area");
+        if (typoTimer != null) {
+          clearTimeout(typoTimer);
+          typoTimer = null;
+        }
+        area.classList.remove("visible");
+        applyTypoContent(num, head, sub);
+        void area.offsetWidth;
+        area.classList.add("visible");
+      }
+      function clearTypo() {
+        if (typoTimer != null) {
+          clearTimeout(typoTimer);
+          typoTimer = null;
+        }
+        document.getElementById("typo-area").classList.remove("visible");
+      }
+      function setTypoMode(mode) {
+        document
+          .getElementById("typo-area")
+          .classList.toggle("card-mode", Boolean(mode));
+      }
+      async function showScenarioCard(num, title, head, sub, ms, exitTypo) {
+        var tc = document.getElementById("title-card");
+        document.getElementById("tc-num").textContent = num;
+        document.getElementById("tc-title").textContent = title;
+        setTypoMode(true);
+        setTypoImmediate(num, head, sub);
+        tc.classList.add("visible");
+        await sleep(ms == null ? pace("titleCard", "defaultHold") : ms);
+        clearTypo();
+        tc.classList.remove("visible");
+        setTypoMode(false);
+        if (exitTypo) {
+          setTypoImmediate(
+            exitTypo.num == null ? num : exitTypo.num,
+            exitTypo.head,
+            exitTypo.sub,
+          );
+        }
+        await sleep(pace("titleCard", "outro"));
+      }
+      async function showTitleCard(num, title, ms, exitTypo) {
+        return showScenarioCard(
+          num,
+          title,
+          document.getElementById("typo-head").innerHTML || "",
+          document.getElementById("typo-sub").innerHTML || "",
+          ms,
+          exitTypo,
+        );
+      }
+      function highlight(sel) {
+        var el = document.querySelector(sel);
+        if (el) {
+          el.classList.add("demo-highlight");
+          setTimeout(function () {
+            el.classList.remove("demo-highlight");
+          }, pace("highlight"));
+        }
+      }
+
+      // ========== SCENARIOS ==========
+      async function scenario1() {
+        showScreen("onboarding");
+        await showScenarioCard(
+          "SCENARIO 01",
+          "왕웨이: 첫 준비",
+          "왕웨이, 중국 유학생",
+          "서울대 D-2 비자",
+          pace("titleCard", "scenario"),
+          {
+            num: "SCENARIO 01",
+            head: "3분 설문으로",
+            sub: "왕웨이의 출발점을 확인합니다",
+          },
+        );
+        await sleep(pace("s1", "introFocus"));
+        setTypo("SCENARIO 01", "학교, 비자, 국적", "지금 필요한 준비를 바로 나눕니다");
+        await animateTap('#q-univ .q-opt[data-val="SNU"]');
+        await sleep(pace("s1", "selectGap"));
+        await animateTap('#q-visa .q-opt[data-val="D2"]');
+        await sleep(pace("s1", "selectGap"));
+        await animateTap('#q-nation .q-opt[data-val="CN"]');
+        await sleep(pace("s1", "selectGap"));
+        await animateTap("#q-arc .q-opt:nth-child(2)");
+        await sleep(pace("s1", "selectGap"));
+        await animateScroll("#screen-onboarding .scr-body", 300);
+        await sleep(pace("s1", "scrollGap"));
+        await animateTap("#q-needs .q-opt:nth-child(2)");
+        await sleep(pace("s1", "scrollGap"));
+        await animateTap("#q-needs .q-opt:nth-child(3)");
+        await sleep(pace("s1", "multiGap"));
+        await animateScroll("#screen-onboarding .scr-body", "bottom");
+        await sleep(pace("s1", "submitGap"));
+        setTypo("SCENARIO 01", "체크리스트 생성 중", "왕웨이의 순서를 정리하고 있습니다");
+        await animateTap("#cta-btn");
+        await waitForScreen("home", 8000);
+        setTypo(
+          "SCENARIO 01",
+          "맞춤 체크리스트 완성",
+          "지금 가능한 일과 대기 중인 일이 나뉩니다",
+        );
+        await sleep(pace("s1", "homeReveal"));
+        highlight("#arc-banner");
+        await sleep(pace("s1", "bannerFocus"));
+        await animateTap("#tab-checklist");
+        await sleep(pace("s1", "checklistReveal"));
+        setTypo(
+          "SCENARIO 01",
+          "잠긴 이유까지 안내",
+          "무엇이 풀리면 되는지 함께 봅니다",
+        );
+        await animateTap("#cl-arc-item");
+        await sleep(pace("s1", "checklistFocus"));
+        await animateTap("#tab-calendar");
+        setTypo(
+          "SCENARIO 01",
+          "스마트 캘린더",
+          "예상 수령일과 준비 시점을 함께 봅니다",
+        );
+        await sleep(pace("s1", "calendarFocus"));
+        await sleep(pace("s1", "outro"));
+      }
+
+      async function scenario2() {
+        resetAll();
+        await sleep(pace("s2", "reset"));
+        switchTab("home");
+        setArcBanner("progress");
+        await showScenarioCard(
+          "SCENARIO 02",
+          "왕웨이: ARC 대기",
+          "지금 할 일부터",
+          "가능한 일과 잠긴 일을 먼저 봅니다",
+          pace("titleCard", "scenario"),
+          {
+            num: "SCENARIO 02",
+            head: "지금은 ARC 대기 중",
+            sub: "가능한 준비를 먼저 진행합니다",
+          },
+        );
+        await sleep(pace("s2", "homeFocus"));
+        highlight("#arc-banner");
+        await sleep(pace("s2", "preChat"));
+        setTypo(
+          "SCENARIO 02",
+          "잠긴 단계 먼저 확인",
+          "왜 기다려야 하는지 바로 보입니다",
+        );
+        await animateTap("#tab-checklist");
+        await sleep(pace("s2", "checklistFocus"));
+        await animateTap("#cl-arc-item");
+        await sleep(Math.max(pace("s2", "confirmFocus") - 120, 0));
+        await animateTap("#tab-calendar");
+        setTypo(
+          "SCENARIO 02",
+          "수령 전 일정 확인",
+          "ARC 예상일과 준비 순서를 봅니다",
+        );
+        await sleep(pace("s2", "calendarFocus"));
+        await sleep(pace("s2", "outro"));
+      }
+
+      async function scenario3() {
+        resetAll();
+        await sleep(pace("s2", "reset"));
+        switchTab("home");
+        setArcBanner("progress");
+        await showScenarioCard(
+          "SCENARIO 03",
+          "왕웨이: ARC 수령",
+          "받는 순간, 다음이 열립니다",
+          "체크리스트가 바로 다시 정리됩니다",
+          pace("titleCard", "scenario"),
+          {
+            num: "SCENARIO 03",
+            head: "아직은 잠긴 상태",
+            sub: "완료 확인 전에는 체크리스트가 그대로입니다",
+          },
+        );
+        await animateTap("#tab-checklist");
+        await sleep(Math.max(pace("s2", "checklistFocus") - 350, 0));
+        await animateTap("#tab-chat-list");
+        await sleep(pace("s2", "chatListFocus"));
+        setTypo("SCENARIO 03", "채팅으로 상태 반영", "왕웨이가 수령 사실을 직접 알립니다");
+        await animateTap("#chat-room-0");
+        await sleep(pace("s2", "chatRoomFocus"));
+        await animateType("#chat-input-field", "ARC 받았어요!");
+        await sleep(pace("s2", "typedPause"));
+        await animateTap("#send-btn");
+        await sleep(pace("s2", "sentPause"));
+        var confirmBtn = await waitForElement("#confirm-arc-btn", 5000);
+        setTypo("SCENARIO 03", "완료 확인 한 번으로", "잠긴 단계가 바로 풀립니다");
+        await sleep(pace("s2", "confirmFocus"));
+        if (confirmBtn) await animateTap("#confirm-arc-btn");
+        await sleep(pace("s2", "unlockFocus"));
+        setTypo("SCENARIO 03", "다음 할 일 재정렬", "이제 계좌 개설이 먼저 보입니다");
+        await animateTap("#tab-home");
+        await sleep(pace("s2", "homeReturn"));
+        highlight("#arc-banner");
+        await sleep(pace("s2", "homeBannerFocus"));
+        await sleep(pace("s2", "outro"));
+      }
+
+      async function scenario4() {
+        resetAll();
+        await sleep(pace("s4", "reset"));
+        setArcCompletedState();
+        switchTab("chat-list");
+        await showScenarioCard(
+          "SCENARIO 04",
+          "왕웨이: AI 질문",
+          "막히면 바로 묻습니다",
+          "출처와 다음 행동을 함께 봅니다",
+          pace("titleCard", "scenario"),
+          {
+            num: "SCENARIO 04",
+            head: "질문은 자연어로",
+            sub: "계좌 개설 순서를 바로 확인합니다",
+          },
+        );
+        await sleep(pace("s4", "titleIntro"));
+        await sleep(pace("s4", "chatListFocus"));
+        await animateTap("#chat-room-0");
+        await sleep(pace("s4", "chatRoomFocus"));
+        await animateType(
+          "#chat-input-field",
+          "계좌 개설은 어떻게 해요?",
+        );
+        await sleep(pace("s4", "typedPause"));
+        await animateTap("#send-btn");
+        await sleep(pace("s4", "answerFocus"));
+        setTypo("SCENARIO 04", "근거까지 바로 확인", "공식 출처와 준비물을 함께 봅니다");
+        await animateScroll("#chat-messages", "bottom");
+        await sleep(pace("s4", "sourceFocus"));
+        await sleep(pace("s4", "outro"));
+      }
+
+      async function showEnding() {
+        await showScenarioCard(
+          "HANA EZ",
+          "Student Start Mode",
+          "안내에서 실행까지",
+          "왕웨이의 첫 금융 시작을 하나로 연결합니다",
+          pace("ending", "hold"),
+        );
+      }
+
+      async function startDemo() {
+        if (demoRunning) return;
+        demoRunning = true;
+        demoAbort = false;
+        scheduleStageScale();
+        resetAll();
+        await sleep(pace("intro", "home"));
+        setTypo("", "Student Start Mode", "유학생을 위한 맞춤 금융 온보딩", 0);
+        await sleep(pace("intro", "typo"));
+        await showPushBanner("오늘은 서울대 무료 건강검진 신청 마감일이에요!", pace("push", "hold"));
+        await scenario1();
+        if (demoAbort) return;
+        await scenario2();
+        if (demoAbort) return;
+        await scenario3();
+        if (demoAbort) return;
+        await scenario4();
+        if (demoAbort) return;
+        await showEnding();
+        demoRunning = false;
+      }
+      resetAll();
+      scheduleStageScale();
+      setTimeout(function () {
+        startDemo();
+      }, pace("intro", "autostart"));
+    </script>
+  </body>
+</html>

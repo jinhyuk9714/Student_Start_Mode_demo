@@ -13,7 +13,7 @@ ROOT = Path("/Users/sungjh/Projects/SSM/HanaEZ_Student_Start_Mode_upstream")
 AUDIO_DIR = ROOT / "output" / "audio_work" / "free_mixkit_65s"
 VIDEO_DIR = ROOT / "output" / "video"
 SOURCE_VIDEO = VIDEO_DIR / "student-start-mode-short-65s-max-2160p.mp4"
-OUTPUT_V3 = VIDEO_DIR / "student-start-mode-short-65s-audio-final-v3.mp4"
+OUTPUT_V6 = VIDEO_DIR / "student-start-mode-short-65s-audio-final-v6.mp4"
 OUTPUT_FINAL = VIDEO_DIR / "student-start-mode-short-65s-audio-final.mp4"
 SOURCES_MD = VIDEO_DIR / "student-start-mode-short-65s-audio-sources.md"
 EVENTS_MD = VIDEO_DIR / "student-start-mode-short-65s-audio-events.md"
@@ -71,13 +71,6 @@ ASSETS = {
         "asset_url": "https://assets.mixkit.co/active_storage/sfx/1108/1108-preview.mp3",
         "role": "alternate tab-switch tick",
     },
-    "send_cue": {
-        "title": "Confirmation tone",
-        "local_name": "sfx-confirmation-tone-2867.mp3",
-        "page_url": "https://mixkit.co/free-sound-effects/notification/",
-        "asset_url": "https://assets.mixkit.co/active_storage/sfx/2867/2867-preview.mp3",
-        "role": "send cue",
-    },
     "info_reveal": {
         "title": "High tech bleep confirmation",
         "local_name": "sfx-high-tech-bleep-confirmation-2520.mp3",
@@ -106,13 +99,6 @@ ASSETS = {
         "asset_url": "https://assets.mixkit.co/active_storage/sfx/2852/2852-preview.mp3",
         "role": "unlock/complete",
     },
-    "source_reveal": {
-        "title": "Clear announce tones",
-        "local_name": "sfx-clear-announce-tones-2861.mp3",
-        "page_url": "https://mixkit.co/free-sound-effects/alerts/",
-        "asset_url": "https://assets.mixkit.co/active_storage/sfx/2861/2861-preview.mp3",
-        "role": "strong source reveal",
-    },
 }
 
 
@@ -127,6 +113,7 @@ EVENTS = [
         "fade": 0.22,
         "volume": 0.14,
         "tier": "C",
+        "status": "unchanged",
     },
     {
         "time": 1.05,
@@ -138,6 +125,7 @@ EVENTS = [
         "fade": 0.08,
         "volume": 0.24,
         "tier": "A",
+        "status": "unchanged",
     },
     {
         "time": 7.07,
@@ -145,10 +133,38 @@ EVENTS = [
         "label": "Survey university select",
         "role": "tap/select",
         "asset": "soft_tap",
-        "trim": 0.20,
-        "fade": 0.05,
-        "volume": 0.10,
+        "trim": 0.16,
+        "fade": 0.04,
+        "volume": 0.08,
         "tier": "C",
+        "head_trim": 0.10,
+        "status": "unified",
+    },
+    {
+        "time": 7.72,
+        "name": "survey_visa_select",
+        "label": "Survey visa select",
+        "role": "tap/select",
+        "asset": "soft_tap",
+        "trim": 0.16,
+        "fade": 0.04,
+        "volume": 0.08,
+        "tier": "C",
+        "head_trim": 0.10,
+        "status": "unified",
+    },
+    {
+        "time": 8.37,
+        "name": "survey_country_select",
+        "label": "Survey country select",
+        "role": "tap/select",
+        "asset": "soft_tap",
+        "trim": 0.16,
+        "fade": 0.04,
+        "volume": 0.08,
+        "tier": "C",
+        "head_trim": 0.10,
+        "status": "unified",
     },
     {
         "time": 9.02,
@@ -156,10 +172,38 @@ EVENTS = [
         "label": "Survey ARC timing select",
         "role": "tap/select",
         "asset": "soft_tap",
-        "trim": 0.20,
-        "fade": 0.05,
-        "volume": 0.10,
+        "trim": 0.16,
+        "fade": 0.04,
+        "volume": 0.08,
         "tier": "C",
+        "head_trim": 0.10,
+        "status": "unified",
+    },
+    {
+        "time": 10.17,
+        "name": "survey_need_select_1",
+        "label": "Survey need select 1",
+        "role": "tap/select",
+        "asset": "soft_tap",
+        "trim": 0.16,
+        "fade": 0.04,
+        "volume": 0.08,
+        "tier": "C",
+        "head_trim": 0.10,
+        "status": "unified",
+    },
+    {
+        "time": 10.72,
+        "name": "survey_need_select_2",
+        "label": "Survey need select 2",
+        "role": "tap/select",
+        "asset": "soft_tap",
+        "trim": 0.16,
+        "fade": 0.04,
+        "volume": 0.08,
+        "tier": "C",
+        "head_trim": 0.10,
+        "status": "unified",
     },
     {
         "time": 11.33,
@@ -171,17 +215,20 @@ EVENTS = [
         "fade": 0.09,
         "volume": 0.08,
         "tier": "C",
+        "status": "unchanged",
     },
     {
         "time": 11.89,
         "name": "survey_submit",
         "label": "Survey submit",
         "role": "tap/select",
-        "asset": "select_click",
-        "trim": 0.24,
-        "fade": 0.06,
-        "volume": 0.12,
+        "asset": "soft_tap",
+        "trim": 0.16,
+        "fade": 0.04,
+        "volume": 0.08,
         "tier": "C",
+        "head_trim": 0.10,
+        "status": "unified",
     },
     {
         "time": 14.80,
@@ -193,6 +240,8 @@ EVENTS = [
         "fade": 0.10,
         "volume": 0.16,
         "tier": "B",
+        "head_trim": 0.10,
+        "status": "unchanged",
     },
     {
         "time": 16.60,
@@ -204,6 +253,8 @@ EVENTS = [
         "fade": 0.08,
         "volume": 0.10,
         "tier": "C",
+        "head_trim": 0.06,
+        "status": "unchanged",
     },
     {
         "time": 19.51,
@@ -215,6 +266,8 @@ EVENTS = [
         "fade": 0.08,
         "volume": 0.10,
         "tier": "C",
+        "head_trim": 0.06,
+        "status": "unchanged",
     },
     {
         "time": 25.39,
@@ -226,17 +279,7 @@ EVENTS = [
         "fade": 0.08,
         "volume": 0.10,
         "tier": "C",
-    },
-    {
-        "time": 27.22,
-        "name": "scenario2_calendar_tab",
-        "label": "Scenario 2 calendar tab",
-        "role": "tab-switch",
-        "asset": "tab_tick_alt",
-        "trim": 0.30,
-        "fade": 0.08,
-        "volume": 0.10,
-        "tier": "C",
+        "status": "unchanged",
     },
     {
         "time": 29.45,
@@ -246,8 +289,9 @@ EVENTS = [
         "asset": "tab_tick_alt",
         "trim": 0.30,
         "fade": 0.08,
-        "volume": 0.10,
+        "volume": 0.05,
         "tier": "C",
+        "status": "softened",
     },
     {
         "time": 30.43,
@@ -257,19 +301,21 @@ EVENTS = [
         "asset": "select_click",
         "trim": 0.24,
         "fade": 0.06,
-        "volume": 0.11,
+        "volume": 0.07,
         "tier": "C",
+        "status": "softened",
     },
     {
         "time": 32.18,
         "name": "scenario2_send",
         "label": "Scenario 2 send message",
         "role": "send",
-        "asset": "send_cue",
-        "trim": 0.30,
-        "fade": 0.07,
-        "volume": 0.11,
+        "asset": "soft_tap",
+        "trim": 0.18,
+        "fade": 0.05,
+        "volume": 0.08,
         "tier": "C",
+        "status": "replaced",
     },
     {
         "time": 33.96,
@@ -281,6 +327,7 @@ EVENTS = [
         "fade": 0.18,
         "volume": 0.21,
         "tier": "A",
+        "status": "unchanged",
     },
     {
         "time": 37.47,
@@ -290,8 +337,9 @@ EVENTS = [
         "asset": "info_reveal_alt",
         "trim": 0.42,
         "fade": 0.10,
-        "volume": 0.15,
+        "volume": 0.09,
         "tier": "B",
+        "status": "softened",
     },
     {
         "time": 41.82,
@@ -301,19 +349,10 @@ EVENTS = [
         "asset": "tab_tick",
         "trim": 0.30,
         "fade": 0.08,
-        "volume": 0.09,
+        "volume": 0.05,
         "tier": "C",
-    },
-    {
-        "time": 43.05,
-        "name": "scenario3_my_page_scroll",
-        "label": "Scenario 3 My Page scroll",
-        "role": "scroll/transition",
-        "asset": "scroll_sweep",
-        "trim": 0.34,
-        "fade": 0.09,
-        "volume": 0.08,
-        "tier": "C",
+        "head_trim": 0.10,
+        "status": "softened",
     },
     {
         "time": 43.93,
@@ -325,6 +364,7 @@ EVENTS = [
         "fade": 0.06,
         "volume": 0.10,
         "tier": "C",
+        "status": "unchanged",
     },
     {
         "time": 46.14,
@@ -334,19 +374,10 @@ EVENTS = [
         "asset": "info_reveal",
         "trim": 0.42,
         "fade": 0.10,
-        "volume": 0.15,
-        "tier": "B",
-    },
-    {
-        "time": 51.57,
-        "name": "scenario4_chat_list_tab",
-        "label": "Scenario 4 chat list tab",
-        "role": "tab-switch",
-        "asset": "tab_tick_alt",
-        "trim": 0.30,
-        "fade": 0.08,
         "volume": 0.10,
-        "tier": "C",
+        "tier": "B",
+        "head_trim": 0.10,
+        "status": "softened",
     },
     {
         "time": 52.55,
@@ -356,19 +387,21 @@ EVENTS = [
         "asset": "select_click",
         "trim": 0.24,
         "fade": 0.06,
-        "volume": 0.11,
+        "volume": 0.06,
         "tier": "C",
+        "status": "softened",
     },
     {
         "time": 54.85,
         "name": "scenario4_send",
         "label": "Scenario 4 send message",
         "role": "send",
-        "asset": "send_cue",
-        "trim": 0.30,
-        "fade": 0.07,
-        "volume": 0.11,
+        "asset": "soft_tap",
+        "trim": 0.18,
+        "fade": 0.05,
+        "volume": 0.08,
         "tier": "C",
+        "status": "replaced",
     },
     {
         "time": 55.70,
@@ -380,28 +413,20 @@ EVENTS = [
         "fade": 0.08,
         "volume": 0.18,
         "tier": "B",
-    },
-    {
-        "time": 56.68,
-        "name": "scenario4_answer_scroll",
-        "label": "Scenario 4 answer scroll",
-        "role": "scroll/transition",
-        "asset": "scroll_sweep",
-        "trim": 0.34,
-        "fade": 0.09,
-        "volume": 0.08,
-        "tier": "C",
+        "status": "unchanged",
     },
     {
         "time": 59.88,
         "name": "scenario4_source_reveal",
         "label": "Scenario 4 source reveal",
         "role": "reveal/info",
-        "asset": "source_reveal",
-        "trim": 0.90,
-        "fade": 0.16,
-        "volume": 0.20,
-        "tier": "A",
+        "asset": "info_reveal_alt",
+        "trim": 0.38,
+        "fade": 0.10,
+        "volume": 0.12,
+        "tier": "B",
+        "head_trim": 0.08,
+        "status": "replaced",
     },
 ]
 
@@ -420,15 +445,17 @@ def ensure_assets() -> None:
 def validate_events() -> None:
     if not (24 <= len(EVENTS) <= 26):
         raise ValueError(f"expected 24-26 events, got {len(EVENTS)}")
+    min_spacing_by_asset = {"soft_tap": 0.5}
     grouped: dict[str, list[float]] = {}
     for event in EVENTS:
         grouped.setdefault(event["asset"], []).append(event["time"])
     for asset_name, times in grouped.items():
         ordered = sorted(times)
+        min_spacing = min_spacing_by_asset.get(asset_name, 0.8)
         for earlier, later in zip(ordered, ordered[1:]):
-            if later - earlier < 0.8:
+            if later - earlier < min_spacing:
                 raise ValueError(
-                    f"asset {asset_name} reused within 0.8s at {earlier:.2f}/{later:.2f}"
+                    f"asset {asset_name} reused within {min_spacing:.1f}s at {earlier:.2f}/{later:.2f}"
                 )
 
 
@@ -476,10 +503,12 @@ def build_filter_script() -> str:
     for index, event in enumerate(EVENTS):
         asset_label = label_pool[event["asset"]].pop(0)
         delay_ms = int(round(event["time"] * 1000))
+        start = event.get("head_trim", 0.0)
+        end = start + event["trim"]
         fade_start = max(event["trim"] - event["fade"], 0.01)
         filter_parts.append(
             f"{asset_label}"
-            f"atrim=0:{event['trim']},asetpts=N/SR/TB,"
+            f"atrim={start:.3f}:{end:.3f},asetpts=N/SR/TB,"
             "afade=t=in:st=0:d=0.01,"
             f"afade=t=out:st={fade_start:.3f}:d={event['fade']:.3f},"
             f"volume={event['volume']:.3f},"
@@ -523,14 +552,17 @@ def render_outputs() -> None:
         "256k",
         "-movflags",
         "+faststart",
-        str(OUTPUT_V3),
+        str(OUTPUT_V6),
     ]
     subprocess.run(command, check=True)
-    shutil.copy2(OUTPUT_V3, OUTPUT_FINAL)
+    shutil.copy2(OUTPUT_V6, OUTPUT_FINAL)
 
 
 def write_sources_md() -> None:
-    used_asset_names = ["bgm"] + list(dict.fromkeys(event["asset"] for event in EVENTS))
+    audible_events = [event for event in EVENTS if event["volume"] > 0.0]
+    used_asset_names = ["bgm"] + list(
+        dict.fromkeys(event["asset"] for event in audible_events)
+    )
     lines = [
         "# 65s Audio Sources",
         "",
@@ -554,6 +586,9 @@ def write_sources_md() -> None:
         if asset_name == "bgm":
             continue
         asset = ASSETS[asset_name]
+        used_in = [
+            event["label"] for event in audible_events if event["asset"] == asset_name
+        ]
         lines.extend(
             [
                 f"- {asset['title']}",
@@ -561,6 +596,7 @@ def write_sources_md() -> None:
                 f"  - Source page: {asset['page_url']}",
                 f"  - Asset URL: {asset['asset_url']}",
                 f"  - Local file: ../audio_work/free_mixkit_65s/{asset['local_name']}",
+                f"  - Used in: {', '.join(used_in)}",
             ]
         )
     SOURCES_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -571,19 +607,19 @@ def write_events_md() -> None:
         "# 65s Audio Event Map",
         "",
         "Applied target",
-        "- `student-start-mode-short-65s-audio-final-v3.mp4`",
+        "- `student-start-mode-short-65s-audio-final-v6.mp4`",
         "- `student-start-mode-short-65s-audio-final.mp4`",
         "",
         "Coverage",
         f"- Total interaction cues: {len(EVENTS)}",
-        "- Goal: quieter UI bed, stronger meaning hierarchy, no focus-only cues",
+        "- Goal: unified Scenario 1 survey clicks without changing other scene audio",
         "",
-        "| Time (s) | Event | Role | Asset |",
-        "| --- | --- | --- | --- |",
+        "| Time (s) | Event | Role | Asset | Status |",
+        "| --- | --- | --- | --- | --- |",
     ]
     for event in EVENTS:
         lines.append(
-            f"| {event['time']:.2f} | {event['label']} | {event['role']} | {ASSETS[event['asset']]['title']} |"
+            f"| {event['time']:.2f} | {event['label']} | {event['role']} | {ASSETS[event['asset']]['title']} | {event['status']} |"
         )
     EVENTS_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")
 

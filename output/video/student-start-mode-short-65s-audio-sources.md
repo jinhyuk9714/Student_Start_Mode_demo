@@ -16,58 +16,58 @@ Sound effects
   - Source page: https://mixkit.co/free-sound-effects/alerts/
   - Asset URL: https://assets.mixkit.co/active_storage/sfx/2574/2574-preview.mp3
   - Local file: ../audio_work/free_mixkit_65s/sfx-interface-start-2574.mp3
+  - Used in: Intro starts
 - Message pop alert
   - Role: notification
   - Source page: https://mixkit.co/free-sound-effects/alerts/
   - Asset URL: https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3
   - Local file: ../audio_work/free_mixkit_65s/sfx-message-pop-2354.mp3
+  - Used in: Push notification appears, Scenario 4 AI answer appears
 - Interface option select
   - Role: soft tap
   - Source page: https://mixkit.co/free-sound-effects/interface/
   - Asset URL: https://assets.mixkit.co/active_storage/sfx/2573/2573-preview.mp3
   - Local file: ../audio_work/free_mixkit_65s/sfx-interface-option-select-2573.mp3
+  - Used in: Survey university select, Survey visa select, Survey country select, Survey ARC timing select, Survey need select 1, Survey need select 2, Survey submit, Scenario 2 send message, Scenario 4 send message
 - Explainer video pops whoosh light pop
   - Role: soft transition sweep
   - Source page: https://mixkit.co/free-sound-effects/whoosh/
   - Asset URL: https://assets.mixkit.co/active_storage/sfx/3005/3005-preview.mp3
   - Local file: ../audio_work/free_mixkit_65s/sfx-explainer-whoosh-light-pop-3005.mp3
-- Select click
-  - Role: tap/select
-  - Source page: https://mixkit.co/free-sound-effects/interface/
-  - Asset URL: https://assets.mixkit.co/active_storage/sfx/1109/1109-preview.mp3
-  - Local file: ../audio_work/free_mixkit_65s/sfx-select-click-1109.mp3
+  - Used in: Survey scroll
 - High tech bleep confirmation
   - Role: info reveal shimmer
   - Source page: https://mixkit.co/free-sound-effects/high-tech/
   - Asset URL: https://assets.mixkit.co/active_storage/sfx/2520/2520-preview.mp3
   - Local file: ../audio_work/free_mixkit_65s/sfx-high-tech-bleep-confirmation-2520.mp3
+  - Used in: Scenario 1 checklist complete banner, Scenario 3 updated checklist reveal
 - Page forward single chime
   - Role: tab-switch tick
   - Source page: https://mixkit.co/free-sound-effects/interface/
   - Asset URL: https://assets.mixkit.co/active_storage/sfx/1107/1107-preview.mp3
   - Local file: ../audio_work/free_mixkit_65s/sfx-page-forward-chime-1107.mp3
+  - Used in: Scenario 1 checklist tab, Scenario 1 smart calendar tab, Scenario 3 My Page tab
 - Page back chime
   - Role: alternate tab-switch tick
   - Source page: https://mixkit.co/free-sound-effects/interface/
   - Asset URL: https://assets.mixkit.co/active_storage/sfx/1108/1108-preview.mp3
   - Local file: ../audio_work/free_mixkit_65s/sfx-page-back-chime-1108.mp3
-- Confirmation tone
-  - Role: send cue
-  - Source page: https://mixkit.co/free-sound-effects/notification/
-  - Asset URL: https://assets.mixkit.co/active_storage/sfx/2867/2867-preview.mp3
-  - Local file: ../audio_work/free_mixkit_65s/sfx-confirmation-tone-2867.mp3
+  - Used in: Scenario 2 checklist tab, Scenario 2 chat list tab
+- Select click
+  - Role: tap/select
+  - Source page: https://mixkit.co/free-sound-effects/interface/
+  - Asset URL: https://assets.mixkit.co/active_storage/sfx/1109/1109-preview.mp3
+  - Local file: ../audio_work/free_mixkit_65s/sfx-select-click-1109.mp3
+  - Used in: Scenario 2 open chat room, Scenario 3 open scholarship item, Scenario 4 open chat room
 - Electronic lock success beeps
   - Role: unlock/complete
   - Source page: https://mixkit.co/free-sound-effects/success/
   - Asset URL: https://assets.mixkit.co/active_storage/sfx/2852/2852-preview.mp3
   - Local file: ../audio_work/free_mixkit_65s/sfx-unlock-success-2852.mp3
+  - Used in: Scenario 2 ARC unlock
 - Digital quick tone
   - Role: alternate info reveal shimmer
   - Source page: https://mixkit.co/free-sound-effects/alerts/
   - Asset URL: https://assets.mixkit.co/active_storage/sfx/2866/2866-preview.mp3
   - Local file: ../audio_work/free_mixkit_65s/sfx-digital-quick-tone-2866.mp3
-- Clear announce tones
-  - Role: strong source reveal
-  - Source page: https://mixkit.co/free-sound-effects/alerts/
-  - Asset URL: https://assets.mixkit.co/active_storage/sfx/2861/2861-preview.mp3
-  - Local file: ../audio_work/free_mixkit_65s/sfx-clear-announce-tones-2861.mp3
+  - Used in: Scenario 2 next-step banner, Scenario 4 source reveal

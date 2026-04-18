@@ -38,6 +38,8 @@ def probe_duration(path: Path) -> float:
 
 
 DEMO_DURATION = probe_duration(SOURCE_VIDEO)
+BASE_DEMO_DURATION = 85.84
+TIME_SCALE = DEMO_DURATION / BASE_DEMO_DURATION if BASE_DEMO_DURATION else 1.0
 
 
 ASSETS = {
@@ -286,6 +288,16 @@ EVENTS = [{'time': 0.18,
   'volume': 0.08,
   'tier': 'C',
   'head_trim': 0.06},
+ {'time': 39.117,
+  'name': 'scenario2_calendar_tab',
+  'label': 'Scenario 2 calendar tab',
+  'role': 'tab-switch',
+  'asset': 'tab_tick_alt',
+  'trim': 0.3,
+  'fade': 0.08,
+  'volume': 0.05,
+  'tier': 'C',
+  'head_trim': 0.06},
  {'time': 41.407,
   'name': 'scenario2_chat_tab',
   'label': 'Scenario 2 chat list tab',
@@ -335,15 +347,15 @@ EVENTS = [{'time': 0.18,
   'fade': 0.12,
   'volume': 0.17,
   'tier': 'A'},
- {'time': 50.788,
-  'name': 'scenario2_next_step_banner',
-  'label': 'Scenario 2 next-step banner',
-  'role': 'reveal/info',
-  'asset': 'info_reveal_alt',
+ {'time': 50.530,
+  'name': 'scenario2_home_tab',
+  'label': 'Scenario 2 home tab return',
+  'role': 'tab-switch',
+  'asset': 'tab_tick_alt',
   'trim': 0.3,
-  'fade': 0.1,
-  'volume': 0.09,
-  'tier': 'B',
+  'fade': 0.08,
+  'volume': 0.05,
+  'tier': 'C',
   'head_trim': 0.06},
  {'time': 57.975,
   'name': 'scenario3_my_page_tab',
@@ -418,12 +430,26 @@ EVENTS = [{'time': 0.18,
   'name': 'scenario4_source_reveal',
   'label': 'Scenario 4 source reveal',
   'role': 'reveal/info',
-  'asset': 'info_reveal_alt',
+  'asset': 'info_reveal',
   'trim': 0.38,
   'fade': 0.1,
-  'volume': 0.12,
+ 'volume': 0.12,
   'tier': 'B',
   'head_trim': 0.08}]
+
+
+def scale_events(events: list[dict]) -> list[dict]:
+    scaled = []
+    for event in events:
+        next_event = dict(event)
+        next_event["time"] = round(next_event["time"] * TIME_SCALE, 3)
+        if next_event.get("role") == "typing":
+            next_event["trim"] = round(next_event["trim"] * TIME_SCALE, 3)
+        scaled.append(next_event)
+    return scaled
+
+
+EVENTS = scale_events(EVENTS)
 
 
 def ensure_assets() -> None:
@@ -438,8 +464,8 @@ def ensure_assets() -> None:
 
 
 def validate_events() -> None:
-    if not (24 <= len(EVENTS) <= 28):
-        raise ValueError(f"expected 24-28 events, got {len(EVENTS)}")
+    if not (24 <= len(EVENTS) <= 30):
+        raise ValueError(f"expected 24-30 events, got {len(EVENTS)}")
     min_spacing_by_asset = {"select_click": 0.5}
     grouped: dict[str, list[float]] = {}
     for event in EVENTS:

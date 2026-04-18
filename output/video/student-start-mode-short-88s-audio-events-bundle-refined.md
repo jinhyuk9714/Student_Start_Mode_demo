@@ -10,31 +10,31 @@ Coverage
 
 | Time (s) | Event | Role | Asset |
 | --- | --- | --- | --- |
-| 0.18 | Intro starts | intro/start | Software interface start |
-| 4.37 | Push notification appears | notification | Message pop alert |
-| 11.97 | Survey university select | tap/select | Select click |
-| 12.83 | Survey visa select | tap/select | Select click |
-| 13.68 | Survey country select | tap/select | Select click |
-| 14.54 | Survey ARC timing select | tap/select | Select click |
-| 16.00 | Survey need select 1 | tap/select | Select click |
-| 16.65 | Survey need select 2 | tap/select | Select click |
-| 15.26 | Survey scroll | scroll/transition | Explainer video pops whoosh light pop |
-| 18.11 | Survey submit | tap/select | Select click |
-| 22.05 | Scenario 1 checklist complete banner | reveal/info | High tech bleep confirmation |
-| 25.52 | Scenario 1 checklist tab | tab-switch | Page forward single chime |
-| 28.88 | Scenario 1 smart calendar tab | tab-switch | Page forward single chime |
-| 36.80 | Scenario 2 checklist tab | tab-switch | Page back chime |
-| 41.41 | Scenario 2 chat list tab | tab-switch | Page back chime |
-| 42.61 | Scenario 2 open chat room | tap/select | Select click |
-| 43.68 | Scenario 2 auto typing | typing | Typing on a laptop keyboard |
-| 44.80 | Scenario 2 send message | send | Confirmation tone |
-| 47.37 | Scenario 2 ARC unlock | unlock/complete | Success tone |
-| 50.79 | Scenario 2 next-step banner | reveal/info | Digital quick tone |
-| 57.98 | Scenario 3 My Page tab | tab-switch | Page forward single chime |
-| 60.43 | Scenario 3 open scholarship item | tap/select | Select click |
-| 62.47 | Scenario 3 updated checklist reveal | reveal/info | High tech bleep confirmation |
-| 71.81 | Scenario 4 open chat room | tap/select | Select click |
-| 72.88 | Scenario 4 auto typing | typing | Typing on a laptop keyboard |
-| 74.56 | Scenario 4 send message | send | Confirmation tone |
-| 75.13 | Scenario 4 AI answer appears | notification | Message pop alert |
-| 77.50 | Scenario 4 source reveal | reveal/info | Digital quick tone |
+| 0.17 | Intro starts | intro/start | Software interface start |
+| 4.18 | Push notification appears | notification | Message pop alert |
+| 11.46 | Survey university select | tap/select | Select click |
+| 12.29 | Survey visa select | tap/select | Select click |
+| 13.10 | Survey country select | tap/select | Select click |
+| 13.93 | Survey ARC timing select | tap/select | Select click |
+| 15.32 | Survey need select 1 | tap/select | Select click |
+| 15.95 | Survey need select 2 | tap/select | Select click |
+| 14.61 | Survey scroll | scroll/transition | Explainer video pops whoosh light pop |
+| 17.34 | Survey submit | tap/select | Select click |
+| 21.11 | Scenario 1 checklist complete banner | reveal/info | High tech bleep confirmation |
+| 24.44 | Scenario 1 checklist tab | tab-switch | Page forward single chime |
+| 27.66 | Scenario 1 smart calendar tab | tab-switch | Page forward single chime |
+| 35.24 | Scenario 2 checklist tab | tab-switch | Page back chime |
+| 39.65 | Scenario 2 chat list tab | tab-switch | Page back chime |
+| 40.80 | Scenario 2 open chat room | tap/select | Select click |
+| 41.83 | Scenario 2 auto typing | typing | Typing on a laptop keyboard |
+| 42.90 | Scenario 2 send message | send | Confirmation tone |
+| 45.36 | Scenario 2 ARC unlock | unlock/complete | Success tone |
+| 48.63 | Scenario 2 next-step banner | reveal/info | Digital quick tone |
+| 55.52 | Scenario 3 My Page tab | tab-switch | Page forward single chime |
+| 57.87 | Scenario 3 open scholarship item | tap/select | Select click |
+| 59.82 | Scenario 3 updated checklist reveal | reveal/info | High tech bleep confirmation |
+| 68.76 | Scenario 4 open chat room | tap/select | Select click |
+| 69.79 | Scenario 4 auto typing | typing | Typing on a laptop keyboard |
+| 71.39 | Scenario 4 send message | send | Confirmation tone |
+| 71.94 | Scenario 4 AI answer appears | notification | Message pop alert |
+| 74.21 | Scenario 4 source reveal | reveal/info | Digital quick tone |
