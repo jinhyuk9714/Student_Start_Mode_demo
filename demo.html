@@ -3268,7 +3268,7 @@
                           width="14"
                           style="color: var(--slate); flex-shrink: 0"
                         ></iconify-icon
-                        >우리은행 연세대지점
+                        >하나은행 관악지점
                       </div>
                       <div class="detail-pill slate">
                         <iconify-icon
@@ -4376,6 +4376,16 @@
           : requestedMode === "short"
             ? "short"
             : "normal";
+      var SHORT_READ_CUT_SCALE = 1.0;
+      function scalePacingTree(value, scale) {
+        if (typeof value === "number") return Math.round(value * scale);
+        if (!value || typeof value !== "object") return value;
+        var next = Array.isArray(value) ? [] : {};
+        Object.keys(value).forEach(function (key) {
+          next[key] = scalePacingTree(value[key], scale);
+        });
+        return next;
+      }
       var DEMO_PACING = {
         normal: {
           intro: { autostart: 2000, home: 2000, typo: 2000 },
@@ -4443,68 +4453,68 @@
           },
         },
         short: {
-          intro: { autostart: 900, home: 900, typo: 900 },
-          push: { hold: 2400, exit: 650 },
-          titleCard: { defaultHold: 1500, scenario: 1100, outro: 220 },
-          loading: { initial: 320, step: 430, complete: 320 },
+          intro: { autostart: 900, home: 1800, typo: 2800 },
+          push: { hold: 3400, exit: 800 },
+          titleCard: { defaultHold: 1650, scenario: 1850, outro: 280 },
+          loading: { initial: 450, step: 680, complete: 450 },
           helpers: {
             tapDown: 140,
             tapUp: 190,
-            typeChar: 42,
-            scrollSettle: 220,
+            typeChar: 50,
+            scrollSettle: 300,
             typoDelay: 220,
           },
-          highlight: 1500,
-          ending: { hold: 1100 },
-          chat: { botReply: 450, confirmUpdate: 320 },
+          highlight: 1900,
+          ending: { hold: 1800 },
+          chat: { botReply: 560, confirmUpdate: 360 },
           s1: {
-            introFocus: 700,
-            selectGap: 250,
-            scrollGap: 160,
-            multiGap: 220,
-            submitGap: 220,
-            homeReveal: 650,
-            bannerFocus: 1500,
-            checklistReveal: 450,
-            checklistFocus: 1200,
-            calendarFocus: 1800,
-            outro: 450,
+            introFocus: 1100,
+            selectGap: 480,
+            scrollGap: 280,
+            multiGap: 360,
+            submitGap: 360,
+            homeReveal: 950,
+            bannerFocus: 2600,
+            checklistReveal: 550,
+            checklistFocus: 2100,
+            calendarFocus: 2400,
+            outro: 700,
           },
           s2: {
-            reset: 180,
-            homeFocus: 900,
-            checklistFocus: 950,
-            calendarFocus: 950,
-            preChat: 250,
-            chatListFocus: 500,
-            chatRoomFocus: 500,
-            typedPause: 320,
-            sentPause: 750,
-            confirmFocus: 450,
-            unlockFocus: 2000,
-            homeReturn: 450,
-            homeBannerFocus: 1900,
-            outro: 450,
+            reset: 220,
+            homeFocus: 1550,
+            checklistFocus: 1700,
+            calendarFocus: 1700,
+            preChat: 500,
+            chatListFocus: 850,
+            chatRoomFocus: 850,
+            typedPause: 460,
+            sentPause: 1250,
+            confirmFocus: 850,
+            unlockFocus: 3000,
+            homeReturn: 700,
+            homeBannerFocus: 3850,
+            outro: 700,
           },
           s3: {
-            reset: 180,
-            myFocus: 650,
-            myScroll: 220,
-            scholarshipHighlight: 220,
-            scholarshipOpen: 1050,
-            checklistFocus: 450,
-            checklistReveal: 1700,
-            outro: 450,
+            reset: 200,
+            myFocus: 1000,
+            myScroll: 360,
+            scholarshipHighlight: 360,
+            scholarshipOpen: 1600,
+            checklistFocus: 650,
+            checklistReveal: 3050,
+            outro: 700,
           },
           s4: {
-            reset: 180,
-            titleIntro: 850,
-            chatListFocus: 500,
-            chatRoomFocus: 500,
-            typedPause: 220,
-            answerFocus: 1400,
-            sourceFocus: 2700,
-            outro: 450,
+            reset: 200,
+            titleIntro: 1300,
+            chatListFocus: 850,
+            chatRoomFocus: 850,
+            typedPause: 460,
+            answerFocus: 2500,
+            sourceFocus: 4700,
+            outro: 750,
           },
         },
         short67: {
@@ -4573,6 +4583,7 @@
           },
         },
       };
+      DEMO_PACING.short = scalePacingTree(DEMO_PACING.short, SHORT_READ_CUT_SCALE);
       function pace(group, key) {
         var value = DEMO_PACING[DEMO_MODE];
         if (key == null) return value[group];
@@ -4777,6 +4788,39 @@
         c.scrollTop = c.scrollHeight;
       }
 
+      function applyARCCompletedState() {
+        setArcBanner("done");
+        ["cl-bank-account", "cl-phone"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) {
+            el.style.background = "var(--teal-light)";
+            el.style.border = "1px solid rgba(93,202,165,.4)";
+            var iconWrap = el.querySelector(
+              'div[style*="background:var(--gray-200)"]',
+            );
+            if (iconWrap) iconWrap.style.background = "var(--teal)";
+            var lockIcon = el.querySelector(
+              'iconify-icon[icon="solar:lock-keyhole-bold"]',
+            );
+            if (lockIcon)
+              lockIcon.setAttribute("icon", "solar:record-circle-linear");
+            var nameDiv = el.querySelector(
+              'div[style*="color:var(--gray-600)"]',
+            );
+            if (nameDiv) {
+              nameDiv.style.color = "var(--gray-800)";
+              nameDiv.style.fontWeight = "600";
+            }
+          }
+        });
+        document.getElementById("sum-done").textContent = "4";
+        document.getElementById("sum-todo").textContent = "1";
+        document.getElementById("sum-locked").textContent = "2";
+        document.getElementById("cl-count").textContent = "4/8 완료";
+        document.getElementById("my-arc-status").textContent = "수령 완료";
+        document.getElementById("my-arc-status").style.color = "var(--teal)";
+      }
+
       function confirmARC(btn) {
         var card = document.getElementById("arc-confirm-card");
         if (!card) card = btn.parentElement.parentElement;
@@ -4789,36 +4833,7 @@
             '<strong>2가지가 새로 가능해졌어요!</strong><br><br><div style="display:flex;align-items:center;gap:6px;color:var(--teal);font-weight:600;font-size:12px;margin:4px 0"><iconify-icon icon="solar:lock-keyhole-unlocked-linear" width="14"></iconify-icon>하나은행 계좌 개설</div><div style="display:flex;align-items:center;gap:6px;color:var(--teal);font-weight:600;font-size:12px;margin:4px 0"><iconify-icon icon="solar:smartphone-linear" width="14"></iconify-icon>후불폰 전환</div><br>먼저 어떤 걸 하시겠어요?<div style="display:flex;gap:4px;margin-top:6px"><span class="src-chip src-hana">하나은행</span></div>',
           );
           showToast("2개 항목이 새로 가능해졌어요!");
-          setArcBanner("done");
-          ["cl-bank-account", "cl-phone"].forEach(function (id) {
-            var el = document.getElementById(id);
-            if (el) {
-              el.style.background = "var(--teal-light)";
-              el.style.border = "1px solid rgba(93,202,165,.4)";
-              var iconWrap = el.querySelector(
-                'div[style*="background:var(--gray-200)"]',
-              );
-              if (iconWrap) iconWrap.style.background = "var(--teal)";
-              var lockIcon = el.querySelector(
-                'iconify-icon[icon="solar:lock-keyhole-bold"]',
-              );
-              if (lockIcon)
-                lockIcon.setAttribute("icon", "solar:record-circle-linear");
-              var nameDiv = el.querySelector(
-                'div[style*="color:var(--gray-600)"]',
-              );
-              if (nameDiv) {
-                nameDiv.style.color = "var(--gray-800)";
-                nameDiv.style.fontWeight = "600";
-              }
-            }
-          });
-          document.getElementById("sum-done").textContent = "4";
-          document.getElementById("sum-todo").textContent = "1";
-          document.getElementById("sum-locked").textContent = "2";
-          document.getElementById("cl-count").textContent = "4/8 완료";
-          document.getElementById("my-arc-status").textContent = "수령 완료";
-          document.getElementById("my-arc-status").style.color = "var(--teal)";
+          applyARCCompletedState();
         }, pace("chat", "confirmUpdate"));
       }
       function toggleScholarship() {
@@ -5195,10 +5210,10 @@
       async function scenario1() {
         // scene:'1/4 온보딩';
         showScreen("onboarding");
-        setTypo("SCENARIO 01", "3분 설문으로", "나만의 금융 여정이 시작됩니다");
-        await showTitleCard("SCENARIO 1", "온보딩 설문", pace("titleCard", "scenario"));
+        setTypo("핵심 기능", "3분 설문으로 시작", "학교, 비자, 국적 등 나의 상황을 간단히 입력합니다");
+        await showTitleCard("핵심 기능 1", "온보딩 설문", pace("titleCard", "scenario"));
         await sleep(pace("s1", "introFocus"));
-        setTypo("SCENARIO 01", "학교, 비자, 국적", "당신의 상황을 알려주세요");
+        setTypo("핵심 기능", "유학생의 정보 입력", "학교, 비자, 국적, ARC 상태를 빠르게 선택합니다");
         await animateTap('#q-univ .q-opt[data-val="SNU"]');
         await sleep(pace("s1", "selectGap"));
         await animateTap('#q-visa .q-opt[data-val="D2"]');
@@ -5215,13 +5230,13 @@
         await sleep(pace("s1", "multiGap"));
         await animateScroll("#screen-onboarding .scr-body", "bottom");
         await sleep(pace("s1", "submitGap"));
-        setTypo("SCENARIO 01", "AI가 분석합니다", "비자 조건 x 학교 x 국적");
+        setTypo("핵심 기능", "AI가 자동 분석", "입력한 조건을 바탕으로 필요한 금융 여정을 정리합니다");
         await animateTap("#cta-btn");
         await waitForScreen("home", 8000);
         setTypo(
-          "SCENARIO 01",
-          "맞춤 체크리스트 완성",
-          "해야 할 일, 순서까지 한눈에",
+          "핵심 기능",
+          "맞춤 체크리스트 생성",
+          "해야 할 일, 기다려야 할 일, 다음 단계를 자동으로 정리합니다",
         );
         await sleep(pace("s1", "homeReveal"));
         highlight("#arc-banner");
@@ -5229,17 +5244,17 @@
         await animateTap("#tab-checklist");
         await sleep(pace("s1", "checklistReveal"));
         setTypo(
-          "SCENARIO 01",
-          "잠금 조건까지 자동 계산",
-          "지금 가능한 것 vs 기다려야 할 것",
+          "핵심 기능",
+          "지금 가능한 일부터 자동 정리",
+          "지금 해야 할 것과 기다려야 할 것을 한눈에 보여줍니다",
         );
         await animateTap("#cl-arc-item");
         await sleep(pace("s1", "checklistFocus"));
         await animateTap("#tab-calendar");
         setTypo(
-          "SCENARIO 01",
+          "핵심 기능",
           "스마트 캘린더",
-          "중요 일정을 자동으로 추적합니다",
+          "중요 일정과 해야 할 시점을 한눈에 확인할 수 있습니다",
         );
         await sleep(pace("s1", "calendarFocus"));
         await sleep(pace("s1", "outro"));
@@ -5249,29 +5264,33 @@
         // scene:'2/4 ARC 수령';
         resetAll();
         await sleep(pace("s2", "reset"));
-        setTypo("SCENARIO 02", "왕웨이, 중국 유학생", "서울대 D-2 비자");
-        await showTitleCard("SCENARIO 2", "왕웨이: ARC 수령", pace("titleCard", "scenario"));
+        setTypo("왕웨이가 ARC 받기 전에는?", "외국인등록증 수령 전", "왕웨이는 지금 해야 할 일과 준비 방법을 바로 확인할 수 있습니다");
+        await showTitleCard("왕웨이 시나리오 1", "ARC 수령 전후", pace("titleCard", "scenario"));
         // Start from home
         switchTab("home");
         await sleep(pace("s2", "homeFocus"));
         setTypo(
-          "SCENARIO 02",
-          "체크리스트 확인",
-          "완료, 가능, 잠김 항목을 한눈에",
+          "왕웨이가 ARC 받기 전에는?",
+          "체크리스트로 할 일 확인",
+          "무엇을 먼저 해야 하는지, 어떻게 준비하면 되는지 한눈에 봅니다",
         );
         await animateTap("#tab-checklist");
         await sleep(pace("s2", "checklistFocus"));
         await animateTap("#tab-calendar");
         setTypo(
-          "SCENARIO 02",
+          "왕웨이가 ARC 받기 전에는?",
           "캘린더로 일정 확인",
-          "ARC 수령 예정일, 비자 만료일",
+          "ARC 수령 예정일과 비자 일정을 놓치지 않고 확인합니다",
         );
         await sleep(pace("s2", "calendarFocus"));
         await sleep(pace("s2", "preChat"));
+        setTypo(
+          "왕웨이가 ARC 받은 후에는?",
+          "외국인등록증 수령 후",
+          "상황이 바뀌면 체크리스트도 즉시 업데이트됩니다",
+        );
         await animateTap("#tab-chat-list");
         await sleep(pace("s2", "chatListFocus"));
-        setTypo("SCENARIO 02", "ARC 수령 시", "체크리스트도 바뀝니다");
         await animateTap("#chat-room-0");
         await sleep(pace("s2", "chatRoomFocus"));
         await animateType("#chat-input-field", "ARC 받았어요!");
@@ -5281,16 +5300,16 @@
         var confirmBtn = await waitForElement("#confirm-arc-btn", 5000);
         await sleep(pace("s2", "confirmFocus"));
         setTypo(
-          "SCENARIO 02",
-          "ARC 수령 → 잠금 해제",
-          "은행 계좌, 후불폰이 가능해져요",
+          "왕웨이가 ARC 받은 후에는?",
+          "체크리스트 자동 변경",
+          "계좌 개설, 후불폰 전환 등 다음 가능 항목이 자동으로 열립니다",
         );
         if (confirmBtn) await animateTap("#confirm-arc-btn");
         await sleep(pace("s2", "unlockFocus"));
         setTypo(
-          "SCENARIO 02",
-          "다음 할 일을 자동 안내",
-          "하나은행 계좌 개설하러 가기",
+          "왕웨이가 ARC 받은 후에는?",
+          "다음 할 일 자동 안내",
+          "이제 무엇을 해야 하는지 바로 이어서 안내합니다",
         );
         await animateTap("#tab-home");
         await sleep(pace("s2", "homeReturn"));
@@ -5302,20 +5321,21 @@
       async function scenario3() {
         // scene:'3/4 장학금';
         resetAll();
+        applyARCCompletedState();
         await sleep(pace("s3", "reset"));
         setPers(
-          "응우옌 민",
-          "연세대학교 | D-2 | 베트남",
-          "응우옌 민 | 연세대 | D-2 | 베트남",
-          "안녕 민!",
+          "왕웨이 (王伟)",
+          "서울대학교 | D-2 | 중국",
+          "왕웨이 | 서울대 | D-2 | 중국",
+          "안녕 왕웨이!",
         );
         scholarshipAdded = false;
         document.getElementById("scholarship-items").style.display = "none";
         document.getElementById("my-scholarship").textContent = "없음";
-        setTypo("SCENARIO 03", "응우옌 민, 베트남 유학생", "연세대 D-2 비자");
-        await showTitleCard("SCENARIO 3", "응우옌: 장학금 추가", pace("titleCard", "scenario"));
+        setTypo("왕웨이가 장학금을 받는다면?", "왕웨이가 장학금을 받게 되면", "새로운 상황에 맞춰 필요한 항목이 다시 정리됩니다");
+        await showTitleCard("왕웨이 시나리오 2", "장학금 수령", pace("titleCard", "scenario"));
         await animateTap("#tab-my");
-        setTypo("SCENARIO 03", "상황이 달라지면", "체크리스트가 자동 업데이트");
+        setTypo("왕웨이가 장학금을 받는다면?", "장학금 수령 상황 반영", "장학금 여부에 따라 체크리스트가 자동으로 업데이트됩니다");
         await sleep(pace("s3", "myFocus"));
         await animateScroll("#screen-my .scr-body", 200);
         await sleep(pace("s3", "myScroll"));
@@ -5324,9 +5344,9 @@
         await animateTap("#my-scholarship");
         await sleep(pace("s3", "scholarshipOpen"));
         setTypo(
-          "SCENARIO 03",
-          "장학금 수령 계좌, 증빙 서류",
-          "필요한 것만 딱 추가됩니다",
+          "왕웨이가 장학금을 받는다면?",
+          "수령 계좌와 증빙서류 안내",
+          "장학금 수령에 필요한 계좌와 서류를 바로 확인할 수 있습니다",
         );
         await animateTap("#tab-checklist");
         await sleep(pace("s3", "checklistFocus"));
@@ -5338,25 +5358,23 @@
       async function scenario4() {
         // scene:'4/4 이체한도';
         resetAll();
+        applyARCCompletedState();
         await sleep(pace("s4", "reset"));
         setPers(
-          "Sarah Johnson",
-          "고려대학교 | D-2 | 독일",
-          "Sarah | 고려대 | D-2 | 독일",
-          "안녕 Sarah!",
+          "왕웨이 (王伟)",
+          "서울대학교 | D-2 | 중국",
+          "왕웨이 | 서울대 | D-2 | 중국",
+          "안녕 왕웨이!",
         );
-        document.getElementById("sum-done").textContent = "5";
-        document.getElementById("sum-todo").textContent = "1";
-        document.getElementById("sum-locked").textContent = "2";
-        setTypo("SCENARIO 04", "Sarah, 독일 유학생", "고려대 D-2 비자");
-        await showTitleCard("SCENARIO 4", "Sarah: 이체한도 문의", pace("titleCard", "scenario"));
+        setTypo("왕웨이가 이체한도가 궁금하다면?", "왕웨이가 이체한도가 궁금할 때", "궁금한 내용은 담당 AI 비서에게 바로 물어볼 수 있습니다");
+        await showTitleCard("왕웨이 시나리오 3", "이체한도 문의", pace("titleCard", "scenario"));
         await sleep(pace("s4", "titleIntro"));
         await animateTap("#tab-chat-list");
         await sleep(pace("s4", "chatListFocus"));
         setTypo(
-          "SCENARIO 04",
-          "궁금한 건 담당 AI 비서에게",
-          "검증된 DB 기반 답변",
+          "왕웨이가 이체한도가 궁금하다면?",
+          "궁금한 건 AI 비서에게",
+          "상황에 맞는 답변을 빠르게 확인할 수 있습니다",
         );
         await animateTap("#chat-room-0");
         await sleep(pace("s4", "chatRoomFocus"));
@@ -5367,7 +5385,7 @@
         await sleep(pace("s4", "typedPause"));
         await animateTap("#send-btn");
         await sleep(pace("s4", "answerFocus"));
-        setTypo("SCENARIO 04", "출처까지 투명하게", "하나은행 · 금융규정");
+        setTypo("왕웨이가 이체한도가 궁금하다면?", "출처까지 신뢰도 있게", "하나은행과 금융규정 기반으로 답변의 근거를 함께 보여줍니다");
         await animateScroll("#chat-messages", "bottom");
         await sleep(pace("s4", "sourceFocus"));
         await sleep(pace("s4", "outro"));
@@ -5378,7 +5396,7 @@
         document.getElementById("tc-num").textContent = "Hana EZ";
         document.getElementById("tc-title").textContent = "Student Start Mode";
         tc.classList.add("visible");
-        setTypo("", "Student Start Mode", "유학생 금융, 더 이상 헤매지 마세요");
+        setTypo("", "Student Start Mode", "유학생 상황에 맞춰, 필요한 금융 여정을 자동으로 안내합니다");
         await sleep(pace("ending", "hold"));
       }
 
@@ -5389,9 +5407,9 @@
         scheduleStageScale();
         resetAll();
         await sleep(pace("intro", "home"));
-        setTypo("", "Student Start Mode", "유학생을 위한 맞춤 금융 온보딩", 0);
+        setTypo("", "Student Start Mode", "유학생 상황에 맞춰 금융 여정을 안내하는 맞춤 온보딩", 0);
         await sleep(pace("intro", "typo"));
-        await showPushBanner("오늘은 서울대 무료 건강검진 신청 마감일이예요!", pace("push", "hold"));
+        await showPushBanner("오늘은 서울대 무료 건강검진 신청 마감일이에요!", pace("push", "hold"));
         await scenario1();
         if (demoAbort) return;
         await scenario2();
